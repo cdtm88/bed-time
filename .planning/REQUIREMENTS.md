@@ -68,32 +68,30 @@
 
 ## Traceability
 
-Populated during roadmap creation.
-
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| STORY-01 | — | Pending |
-| STORY-02 | — | Pending |
-| STORY-03 | — | Pending |
-| STORY-04 | — | Pending |
-| STORY-05 | — | Pending |
-| STORY-06 | — | Pending |
-| STORY-07 | — | Pending |
-| SAFE-01 | — | Pending |
-| SAFE-02 | — | Pending |
-| SAFE-03 | — | Pending |
-| SAFE-04 | — | Pending |
-| READ-01 | — | Pending |
-| INFRA-01 | — | Pending |
-| INFRA-02 | — | Pending |
-| INFRA-03 | — | Pending |
-| INFRA-04 | — | Pending |
+| STORY-01 | Phase 2 | Pending |
+| STORY-02 | Phase 2 | Pending |
+| STORY-03 | Phase 2 | Pending |
+| STORY-04 | Phase 2 | Pending |
+| STORY-05 | Phase 6 | Pending |
+| STORY-06 | Phase 6 | Pending |
+| STORY-07 | Phase 6 | Pending |
+| SAFE-01 | Phase 3 | Pending |
+| SAFE-02 | Phase 3 | Pending |
+| SAFE-03 | Phase 3 | Pending |
+| SAFE-04 | Phase 2 | Pending |
+| READ-01 | Phase 5 | Pending |
+| INFRA-01 | Phase 4 | Pending |
+| INFRA-02 | Phase 2 | Pending |
+| INFRA-03 | Phase 4 | Pending |
+| INFRA-04 | Phase 1 | Pending |
 
 **Coverage:**
 - v1 requirements: 16 total
-- Mapped to phases: 0 (roadmap not yet created)
-- Unmapped: 16 ⚠️
+- Mapped to phases: 16/16
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-03-23*
-*Last updated: 2026-03-23 after initial definition*
+*Last updated: 2026-03-23 after roadmap creation*
