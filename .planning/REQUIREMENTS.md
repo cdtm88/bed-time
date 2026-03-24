@@ -29,7 +29,7 @@
 ### Infrastructure (INFRA)
 
 - [ ] **INFRA-01**: No login or account required — any parent can visit, enter details, and get a story immediately
-- [ ] **INFRA-02**: All Claude API calls are made server-side; the API key is never exposed to the frontend
+- [x] **INFRA-02**: All Claude API calls are made server-side; the API key is never exposed to the frontend
 - [ ] **INFRA-03**: App enforces IP-based rate limiting to prevent abuse in the absence of user authentication
 - [x] **INFRA-04**: App is deployed on Vercel with zero-config hosting and edge functions
 
@@ -83,7 +83,7 @@
 | SAFE-04 | Phase 2 | Complete |
 | READ-01 | Phase 5 | Pending |
 | INFRA-01 | Phase 4 | Pending |
-| INFRA-02 | Phase 2 | Pending |
+| INFRA-02 | Phase 2 | Complete |
 | INFRA-03 | Phase 4 | Pending |
 | INFRA-04 | Phase 1 | Complete |
 

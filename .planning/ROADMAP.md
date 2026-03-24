@@ -48,7 +48,7 @@ Plans:
 
 Plans:
 - [x] 02-01-PLAN.md — Test infra (Vitest) + library modules: input validation, age-level mapping, prompt construction (TDD)
-- [ ] 02-02-PLAN.md — Anthropic SDK integration, route handler wiring, curl verification checkpoint
+- [x] 02-02-PLAN.md — Anthropic SDK integration, route handler wiring, curl verification checkpoint
 
 ### Phase 3: Safety Validation Layer
 **Goal**: Every generated story is verified safe before it can reach a parent, with automatic retry on failure and graceful error handling

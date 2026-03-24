@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Ready to execute
-stopped_at: Completed 02-01-PLAN.md
-last_updated: "2026-03-24T08:06:55.976Z"
+status: Phase complete — ready for verification
+stopped_at: Completed 02-02-PLAN.md
+last_updated: "2026-03-24T17:40:39.618Z"
 progress:
   total_phases: 6
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 3
-  completed_plans: 2
+  completed_plans: 3
 ---
 
 # Project State
@@ -48,6 +48,7 @@ Plan: 2 of 2
 *Updated after each plan completion*
 | Phase 01-project-scaffolding P01 | 30 | 2 tasks | 13 files |
 | Phase 02-core-generation-pipeline P01 | 3 | 2 tasks | 8 files |
+| Phase 02-core-generation-pipeline P02 | 2 | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -65,6 +66,8 @@ Recent decisions affecting current work:
 - [Phase 01-project-scaffolding]: Vercel deployment via GitHub dashboard integration (not CLI) — automatic redeploy on push to main at https://bed-time-nu.vercel.app/
 - [Phase 02-core-generation-pipeline]: System prompt uses word count range (93%-107%) rather than exact target for natural Claude output
 - [Phase 02-core-generation-pipeline]: Name regex /^[a-zA-Z\s]{1,30}$/ per D-06 -- ASCII letters and spaces only
+- [Phase 02-core-generation-pipeline]: Plain text streaming (text/plain) instead of SSE for simpler client consumption
+- [Phase 02-core-generation-pipeline]: Generic 500 error on Claude failures -- never expose API internals to client
 
 ### Pending Todos
 
@@ -77,6 +80,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-24T08:06:55.973Z
-Stopped at: Completed 02-01-PLAN.md
+Last session: 2026-03-24T17:40:39.615Z
+Stopped at: Completed 02-02-PLAN.md
 Resume file: None
