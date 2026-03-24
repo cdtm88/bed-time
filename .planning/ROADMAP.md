@@ -1,4 +1,4 @@
-# Roadmap: Bedtime Story Generator
+# Roadmap: Nightlight Tales
 
 ## Overview
 
@@ -29,10 +29,10 @@ Decimal phases appear between their surrounding integers in numeric order.
   1. Next.js app is deployed on Vercel and accessible via a public URL
   2. The development environment runs locally with hot reload via Turbopack
   3. Tailwind CSS is configured and rendering styles correctly
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
-- [ ] 01-01: TBD
+- [ ] 01-01-PLAN.md — Scaffold Next.js 16 with Tailwind v4, Edge Runtime stub, and Vercel deployment
 
 ### Phase 2: Core Generation Pipeline
 **Goal**: A parent's inputs (name, age, theme, duration) produce a personalized story via Claude, callable and testable through an API endpoint
