@@ -58,10 +58,11 @@ Plans:
   1. A generated story passes through a separate validation model (Haiku) that classifies it as safe or unsafe before display
   2. If validation flags a story as unsafe, the system silently retries generation (up to 2 retries) without the parent seeing anything
   3. If all retries fail, the parent sees a friendly error message -- never an unsafe story
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 03-01: TBD
+- [ ] 03-01-PLAN.md — Safety validation library with TDD: validation parsing, Haiku classification, retry orchestration, prompt builders
+- [ ] 03-02-PLAN.md — Route handler integration: replace streaming with buffered safety-validated response, live verification
 
 ### Phase 4: Input Form
 **Goal**: A parent can visit the app, enter their child's details, and trigger story generation with zero friction
@@ -115,7 +116,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 |-------|----------------|--------|-----------|
 | 1. Project Scaffolding | 1/1 | Complete   | 2026-03-24 |
 | 2. Core Generation Pipeline | 0/2 | Not started | - |
-| 3. Safety Validation Layer | 0/1 | Not started | - |
+| 3. Safety Validation Layer | 0/2 | Not started | - |
 | 4. Input Form | 0/1 | Not started | - |
 | 5. Reading Experience | 0/1 | Not started | - |
 | 6. Story Quality Tuning | 0/1 | Not started | - |
