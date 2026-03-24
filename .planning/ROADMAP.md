@@ -32,7 +32,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 1 plan
 
 Plans:
-- [ ] 01-01-PLAN.md — Scaffold Next.js 16 with Tailwind v4, Edge Runtime stub, and Vercel deployment
+- [x] 01-01-PLAN.md — Scaffold Next.js 16 with Tailwind v4, Edge Runtime stub, and Vercel deployment
 
 ### Phase 2: Core Generation Pipeline
 **Goal**: A parent's inputs (name, age, theme, duration) produce a personalized story via Claude, callable and testable through an API endpoint
