@@ -2,9 +2,9 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: unknown
-stopped_at: "Phase 01-01: Task 1 complete, awaiting Task 2 Vercel checkpoint (human-action)"
-last_updated: "2026-03-24T06:16:38.579Z"
+status: Phase complete — ready for verification
+stopped_at: Completed 01-01-PLAN.md — Phase 1 Project Scaffolding complete
+last_updated: "2026-03-24T07:12:29.786Z"
 progress:
   total_phases: 6
   completed_phases: 1
@@ -46,6 +46,7 @@ Plan: 1 of 1
 - Trend: -
 
 *Updated after each plan completion*
+| Phase 01-project-scaffolding P01 | 30 | 2 tasks | 13 files |
 
 ## Accumulated Context
 
@@ -60,6 +61,7 @@ Recent decisions affecting current work:
 - [Phase 01-project-scaffolding]: Tailwind v4 CSS-first: @import 'tailwindcss' in globals.css, @tailwindcss/postcss plugin, no tailwind.config.js
 - [Phase 01-project-scaffolding]: Edge Runtime declared with export const runtime = 'edge' (not experimental-edge, removed in Next.js 16)
 - [Phase 01-project-scaffolding]: src/ layout with tsconfig @/* alias pointing to ./src/*; all app code under src/app/
+- [Phase 01-project-scaffolding]: Vercel deployment via GitHub dashboard integration (not CLI) — automatic redeploy on push to main at https://bed-time-nu.vercel.app/
 
 ### Pending Todos
 
@@ -72,6 +74,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-24T06:16:03.174Z
-Stopped at: Phase 01-01: Task 1 complete, awaiting Task 2 Vercel checkpoint (human-action)
+Last session: 2026-03-24T07:12:29.783Z
+Stopped at: Completed 01-01-PLAN.md — Phase 1 Project Scaffolding complete
 Resume file: None

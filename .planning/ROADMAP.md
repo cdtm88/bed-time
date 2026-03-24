@@ -12,7 +12,7 @@ This roadmap delivers a web app that lets parents generate safe, personalized be
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Project Scaffolding** - Next.js project setup with Vercel deployment pipeline
+- [x] **Phase 1: Project Scaffolding** - Next.js project setup with Vercel deployment pipeline (completed 2026-03-24)
 - [ ] **Phase 2: Core Generation Pipeline** - Input validation, age/duration mapping, prompt construction, and Claude API integration testable via curl
 - [ ] **Phase 3: Safety Validation Layer** - Post-generation content filtering with retry logic and graceful failure
 - [ ] **Phase 4: Input Form** - Parent-facing web form with no-login flow and rate limiting
@@ -113,7 +113,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Project Scaffolding | 0/1 | Not started | - |
+| 1. Project Scaffolding | 1/1 | Complete   | 2026-03-24 |
 | 2. Core Generation Pipeline | 0/2 | Not started | - |
 | 3. Safety Validation Layer | 0/1 | Not started | - |
 | 4. Input Form | 0/1 | Not started | - |

@@ -72,14 +72,14 @@ completed: 2026-03-24
 
 # Phase 1 Plan 1: Project Scaffolding Summary
 
-**Next.js 16.2.1 app scaffolded with Tailwind CSS v4, Edge Runtime stub at /api/generate, deployed to Vercel via GitHub integration**
+**Next.js 16.2.1 app scaffolded with Tailwind CSS v4, Edge Runtime stub at /api/generate, deployed to Vercel at https://bed-time-nu.vercel.app/ with automatic GitHub deploys**
 
 ## Performance
 
-- **Duration:** ~15 min (Task 1 complete; Task 2 awaiting human action)
+- **Duration:** ~30 min
 - **Started:** 2026-03-24T10:01:22Z
-- **Completed:** 2026-03-24 (partial - checkpoint at Task 2)
-- **Tasks:** 1/2 complete (Task 2 is checkpoint:human-action)
+- **Completed:** 2026-03-24T06:16:38Z
+- **Tasks:** 2/2 complete
 - **Files modified:** 19
 
 ## Accomplishments
@@ -87,16 +87,17 @@ completed: 2026-03-24
 - Tailwind CSS v4 configured correctly: postcss.config.mjs with @tailwindcss/postcss, globals.css with @import "tailwindcss" only
 - Edge Runtime stub at src/app/api/generate/route.ts with runtime="edge" and POST handler
 - npm run build passes cleanly with zero TypeScript or Tailwind errors
-- Dev server tested: localhost:3000 renders "Nightlight Tales"; POST /api/generate returns "Story generation coming in Phase 2"
+- Production deployment live at https://bed-time-nu.vercel.app/ via Vercel GitHub integration with automatic deploys on push to main
+- Verified: curl https://bed-time-nu.vercel.app/ returns HTML with "Nightlight Tales"; POST /api/generate returns "Story generation coming in Phase 2"
 
 ## Task Commits
 
 Each task was committed atomically:
 
 1. **Task 1: Scaffold Next.js 16 project with Edge Runtime stub and placeholder structure** - `f01ba5b` (feat)
-2. **Task 2: Connect GitHub repo to Vercel and verify deployment** - PENDING (checkpoint:human-action)
+2. **Task 2: Connect GitHub repo to Vercel and verify deployment** - Human action (Vercel dashboard; no local file changes)
 
-**Plan metadata:** TBD after Task 2 completion
+**Plan metadata:** committed in final docs commit (see below)
 
 ## Files Created/Modified
 - `src/app/layout.tsx` - Root layout with metadata for "Nightlight Tales"
@@ -149,31 +150,53 @@ Each task was committed atomically:
 
 ## User Setup Required
 
-Task 2 is a `checkpoint:human-action` requiring manual Vercel dashboard configuration:
+Vercel deployment configured by user via dashboard (completed):
 
-1. Go to https://vercel.com (create free account if needed)
-2. Click "Add New Project" -> "Import Git Repository"
-3. Select the `bed-time` GitHub repository
-4. Accept default settings (Vercel auto-detects Next.js)
-5. Click "Deploy"
+1. Logged in to Vercel account at https://vercel.com
+2. Clicked "Add New Project" -> "Import Git Repository"
+3. Selected the `bed-time` GitHub repository
+4. Accepted default Next.js settings and deployed
+5. Deployment URL confirmed: https://bed-time-nu.vercel.app/
 
-**Note:** No git remote is configured in this repo yet. The user must also push to GitHub before Vercel can import the repo:
-- Create GitHub repo at https://github.com/new
-- `git remote add origin https://github.com/{username}/bed-time.git`
-- `git push -u origin main`
-
-After deployment, verify:
-- `curl -X POST https://{deployment-url}.vercel.app/api/generate` returns "Story generation coming in Phase 2"
+All verification passed:
+- `curl https://bed-time-nu.vercel.app/` returns HTML containing "Nightlight Tales"
+- `curl -X POST https://bed-time-nu.vercel.app/api/generate` returns "Story generation coming in Phase 2"
+- Automatic deploys enabled (Vercel GitHub integration connected)
 
 ## Next Phase Readiness
 - Next.js 16 scaffold complete and building cleanly
+- Production deployment live at https://bed-time-nu.vercel.app/ with automatic deploys on push to main
 - Edge Runtime stub at /api/generate ready for Phase 2 to implement Claude streaming
 - src/components/ and src/lib/ placeholder directories ready for Phase 2+
-- Phase 2 (story generation API) can begin once Vercel deployment is verified
+- `ANTHROPIC_API_KEY` must be added to Vercel environment variables before Phase 2 API calls go live
+- Phase 2 (Core Generation Pipeline) can begin immediately
 
 ## Known Stubs
 - `src/app/api/generate/route.ts` line 3-8: POST handler returns placeholder "Story generation coming in Phase 2" - intentional Phase 1 stub, Phase 2 will implement the Claude API streaming
 
 ---
+## Self-Check: PASSED
+
+All created files confirmed present:
+- FOUND: src/app/api/generate/route.ts
+- FOUND: src/app/page.tsx
+- FOUND: src/app/globals.css
+- FOUND: src/app/layout.tsx
+- FOUND: .env.local.example
+- FOUND: src/components/.gitkeep
+- FOUND: src/lib/.gitkeep
+- FOUND: .planning/phases/01-project-scaffolding/01-01-SUMMARY.md
+
+Commits confirmed present:
+- FOUND: f01ba5b (feat: scaffold Next.js 16 app)
+- FOUND: cdd3bde (docs: complete project scaffolding plan - awaiting Vercel checkpoint)
+- FOUND: fa01813 (Merge branch 'main' - confirms GitHub push succeeded)
+
+Vercel deployment verified by user:
+- https://bed-time-nu.vercel.app/ returns HTML with "Nightlight Tales"
+- POST /api/generate returns "Story generation coming in Phase 2"
+- Automatic deploys enabled
+
+---
 *Phase: 01-project-scaffolding*
-*Completed: 2026-03-24 (partial - awaiting Task 2 Vercel checkpoint)*
+*Completed: 2026-03-24*
