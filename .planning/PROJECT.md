@@ -1,4 +1,4 @@
-# Bedtime Story Generator
+# Nightlight Tales
 
 ## What This Is
 
@@ -12,16 +12,15 @@ A parent can generate a safe, personalized bedtime story in under a minute and r
 
 ### Validated
 
-(None yet — ship to validate)
+- [x] Parent inputs: child's name, exact age, theme (preset list), reading duration (5 / 10 / 15 min) — *Validated in Phase 02: core-generation-pipeline*
+- [x] Stories are personalized — child's name, age, and chosen theme woven throughout naturally — *Validated in Phase 02: core-generation-pipeline*
+- [x] Age input is mapped internally to reading level bands (Toddler 0–3, Young child 4–6, Older child 7–10) to calibrate vocabulary and complexity — *Validated in Phase 02: core-generation-pipeline*
 
 ### Active
 
 **Story Generation**
-- [ ] Parent inputs: child's name, exact age, theme (preset list), reading duration (5 / 10 / 15 min)
-- [ ] Stories are personalized — child's name, age, and chosen theme woven throughout naturally
 - [ ] Stories follow a real narrative arc: beginning, conflict, resolution
 - [ ] Stories use calming, winding-down language appropriate for bedtime
-- [ ] Age input is mapped internally to reading level bands (Toddler 0–3, Young child 4–6, Older child 7–10) to calibrate vocabulary and complexity
 
 **Safety**
 - [ ] All generated stories are age-appropriate and strictly safe
@@ -86,4 +85,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-03-23 after initialization*
+*Last updated: 2026-03-24 — Phase 02 complete: core generation pipeline live*
