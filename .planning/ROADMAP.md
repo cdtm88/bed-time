@@ -47,7 +47,7 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 02-01-PLAN.md — Test infra (Vitest) + library modules: input validation, age-level mapping, prompt construction (TDD)
+- [x] 02-01-PLAN.md — Test infra (Vitest) + library modules: input validation, age-level mapping, prompt construction (TDD)
 - [ ] 02-02-PLAN.md — Anthropic SDK integration, route handler wiring, curl verification checkpoint
 
 ### Phase 3: Safety Validation Layer

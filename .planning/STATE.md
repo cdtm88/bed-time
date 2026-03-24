@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Ready to plan
-stopped_at: Completed 01-01-PLAN.md — Phase 1 Project Scaffolding complete
-last_updated: "2026-03-24T07:21:02.816Z"
+status: Ready to execute
+stopped_at: Completed 02-01-PLAN.md
+last_updated: "2026-03-24T08:06:55.976Z"
 progress:
   total_phases: 6
   completed_phases: 1
-  total_plans: 1
-  completed_plans: 1
+  total_plans: 3
+  completed_plans: 2
 ---
 
 # Project State
@@ -19,12 +19,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-23)
 
 **Core value:** A parent can generate a safe, personalized bedtime story in under a minute and read it aloud to their child tonight.
-**Current focus:** Phase 01 — project-scaffolding
+**Current focus:** Phase 02 — core-generation-pipeline
 
 ## Current Position
 
-Phase: 2
-Plan: Not started
+Phase: 02 (core-generation-pipeline) — EXECUTING
+Plan: 2 of 2
 
 ## Performance Metrics
 
@@ -47,6 +47,7 @@ Plan: Not started
 
 *Updated after each plan completion*
 | Phase 01-project-scaffolding P01 | 30 | 2 tasks | 13 files |
+| Phase 02-core-generation-pipeline P01 | 3 | 2 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -62,6 +63,8 @@ Recent decisions affecting current work:
 - [Phase 01-project-scaffolding]: Edge Runtime declared with export const runtime = 'edge' (not experimental-edge, removed in Next.js 16)
 - [Phase 01-project-scaffolding]: src/ layout with tsconfig @/* alias pointing to ./src/*; all app code under src/app/
 - [Phase 01-project-scaffolding]: Vercel deployment via GitHub dashboard integration (not CLI) — automatic redeploy on push to main at https://bed-time-nu.vercel.app/
+- [Phase 02-core-generation-pipeline]: System prompt uses word count range (93%-107%) rather than exact target for natural Claude output
+- [Phase 02-core-generation-pipeline]: Name regex /^[a-zA-Z\s]{1,30}$/ per D-06 -- ASCII letters and spaces only
 
 ### Pending Todos
 
@@ -74,6 +77,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-24T07:12:29.783Z
-Stopped at: Completed 01-01-PLAN.md — Phase 1 Project Scaffolding complete
+Last session: 2026-03-24T08:06:55.973Z
+Stopped at: Completed 02-01-PLAN.md
 Resume file: None

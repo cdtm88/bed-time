@@ -7,10 +7,10 @@
 
 ### Story Generation (STORY)
 
-- [ ] **STORY-01**: Parent can enter a child's name (letters only, max 30 characters)
-- [ ] **STORY-02**: Parent can enter a child's exact age; app maps age to reading level band internally (0–3 toddler, 4–6 young child, 7–10 older child) to calibrate vocabulary and sentence complexity
-- [ ] **STORY-03**: Parent can select a theme from a preset curated list of 15–20 options (e.g. dinosaurs, space, ocean, fairy tales, animals, etc.)
-- [ ] **STORY-04**: Parent can select a reading duration (5, 10, or 15 minutes); app maps selection to a target word count
+- [x] **STORY-01**: Parent can enter a child's name (letters only, max 30 characters)
+- [x] **STORY-02**: Parent can enter a child's exact age; app maps age to reading level band internally (0–3 toddler, 4–6 young child, 7–10 older child) to calibrate vocabulary and sentence complexity
+- [x] **STORY-03**: Parent can select a theme from a preset curated list of 15–20 options (e.g. dinosaurs, space, ocean, fairy tales, animals, etc.)
+- [x] **STORY-04**: Parent can select a reading duration (5, 10, or 15 minutes); app maps selection to a target word count
 - [ ] **STORY-05**: Generated story follows a complete narrative arc with a beginning, conflict, and resolution
 - [ ] **STORY-06**: Generated story uses calming, wind-down language designed to ease children toward sleep
 - [ ] **STORY-07**: Generated stories use varied narrative structures (not the same template each time), incorporate sensory language and descriptive imagery, and integrate the child's name naturally throughout
@@ -20,7 +20,7 @@
 - [ ] **SAFE-01**: Every generated story passes multi-layer content filtering: prompt-level safety constraints baked into the system prompt, plus a separate post-generation validation call using a lightweight model to classify the story as safe or unsafe before display
 - [ ] **SAFE-02**: If the post-generation validation flags a story as uncertain or unsafe, the app silently retries story generation with a modified prompt that reinforces safety constraints (up to 2 retries)
 - [ ] **SAFE-03**: If a safe story cannot be produced after all retries, the app displays a graceful, friendly error message — the unsafe story is never shown to the parent
-- [ ] **SAFE-04**: The child's name input is strictly validated (letters and spaces only, max 30 characters) and XML-delimited within the prompt to prevent prompt injection attacks
+- [x] **SAFE-04**: The child's name input is strictly validated (letters and spaces only, max 30 characters) and XML-delimited within the prompt to prevent prompt injection attacks
 
 ### Reading Experience (READ)
 
@@ -70,17 +70,17 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| STORY-01 | Phase 2 | Pending |
-| STORY-02 | Phase 2 | Pending |
-| STORY-03 | Phase 2 | Pending |
-| STORY-04 | Phase 2 | Pending |
+| STORY-01 | Phase 2 | Complete |
+| STORY-02 | Phase 2 | Complete |
+| STORY-03 | Phase 2 | Complete |
+| STORY-04 | Phase 2 | Complete |
 | STORY-05 | Phase 6 | Pending |
 | STORY-06 | Phase 6 | Pending |
 | STORY-07 | Phase 6 | Pending |
 | SAFE-01 | Phase 3 | Pending |
 | SAFE-02 | Phase 3 | Pending |
 | SAFE-03 | Phase 3 | Pending |
-| SAFE-04 | Phase 2 | Pending |
+| SAFE-04 | Phase 2 | Complete |
 | READ-01 | Phase 5 | Pending |
 | INFRA-01 | Phase 4 | Pending |
 | INFRA-02 | Phase 2 | Pending |
