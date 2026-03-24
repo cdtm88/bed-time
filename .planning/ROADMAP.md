@@ -44,11 +44,11 @@ Plans:
   3. Story vocabulary and complexity differ observably between a toddler (age 2) and an older child (age 9)
   4. Story length scales proportionally with the selected duration (5/10/15 min)
   5. The API key is never present in client-side code or network responses
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 02-01: TBD
-- [ ] 02-02: TBD
+- [ ] 02-01-PLAN.md — Test infra (Vitest) + library modules: input validation, age-level mapping, prompt construction (TDD)
+- [ ] 02-02-PLAN.md — Anthropic SDK integration, route handler wiring, curl verification checkpoint
 
 ### Phase 3: Safety Validation Layer
 **Goal**: Every generated story is verified safe before it can reach a parent, with automatic retry on failure and graceful error handling
