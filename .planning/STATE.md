@@ -12,7 +12,7 @@ See: .planning/PROJECT.md (updated 2026-03-23)
 Phase: 1 of 6 (Project Scaffolding)
 Plan: 0 of 1 in current phase
 Status: Ready to plan
-Last activity: 2026-03-23 -- Roadmap created
+Last activity: 2026-03-24 -- Phase 1 context gathered
 
 Progress: [░░░░░░░░░░] 0%
 
@@ -52,11 +52,11 @@ None yet.
 
 ### Blockers/Concerns
 
-- Vercel free tier has 10-second serverless timeout which may be insufficient for story generation (10-30s). Verify Pro tier limits before Phase 1 deployment.
+- ~~Vercel free tier timeout~~ — Resolved in Phase 1 context: using Edge Runtime streaming, no timeout applies.
 - Claude model pricing and rate limits should be verified against current Anthropic docs before Phase 2.
 
 ## Session Continuity
 
-Last session: 2026-03-23
-Stopped at: Roadmap created, ready for Phase 1 planning
-Resume file: None
+Last session: 2026-03-24
+Stopped at: Phase 1 context gathered, ready for Phase 1 planning
+Resume file: .planning/phases/01-project-scaffolding/01-CONTEXT.md
