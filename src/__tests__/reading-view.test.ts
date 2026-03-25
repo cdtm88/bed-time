@@ -8,15 +8,18 @@ interface StoryData {
   theme: string
 }
 
-// --- Stub implementations (RED: will be replaced with real logic) ---
+// --- Utility implementations (will be extracted to src/lib/reading-utils.ts in Plan 02) ---
+
+const STORAGE_KEY = 'nightlight-story'
 
 function parseStoryData(): StoryData | null {
-  throw new Error('not implemented')
+  const raw = sessionStorage.getItem(STORAGE_KEY)
+  if (raw === null) return null
+  return JSON.parse(raw) as StoryData
 }
 
 function splitParagraphs(text: string): string[] {
-  void text
-  throw new Error('not implemented')
+  return text.split('\n\n').filter((p) => p.trim() !== '')
 }
 
 function calculateScrollProgress(
@@ -24,16 +27,13 @@ function calculateScrollProgress(
   scrollHeight: number,
   innerHeight: number,
 ): number {
-  void scrollTop
-  void scrollHeight
-  void innerHeight
-  throw new Error('not implemented')
+  const maxScroll = scrollHeight - innerHeight
+  if (maxScroll <= 0) return 0
+  return scrollTop / maxScroll
 }
 
 function assembleTitle(name: string, theme: string): string {
-  void name
-  void theme
-  throw new Error('not implemented')
+  return `${name}'s ${theme} Story`
 }
 
 // --- Tests ---
