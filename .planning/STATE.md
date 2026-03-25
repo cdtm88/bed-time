@@ -2,9 +2,9 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Ready to execute
-stopped_at: "Checkpoint 04-02 Task 3: awaiting human-verify at http://localhost:3000"
-last_updated: "2026-03-25T08:28:09.206Z"
+status: Phase complete — ready for verification
+stopped_at: Completed 04-02-PLAN.md — Phase 04 input-form complete
+last_updated: "2026-03-25T08:48:01.788Z"
 progress:
   total_phases: 6
   completed_phases: 4
@@ -53,6 +53,7 @@ Plan: 2 of 2
 | Phase 03 P02 | 1 | 1 tasks | 1 files |
 | Phase 03 P02 | 1 | 2 tasks | 1 files |
 | Phase 04-input-form P01 | 2 | 2 tasks | 8 files |
+| Phase 04-input-form P02 | 22 | 3 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -78,6 +79,9 @@ Recent decisions affecting current work:
 - [Phase 03]: Buffered response replaces streaming: full story validated before reaching client
 - [Phase 04-input-form]: In-memory Map for rate limiter: edge-compatible, no external dependency, resets on redeploy (acceptable for MVP)
 - [Phase 04-input-form]: Tailwind v4 @theme inline font bridge connects next/font CSS variables to font-serif and font-sans utilities
+- [Phase 04-input-form]: All sub-components are controlled (presentational) — state centralized in StoryForm parent
+- [Phase 04-input-form]: window.location.href used for /story navigation to ensure sessionStorage is written before page unloads
+- [Phase 04-input-form]: LoadingOverlay uses inline <style> for @keyframes breathe and twinkle — Tailwind v4 cannot express custom keyframes without config file
 
 ### Pending Todos
 
@@ -90,6 +94,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-25T08:28:09.203Z
-Stopped at: Checkpoint 04-02 Task 3: awaiting human-verify at http://localhost:3000
+Last session: 2026-03-25T08:48:01.784Z
+Stopped at: Completed 04-02-PLAN.md — Phase 04 input-form complete
 Resume file: None
