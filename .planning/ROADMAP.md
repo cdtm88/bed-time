@@ -121,3 +121,15 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 | 4. Input Form | 2/2 | Complete   | 2026-03-25 |
 | 5. Reading Experience | 0/1 | Not started | - |
 | 6. Story Quality Tuning | 0/1 | Not started | - |
+
+
+## Backlog
+
+### Phase 999.1: Update name across files and metadata to Nightlight Tales (BACKLOG)
+
+**Goal:** Audit all files, package.json metadata, HTML title tags, README, and any hardcoded strings to ensure the app name is consistently "Nightlight Tales" everywhere.
+**Requirements:** TBD
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (promote with /gsd:review-backlog when ready)
