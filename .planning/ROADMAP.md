@@ -18,6 +18,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 4: Input Form** - Parent-facing web form with no-login flow and rate limiting (completed 2026-03-25)
 - [ ] **Phase 5: Reading Experience** - Fullscreen dim-room reading mode optimized for parents reading aloud
 - [ ] **Phase 6: Story Quality Tuning** - Narrative arc, calming language, and varied story structures
+- [ ] **Phase 7: Nightlight Tales Branding** - Audit and update app name, metadata, and strings to "Nightlight Tales" consistently
 
 ## Phase Details
 
@@ -108,10 +109,19 @@ Plans:
 Plans:
 - [ ] 06-01: TBD
 
+### Phase 7: Nightlight Tales Branding
+**Goal**: All app name references, metadata, and strings consistently use "Nightlight Tales" across package.json, HTML title tags, README, and any hardcoded strings
+**Depends on**: Phase 6
+**Requirements**: TBD
+**Plans**: TBD
+
+Plans:
+- [ ] TBD (run /gsd:plan-phase 7 to break down)
+
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
+Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
@@ -121,15 +131,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 | 4. Input Form | 2/2 | Complete   | 2026-03-25 |
 | 5. Reading Experience | 0/1 | Not started | - |
 | 6. Story Quality Tuning | 0/1 | Not started | - |
-
-
-## Backlog
-
-### Phase 999.1: Update name across files and metadata to Nightlight Tales (BACKLOG)
-
-**Goal:** Audit all files, package.json metadata, HTML title tags, README, and any hardcoded strings to ensure the app name is consistently "Nightlight Tales" everywhere.
-**Requirements:** TBD
-**Plans:** 0 plans
-
-Plans:
-- [ ] TBD (promote with /gsd:review-backlog when ready)
+| 7. Nightlight Tales Branding | 0/0 | Not started | - |
