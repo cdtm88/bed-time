@@ -1,7 +1,5 @@
+import { StoryForm } from '@/components/story-form'
+
 export default function Home() {
-  return (
-    <main className="flex min-h-screen items-center justify-center">
-      <h1 className="text-2xl font-bold">Nightlight Tales</h1>
-    </main>
-  )
+  return <StoryForm />
 }
