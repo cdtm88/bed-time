@@ -30,7 +30,7 @@ A parent can generate a safe, personalized bedtime story in under a minute and r
 **Reading Experience**
 - [ ] Story displayed in a distraction-free, full-screen reading mode
 - [ ] Large, high-contrast font optimized for reading aloud in a dim room
-- [ ] No accounts or login required for MVP — generate and read, no friction
+- [x] No accounts or login required for MVP — generate and read, no friction — *Validated in Phase 04: input-form*
 
 **Platform**
 - [ ] Web app for MVP (accessible on phone browser for bedside use)
@@ -85,4 +85,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-03-25 — Phase 03 complete: safety validation layer live*
+*Last updated: 2026-03-25 — Phase 04 complete: parent-facing input form live*
