@@ -105,10 +105,21 @@ Plans:
   2. Stories use calming, sleep-inducing language that progressively slows pace toward the ending
   3. Generating multiple stories with the same inputs produces noticeably different narratives (varied structures, openings, and imagery)
   4. Stories incorporate sensory language and descriptive imagery rather than generic narration
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 06-01: TBD
+- [ ] 06-01-PLAN.md — Per-age sensory guidance in reading level descriptions (TDD, D-08)
+- [ ] 06-02-PLAN.md — Rewrite buildSystemPrompt with narrative arc, wind-down, variation, and sensory instructions (TDD, D-01 through D-07, D-09)
+
+### Phase 06.1: 3-minute duration option (INSERTED)
+
+**Goal:** [Urgent work - to be planned]
+**Requirements**: TBD
+**Depends on:** Phase 6
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (run /gsd:plan-phase 06.1 to break down)
 
 ### Phase 7: Nightlight Tales Branding
 **Goal**: All app name references, metadata, and strings consistently use "Nightlight Tales" across package.json, HTML title tags, README, and any hardcoded strings
@@ -131,7 +142,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 | 3. Safety Validation Layer | 0/2 | Not started | - |
 | 4. Input Form | 2/2 | Complete   | 2026-03-25 |
 | 5. Reading Experience | 0/2 | Not started | - |
-| 6. Story Quality Tuning | 0/1 | Not started | - |
+| 6. Story Quality Tuning | 0/2 | Not started | - |
 | 7. Nightlight Tales Branding | 0/0 | Not started | - |
 
 ## Backlog
