@@ -133,3 +133,14 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 | 5. Reading Experience | 0/2 | Not started | - |
 | 6. Story Quality Tuning | 0/1 | Not started | - |
 | 7. Nightlight Tales Branding | 0/0 | Not started | - |
+
+## Backlog
+
+### Phase 999.1: Reading Font Readability Research (BACKLOG)
+
+**Goal:** Research the best font for bedtime story readability. Evaluate alternatives to Noto Serif for the reading view — consider readability in dim-room conditions, on mobile, at 20px+ sizes. Candidates include Georgia, Lora, and system serif options.
+**Requirements:** TBD
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (promote with /gsd:review-backlog when ready)
