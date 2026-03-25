@@ -49,10 +49,12 @@ Exceptions: Touch target minimum 44px height for age stepper buttons, duration b
 | Role | Token | Font | Size | Weight | Line Height | Letter Spacing |
 |------|-------|------|------|--------|-------------|----------------|
 | Display | `display-lg` | Noto Serif | 3.5rem (56px) | 400 (Regular) | 1.2 | -0.02em |
-| Headline | `headline-md` | Noto Serif | 1.75rem (28px) | 500 (Medium) | 1.3 | -0.02em |
+| Headline | `headline-md` | Noto Serif | 1.75rem (28px) | 400 (Regular) | 1.3 | -0.02em |
 | Title | `title-sm` | Noto Serif | 1rem (16px) | 600 (Semi-Bold) | 1.4 | normal |
 | Body | `body-lg` | Noto Serif | 1rem (16px) | 400 (Regular) | 1.6 | normal |
-| Label | `label-md` | Plus Jakarta Sans | 0.75rem (12px) | 700 (Bold) | 1.3 | 0.04em |
+| Label | `label-md` | Plus Jakarta Sans | 0.75rem (12px) | 600 (Semi-Bold) | 1.3 | 0.04em |
+
+**Weight palette:** 400 (Regular) and 600 (Semi-Bold) only. Regular carries display, headline, and body text. Semi-Bold carries titles and labels where emphasis or distinction from body text is needed.
 
 Usage in this phase:
 - **Page title** ("Nightlight Tales"): `headline-md` -- the form page does not need `display-lg`
@@ -87,6 +89,21 @@ Accent reserved for:
 - Input focus glow (2px `primary-container` outer glow)
 - Selected theme tile highlight (tonal shift to `primary-container` at 20% opacity background)
 - Selected duration button fill
+
+---
+
+## Visual Hierarchy and Focal Point
+
+**Primary visual anchor:** Generate Story button -- the gradient accent fill makes it the strongest focal point on the page.
+
+**Visual hierarchy (top to bottom):**
+1. Page title ("Nightlight Tales") -- `headline-md`, largest text on the page, draws the eye first
+2. Theme tile grid -- visual weight from SVG illustrations and 2-column layout creates a dense interactive zone
+3. Name input field -- recessed pill with distinct fill (`surface-container-highest`) stands out from the page background
+4. Generate Story button -- accent gradient, full-width, bottom-anchored as the terminal action
+5. Age stepper and duration toggle -- secondary controls with subtle fills, supporting the main flow
+
+**Reading flow:** Title orients the parent, then fields guide top-to-bottom in natural form order, culminating in the Generate button as the clear call to action.
 
 ---
 
