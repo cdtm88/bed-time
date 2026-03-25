@@ -48,21 +48,20 @@ Exceptions: Touch target minimum 44px for "Back to Home" and any floating contro
 
 | Role | Token | Font | Size | Weight | Line Height | Letter Spacing |
 |------|-------|------|------|--------|-------------|----------------|
-| Story title | `display-lg` | Noto Serif | 2rem (32px) | 400 (Regular) | 1.3 | -0.02em |
+| Story title / Empty state heading | `display-lg` | Noto Serif | 2rem (32px) | 400 (Regular) | 1.3 | -0.02em |
 | Story body | `body-reading` | Noto Serif | 1.25rem (20px) | 400 (Regular) | 1.8 | 0.01em |
-| UI control label | `label-md` | Plus Jakarta Sans | 0.75rem (12px) | 600 (Semi-Bold) | 1.3 | 0.04em |
-| Empty state heading | `headline-md` | Noto Serif | 1.75rem (28px) | 400 (Regular) | 1.3 | -0.02em |
 | Empty state body | `body-lg` | Noto Serif | 1rem (16px) | 400 (Regular) | 1.6 | normal |
+| UI control label | `label-md` | Plus Jakarta Sans | 0.75rem (12px) | 600 (Semi-Bold) | 1.3 | 0.04em |
 
 **Weight palette:** 400 (Regular) and 600 (Semi-Bold) only. Consistent with Phase 4.
 
 **Reading-optimized body text:** Story body uses 20px at 1.8 line-height -- larger than the form's 16px body. This is intentional: parents read aloud from arm's length in dim light. The 1.8 line-height provides generous inter-line spacing that prevents losing your place mid-sentence. The 0.01em letter spacing opens up readability at this size without feeling tracked-out.
 
 Usage in this phase:
-- **Story title** (child's name + theme context): `display-lg` variant at 32px -- smaller than the full 56px display to leave room for the story
+- **Story title** (child's name + theme context): `display-lg` at 32px -- smaller than the full 56px display to leave room for the story
 - **Story paragraphs**: `body-reading` (20px, 1.8 line-height)
 - **"New Story" button text**: `label-md`, uppercase
-- **Empty state heading**: `headline-md`
+- **Empty state heading**: `display-lg` (32px) -- shares token with story title for consistency
 - **Empty state body**: `body-lg`
 
 ---
@@ -116,7 +115,7 @@ Accent reserved for:
 
 ### 2. Story Title Block
 - Position: top of reading container, below 48px top padding
-- Text: `display-lg` variant (32px), `reading-on-surface-muted` (#a89f8f)
+- Text: `display-lg` (32px), `reading-on-surface-muted` (#a89f8f)
 - Content: "{Child's Name}'s {Theme} Adventure" or similar contextual title
 - Margin-bottom: 32px below title before first paragraph
 - No border, no background -- text only, floating on the dark surface
@@ -145,7 +144,7 @@ Accent reserved for:
 - Triggers when: sessionStorage has no `nightlight-story` key
 - Background: `reading-surface` (#1a1a2e) -- consistent with reading mode
 - Layout: centered vertically and horizontally
-- Heading: `headline-md` (28px), `reading-on-surface` (#e8e0d0) -- "No story yet"
+- Heading: `display-lg` (32px), `reading-on-surface` (#e8e0d0) -- "No story yet"
 - Body: `body-lg` (16px), `reading-on-surface-muted` (#a89f8f) -- "Head back to create a bedtime story."
 - Action button: same gold pill as "New Story" -- "CREATE A STORY"
 - Spacing: 8px gap between heading and body, 24px gap between body and button
