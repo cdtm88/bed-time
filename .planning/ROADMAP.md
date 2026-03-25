@@ -77,7 +77,7 @@ Plans:
 **UI hint**: yes
 
 Plans:
-- [ ] 04-01-PLAN.md — Design system tokens, Google Fonts, rate-limit library (TDD), theme-utils, route integration, /story stub
+- [x] 04-01-PLAN.md — Design system tokens, Google Fonts, rate-limit library (TDD), theme-utils, route integration, /story stub
 - [ ] 04-02-PLAN.md — Input form UI components (NameInput, AgeStepper, DurationToggle, ThemeGrid, LoadingOverlay, StoryForm) and page wiring
 
 ### Phase 5: Reading Experience
@@ -118,6 +118,6 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 | 1. Project Scaffolding | 1/1 | Complete   | 2026-03-24 |
 | 2. Core Generation Pipeline | 0/2 | Not started | - |
 | 3. Safety Validation Layer | 0/2 | Not started | - |
-| 4. Input Form | 0/2 | Not started | - |
+| 4. Input Form | 1/2 | In Progress|  |
 | 5. Reading Experience | 0/1 | Not started | - |
 | 6. Story Quality Tuning | 0/1 | Not started | - |
