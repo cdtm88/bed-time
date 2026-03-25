@@ -62,7 +62,7 @@ Plans:
 
 Plans:
 - [x] 03-01-PLAN.md — Safety validation library with TDD: validation parsing, Haiku classification, retry orchestration, prompt builders
-- [ ] 03-02-PLAN.md — Route handler integration: replace streaming with buffered safety-validated response, live verification
+- [x] 03-02-PLAN.md — Route handler integration: replace streaming with buffered safety-validated response, live verification
 
 ### Phase 4: Input Form
 **Goal**: A parent can visit the app, enter their child's details, and trigger story generation with zero friction
