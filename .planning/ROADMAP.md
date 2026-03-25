@@ -89,11 +89,12 @@ Plans:
   1. The story displays in a fullscreen mode with no navigation chrome, no distracting UI elements
   2. Text uses a large serif font with warm/dark background colors, readable in a dim room
   3. The reading view works well on a phone held at bedside (mobile-optimized layout, appropriate line length)
-**Plans**: TBD
+**Plans**: 2 plans
 **UI hint**: yes
 
 Plans:
-- [ ] 05-01: TBD
+- [ ] 05-01-PLAN.md — Test scaffolding, dark reading mode CSS tokens, sessionStorage JSON contract update
+- [ ] 05-02-PLAN.md — ReadingView client component, page.tsx server wrapper with viewport export, visual checkpoint
 
 ### Phase 6: Story Quality Tuning
 **Goal**: Generated stories are genuinely engaging narratives with calming wind-down arcs, not bland AI-generated text
@@ -129,6 +130,6 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 | 2. Core Generation Pipeline | 0/2 | Not started | - |
 | 3. Safety Validation Layer | 0/2 | Not started | - |
 | 4. Input Form | 2/2 | Complete   | 2026-03-25 |
-| 5. Reading Experience | 0/1 | Not started | - |
+| 5. Reading Experience | 0/2 | Not started | - |
 | 6. Story Quality Tuning | 0/1 | Not started | - |
 | 7. Nightlight Tales Branding | 0/0 | Not started | - |
