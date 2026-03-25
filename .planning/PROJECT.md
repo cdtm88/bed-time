@@ -23,9 +23,9 @@ A parent can generate a safe, personalized bedtime story in under a minute and r
 - [ ] Stories use calming, winding-down language appropriate for bedtime
 
 **Safety**
-- [ ] All generated stories are age-appropriate and strictly safe
-- [ ] On any uncertainty, the system silently retries story generation (re-evaluates inputs and tries again)
-- [ ] If a safe story cannot be produced after retries, the app shows a graceful, friendly error message rather than displaying an unsafe story
+- [x] All generated stories are age-appropriate and strictly safe — *Validated in Phase 03: safety-validation-layer*
+- [x] On any uncertainty, the system silently retries story generation (re-evaluates inputs and tries again) — *Validated in Phase 03: safety-validation-layer*
+- [x] If a safe story cannot be produced after retries, the app shows a graceful, friendly error message rather than displaying an unsafe story — *Validated in Phase 03: safety-validation-layer*
 
 **Reading Experience**
 - [ ] Story displayed in a distraction-free, full-screen reading mode
@@ -85,4 +85,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-03-24 — Phase 02 complete: core generation pipeline live*
+*Last updated: 2026-03-25 — Phase 03 complete: safety validation layer live*
