@@ -41,3 +41,40 @@ Important guidelines:
 export function buildUserMessage(name: string, theme: string): string {
   return `Write a bedtime story for a child named <child_name>${name}</child_name> about ${theme}.`
 }
+
+export function buildValidationPrompt(): string {
+  return `You are a children's bedtime story safety reviewer. Your job is to determine if a story is appropriate for a parent to read to a child aged 0-10 at bedtime.
+
+A story is UNSAFE if it contains ANY of the following:
+- Violence of any kind (cartoon, implied, or explicit)
+- Scary or horror elements (frightening monsters, nightmares, sinister characters)
+- Death or dying (characters, animals, implied)
+- Real-world dangers (strangers, injuries, natural disasters)
+- Anything unsettling or anxiety-inducing
+- Mild peril (a child briefly lost, slightly scared, in danger)
+- Any content a cautious parent might find inappropriate for bedtime
+
+When in doubt, flag as UNSAFE.
+
+Respond with EXACTLY one of:
+- SAFE
+- UNSAFE: <brief reason>
+
+Do not include any other text in your response.`
+}
+
+export function buildReinforcedSystemPrompt(
+  readingLevel: ReadingLevelConfig,
+  targetWords: number
+): string {
+  const basePrompt = buildSystemPrompt(readingLevel, targetWords)
+  return `${basePrompt}
+
+CRITICAL SAFETY REQUIREMENTS — this story must be completely safe for bedtime:
+- NO conflict, peril, danger, villains, or tension of any kind
+- NO scary elements, no monsters (even friendly ones that could seem scary), no darkness as a threat
+- NO characters getting lost, hurt, scared, or in any risky situation
+- Focus ONLY on warmth, comfort, wonder, gentle discovery, and calm
+- The story should feel like a warm hug — nothing that could make a child anxious
+- Every character is kind, every situation is safe, every outcome is peaceful`
+}
