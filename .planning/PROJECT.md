@@ -28,8 +28,8 @@ A parent can generate a safe, personalized bedtime story in under a minute and r
 - [x] If a safe story cannot be produced after retries, the app shows a graceful, friendly error message rather than displaying an unsafe story — *Validated in Phase 03: safety-validation-layer*
 
 **Reading Experience**
-- [ ] Story displayed in a distraction-free, full-screen reading mode
-- [ ] Large, high-contrast font optimized for reading aloud in a dim room
+- [x] Story displayed in a distraction-free, full-screen reading mode — *Validated in Phase 05: reading-experience*
+- [x] Large, high-contrast font optimized for reading aloud in a dim room — *Validated in Phase 05: reading-experience*
 - [x] No accounts or login required for MVP — generate and read, no friction — *Validated in Phase 04: input-form*
 
 **Platform**
