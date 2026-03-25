@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Ready to plan
-stopped_at: Completed 04-02-PLAN.md — Phase 04 input-form complete
-last_updated: "2026-03-25T08:53:15.119Z"
+status: Ready to execute
+stopped_at: Completed 05-01-PLAN.md
+last_updated: "2026-03-25T11:05:28.039Z"
 progress:
-  total_phases: 6
+  total_phases: 7
   completed_phases: 4
-  total_plans: 7
-  completed_plans: 7
+  total_plans: 9
+  completed_plans: 8
 ---
 
 # Project State
@@ -19,12 +19,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-23)
 
 **Core value:** A parent can generate a safe, personalized bedtime story in under a minute and read it aloud to their child tonight.
-**Current focus:** Phase 04 — input-form
+**Current focus:** Phase 05 — reading-experience
 
 ## Current Position
 
-Phase: 5
-Plan: Not started
+Phase: 05 (reading-experience) — EXECUTING
+Plan: 2 of 2
 
 ## Performance Metrics
 
@@ -54,6 +54,7 @@ Plan: Not started
 | Phase 03 P02 | 1 | 2 tasks | 1 files |
 | Phase 04-input-form P01 | 2 | 2 tasks | 8 files |
 | Phase 04-input-form P02 | 22 | 3 tasks | 7 files |
+| Phase 05 P01 | 3 | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -82,6 +83,8 @@ Recent decisions affecting current work:
 - [Phase 04-input-form]: All sub-components are controlled (presentational) — state centralized in StoryForm parent
 - [Phase 04-input-form]: window.location.href used for /story navigation to ensure sessionStorage is written before page unloads
 - [Phase 04-input-form]: LoadingOverlay uses inline <style> for @keyframes breathe and twinkle — Tailwind v4 cannot express custom keyframes without config file
+- [Phase 05]: Utility functions (parseStoryData, splitParagraphs, calculateScrollProgress, assembleTitle) defined inline in test file; will be extracted in Plan 02
+- [Phase 05]: jsdom environment applied globally to all vitest tests (no-op for non-browser tests)
 
 ### Pending Todos
 
@@ -94,6 +97,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-25T08:48:01.784Z
-Stopped at: Completed 04-02-PLAN.md — Phase 04 input-form complete
+Last session: 2026-03-25T11:05:28.036Z
+Stopped at: Completed 05-01-PLAN.md
 Resume file: None

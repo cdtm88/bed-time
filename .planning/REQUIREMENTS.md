@@ -24,7 +24,7 @@
 
 ### Reading Experience (READ)
 
-- [ ] **READ-01**: After generation completes, the story is displayed in a fullscreen, distraction-free reading mode with a large serif font, warm/dark background, and no navigation chrome — optimised for a parent reading aloud in a dim bedroom
+- [x] **READ-01**: After generation completes, the story is displayed in a fullscreen, distraction-free reading mode with a large serif font, warm/dark background, and no navigation chrome — optimised for a parent reading aloud in a dim bedroom
 
 ### Infrastructure (INFRA)
 
@@ -81,7 +81,7 @@
 | SAFE-02 | Phase 3 | Complete |
 | SAFE-03 | Phase 3 | Complete |
 | SAFE-04 | Phase 2 | Complete |
-| READ-01 | Phase 5 | Pending |
+| READ-01 | Phase 5 | Complete |
 | INFRA-01 | Phase 4 | Complete |
 | INFRA-02 | Phase 2 | Complete |
 | INFRA-03 | Phase 4 | Complete |

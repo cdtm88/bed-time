@@ -93,7 +93,7 @@ Plans:
 **UI hint**: yes
 
 Plans:
-- [ ] 05-01-PLAN.md — Test scaffolding, dark reading mode CSS tokens, sessionStorage JSON contract update
+- [x] 05-01-PLAN.md — Test scaffolding, dark reading mode CSS tokens, sessionStorage JSON contract update
 - [ ] 05-02-PLAN.md — ReadingView client component, page.tsx server wrapper with viewport export, visual checkpoint
 
 ### Phase 6: Story Quality Tuning
