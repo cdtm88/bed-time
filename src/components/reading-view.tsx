@@ -98,8 +98,8 @@ export function ReadingView() {
         className="fixed top-0 left-0 h-[3px] z-40 transition-opacity duration-300 ease-in-out"
         style={{
           width: `${progress * 100}%`,
-          backgroundColor: 'var(--color-reading-on-surface-muted)',
-          opacity: progress > 0 ? 0.4 : 0,
+          backgroundColor: 'var(--color-secondary-container)',
+          opacity: progress > 0 ? 1 : 0,
         }}
       />
 
@@ -139,18 +139,12 @@ export function ReadingView() {
         </article>
 
         {/* End-of-story section */}
-        <div className="mt-2xl flex flex-col items-center gap-md">
+        <div className="mt-2xl flex justify-center">
           <a
             href="/"
             className="bg-secondary-container text-on-secondary-container font-sans text-[0.75rem] font-semibold uppercase tracking-[0.04em] h-[48px] px-xl rounded-full inline-flex items-center justify-center transition-all duration-300 ease-in-out hover:brightness-110 focus-visible:outline-2 focus-visible:outline-reading-on-surface-muted focus-visible:outline-offset-2"
           >
             NEW STORY
-          </a>
-          <a
-            href="/"
-            className="font-sans text-[0.75rem] text-reading-on-surface-muted hover:text-reading-on-surface transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-reading-on-surface-muted focus-visible:outline-offset-2"
-          >
-            &larr; Home
           </a>
         </div>
       </div>
