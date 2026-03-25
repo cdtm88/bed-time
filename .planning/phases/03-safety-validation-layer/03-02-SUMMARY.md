@@ -45,7 +45,7 @@ completed: 2026-03-25
 - **Duration:** 1 min
 - **Started:** 2026-03-25T03:41:39Z
 - **Completed:** 2026-03-25T03:42:30Z
-- **Tasks:** 1 of 2 (Task 2 is human-verify checkpoint)
+- **Tasks:** 2 of 2
 - **Files modified:** 1
 
 ## Accomplishments
@@ -59,6 +59,10 @@ completed: 2026-03-25
 Each task was committed atomically:
 
 1. **Task 1: Replace streaming with buffered safety-validated response** - `ec7880f` (feat)
+2. **Task 2: Verify safety validation with live API** - checkpoint:human-verify (approved)
+   - Story returned as complete plain text (not streamed)
+   - Input validation confirmed working (400 on invalid theme)
+   - Content appropriate for children's bedtime
 
 ## Files Created/Modified
 - `src/app/api/generate/route.ts` - Rewired to use generateSafeStory, buffered plain text response, D-07 error handling
@@ -82,6 +86,12 @@ None - no external service configuration required.
 ## Known Stubs
 
 None - route handler is fully wired to safety module.
+
+## Self-Check: PASSED
+
+- FOUND: ec7880f (Task 1 commit)
+- FOUND: 03-02-SUMMARY.md
+- Task 2 checkpoint approved by user
 
 ## Next Phase Readiness
 - Safety validation layer complete: every story passes Haiku check before reaching the client
