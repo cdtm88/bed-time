@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: Project Scaffolding** - Next.js project setup with Vercel deployment pipeline (completed 2026-03-24)
 - [ ] **Phase 2: Core Generation Pipeline** - Input validation, age/duration mapping, prompt construction, and Claude API integration testable via curl
 - [ ] **Phase 3: Safety Validation Layer** - Post-generation content filtering with retry logic and graceful failure
-- [ ] **Phase 4: Input Form** - Parent-facing web form with no-login flow and rate limiting
+- [x] **Phase 4: Input Form** - Parent-facing web form with no-login flow and rate limiting (completed 2026-03-25)
 - [ ] **Phase 5: Reading Experience** - Fullscreen dim-room reading mode optimized for parents reading aloud
 - [ ] **Phase 6: Story Quality Tuning** - Narrative arc, calming language, and varied story structures
 
@@ -78,7 +78,7 @@ Plans:
 
 Plans:
 - [x] 04-01-PLAN.md — Design system tokens, Google Fonts, rate-limit library (TDD), theme-utils, route integration, /story stub
-- [ ] 04-02-PLAN.md — Input form UI components (NameInput, AgeStepper, DurationToggle, ThemeGrid, LoadingOverlay, StoryForm) and page wiring
+- [x] 04-02-PLAN.md — Input form UI components (NameInput, AgeStepper, DurationToggle, ThemeGrid, LoadingOverlay, StoryForm) and page wiring
 
 ### Phase 5: Reading Experience
 **Goal**: Parents can read the generated story aloud in a calm, distraction-free environment optimized for dim bedrooms
@@ -118,6 +118,6 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 | 1. Project Scaffolding | 1/1 | Complete   | 2026-03-24 |
 | 2. Core Generation Pipeline | 0/2 | Not started | - |
 | 3. Safety Validation Layer | 0/2 | Not started | - |
-| 4. Input Form | 1/2 | In Progress|  |
+| 4. Input Form | 2/2 | Complete   | 2026-03-25 |
 | 5. Reading Experience | 0/1 | Not started | - |
 | 6. Story Quality Tuning | 0/1 | Not started | - |
