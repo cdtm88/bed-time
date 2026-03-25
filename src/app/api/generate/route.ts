@@ -2,6 +2,7 @@ export const runtime = "edge"
 
 import Anthropic from "@anthropic-ai/sdk"
 import { validateInput, GenerateInput } from "@/lib/schemas"
+import { checkRateLimit } from "@/lib/rate-limit"
 import { getReadingLevel } from "@/lib/age-levels"
 import {
   buildUserMessage,
@@ -13,6 +14,15 @@ import { generateSafeStory, GenerationParams } from "@/lib/safety"
 const client = new Anthropic()
 
 export async function POST(request: Request) {
+  const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || '127.0.0.1'
+  const { allowed } = checkRateLimit(ip)
+  if (!allowed) {
+    return new Response(
+      JSON.stringify({ error: "You've created a few stories recently. Try again in a bit." }),
+      { status: 429, headers: { 'Content-Type': 'application/json' } }
+    )
+  }
+
   let body: unknown
   try {
     body = await request.json()
