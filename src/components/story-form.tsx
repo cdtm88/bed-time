@@ -41,8 +41,11 @@ export function StoryForm() {
         return
       }
       const storyText = await res.text()
-      sessionStorage.setItem('nightlight-story', storyText)
-      sessionStorage.setItem('nightlight-story-name', name.trim())
+      sessionStorage.setItem('nightlight-story', JSON.stringify({
+        story: storyText,
+        name: name.trim(),
+        theme: theme,
+      }))
       window.location.href = '/story'
     } catch {
       setIsLoading(false)

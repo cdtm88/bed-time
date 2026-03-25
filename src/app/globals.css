@@ -18,6 +18,13 @@
   --spacing-xl: 32px;
   --spacing-2xl: 48px;
   --spacing-3xl: 64px;
+
+  /* Reading mode (Phase 5) */
+  --color-reading-surface: #1a1a2e;
+  --color-reading-surface-elevated: #232340;
+  --color-reading-on-surface: #e8e0d0;
+  --color-reading-on-surface-muted: #a89f8f;
+  --color-on-secondary-container: #1b1c17;
 }
 
 @theme inline {
