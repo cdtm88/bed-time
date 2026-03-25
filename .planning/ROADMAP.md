@@ -61,7 +61,7 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 03-01-PLAN.md — Safety validation library with TDD: validation parsing, Haiku classification, retry orchestration, prompt builders
+- [x] 03-01-PLAN.md — Safety validation library with TDD: validation parsing, Haiku classification, retry orchestration, prompt builders
 - [ ] 03-02-PLAN.md — Route handler integration: replace streaming with buffered safety-validated response, live verification
 
 ### Phase 4: Input Form

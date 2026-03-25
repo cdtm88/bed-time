@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Ready to plan
-stopped_at: Completed 02-02-PLAN.md
-last_updated: "2026-03-24T17:50:36.081Z"
+status: Ready to execute
+stopped_at: Completed 03-01-PLAN.md
+last_updated: "2026-03-25T03:40:32.532Z"
 progress:
   total_phases: 6
   completed_phases: 2
-  total_plans: 3
-  completed_plans: 3
+  total_plans: 5
+  completed_plans: 4
 ---
 
 # Project State
@@ -19,12 +19,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-23)
 
 **Core value:** A parent can generate a safe, personalized bedtime story in under a minute and read it aloud to their child tonight.
-**Current focus:** Phase 02 — core-generation-pipeline
+**Current focus:** Phase 03 — safety-validation-layer
 
 ## Current Position
 
-Phase: 3
-Plan: Not started
+Phase: 03 (safety-validation-layer) — EXECUTING
+Plan: 2 of 2
 
 ## Performance Metrics
 
@@ -49,6 +49,7 @@ Plan: Not started
 | Phase 01-project-scaffolding P01 | 30 | 2 tasks | 13 files |
 | Phase 02-core-generation-pipeline P01 | 3 | 2 tasks | 8 files |
 | Phase 02-core-generation-pipeline P02 | 2 | 2 tasks | 3 files |
+| Phase 03 P01 | 2 | 1 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -68,6 +69,8 @@ Recent decisions affecting current work:
 - [Phase 02-core-generation-pipeline]: Name regex /^[a-zA-Z\s]{1,30}$/ per D-06 -- ASCII letters and spaces only
 - [Phase 02-core-generation-pipeline]: Plain text streaming (text/plain) instead of SSE for simpler client consumption
 - [Phase 02-core-generation-pipeline]: Generic 500 error on Claude failures -- never expose API internals to client
+- [Phase 03]: Fail-closed validation parsing: unparseable responses treated as UNSAFE
+- [Phase 03]: Haiku claude-haiku-4-5-20251001 for validation, Sonnet claude-sonnet-4-6 for generation
 
 ### Pending Todos
 
@@ -80,6 +83,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-24T17:40:39.615Z
-Stopped at: Completed 02-02-PLAN.md
+Last session: 2026-03-25T03:40:32.529Z
+Stopped at: Completed 03-01-PLAN.md
 Resume file: None

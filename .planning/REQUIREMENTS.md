@@ -17,9 +17,9 @@
 
 ### Safety (SAFE)
 
-- [ ] **SAFE-01**: Every generated story passes multi-layer content filtering: prompt-level safety constraints baked into the system prompt, plus a separate post-generation validation call using a lightweight model to classify the story as safe or unsafe before display
-- [ ] **SAFE-02**: If the post-generation validation flags a story as uncertain or unsafe, the app silently retries story generation with a modified prompt that reinforces safety constraints (up to 2 retries)
-- [ ] **SAFE-03**: If a safe story cannot be produced after all retries, the app displays a graceful, friendly error message — the unsafe story is never shown to the parent
+- [x] **SAFE-01**: Every generated story passes multi-layer content filtering: prompt-level safety constraints baked into the system prompt, plus a separate post-generation validation call using a lightweight model to classify the story as safe or unsafe before display
+- [x] **SAFE-02**: If the post-generation validation flags a story as uncertain or unsafe, the app silently retries story generation with a modified prompt that reinforces safety constraints (up to 2 retries)
+- [x] **SAFE-03**: If a safe story cannot be produced after all retries, the app displays a graceful, friendly error message — the unsafe story is never shown to the parent
 - [x] **SAFE-04**: The child's name input is strictly validated (letters and spaces only, max 30 characters) and XML-delimited within the prompt to prevent prompt injection attacks
 
 ### Reading Experience (READ)
@@ -77,9 +77,9 @@
 | STORY-05 | Phase 6 | Pending |
 | STORY-06 | Phase 6 | Pending |
 | STORY-07 | Phase 6 | Pending |
-| SAFE-01 | Phase 3 | Pending |
-| SAFE-02 | Phase 3 | Pending |
-| SAFE-03 | Phase 3 | Pending |
+| SAFE-01 | Phase 3 | Complete |
+| SAFE-02 | Phase 3 | Complete |
+| SAFE-03 | Phase 3 | Complete |
 | SAFE-04 | Phase 2 | Complete |
 | READ-01 | Phase 5 | Pending |
 | INFRA-01 | Phase 4 | Pending |
