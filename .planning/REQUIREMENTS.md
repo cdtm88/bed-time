@@ -10,7 +10,7 @@
 - [x] **STORY-01**: Parent can enter a child's name (letters only, max 30 characters)
 - [x] **STORY-02**: Parent can enter a child's exact age; app maps age to reading level band internally (0–3 toddler, 4–6 young child, 7–10 older child) to calibrate vocabulary and sentence complexity
 - [x] **STORY-03**: Parent can select a theme from a preset curated list of 15–20 options (e.g. dinosaurs, space, ocean, fairy tales, animals, etc.)
-- [x] **STORY-04**: Parent can select a reading duration (5, 10, or 15 minutes); app maps selection to a target word count
+- [x] **STORY-04**: Parent can select a reading duration (3, 5, 10, or 15 minutes); app maps selection to a target word count (extended in Phase 06.1 to include 3-minute/450-word compact option)
 - [x] **STORY-05**: Generated story follows a complete narrative arc with a beginning, conflict, and resolution
 - [x] **STORY-06**: Generated story uses calming, wind-down language designed to ease children toward sleep
 - [x] **STORY-07**: Generated stories use varied narrative structures (not the same template each time), incorporate sensory language and descriptive imagery, and integrate the child's name naturally throughout
@@ -25,6 +25,10 @@
 ### Reading Experience (READ)
 
 - [x] **READ-01**: After generation completes, the story is displayed in a fullscreen, distraction-free reading mode with a large serif font, warm/dark background, and no navigation chrome — optimised for a parent reading aloud in a dim bedroom
+
+### Duration Options (DUR)
+
+- [x] **DUR-01**: App supports a 3-minute reading duration (450-word compact arc with simplified narrative structure) as the shortest option alongside 5, 10, and 15 minutes
 
 ### Infrastructure (INFRA)
 
@@ -86,10 +90,11 @@
 | INFRA-02 | Phase 2 | Complete |
 | INFRA-03 | Phase 4 | Complete |
 | INFRA-04 | Phase 1 | Complete |
+| DUR-01 | Phase 06.1 | Complete |
 
 **Coverage:**
-- v1 requirements: 16 total
-- Mapped to phases: 16/16
+- v1 requirements: 17 total
+- Mapped to phases: 17/17
 - Unmapped: 0
 
 ---
