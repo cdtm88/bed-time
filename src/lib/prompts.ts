@@ -1,6 +1,7 @@
 import { ReadingLevelConfig } from "@/lib/age-levels"
 
 const DURATION_CONFIG = {
+  3: { words: 450, maxTokens: 900 },
   5: { words: 750, maxTokens: 1500 },
   10: { words: 1500, maxTokens: 3000 },
   15: { words: 2250, maxTokens: 4096 },

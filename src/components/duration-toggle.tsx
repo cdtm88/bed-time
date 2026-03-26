@@ -1,6 +1,6 @@
 'use client'
 
-const DURATIONS = [5, 10, 15] as const
+const DURATIONS = [3, 5, 10, 15] as const
 
 interface DurationToggleProps {
   value: number

@@ -19,7 +19,7 @@ export const VALID_THEMES = [
   "Holidays & Seasons",
 ] as const
 
-export const VALID_DURATIONS = [5, 10, 15] as const
+export const VALID_DURATIONS = [3, 5, 10, 15] as const
 
 export interface GenerateInput {
   name: string
@@ -67,7 +67,7 @@ export function validateInput(input: unknown): string | null {
     typeof duration !== "number" ||
     !(VALID_DURATIONS as readonly number[]).includes(duration)
   ) {
-    return "Invalid duration: must be 5, 10, or 15"
+    return "Invalid duration: must be 3, 5, 10, or 15"
   }
 
   return null
