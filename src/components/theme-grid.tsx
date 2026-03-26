@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import Image from 'next/image'
 import { VALID_THEMES } from '@/lib/schemas'
 import { themeToFilename } from '@/lib/theme-utils'
@@ -10,6 +11,8 @@ interface ThemeGridProps {
 }
 
 export function ThemeGrid({ value, onChange }: ThemeGridProps) {
+  const [failedImages, setFailedImages] = useState<Set<string>>(new Set())
+
   return (
     <div className="flex flex-col gap-xs">
       <span className="font-sans text-[0.75rem] font-semibold uppercase tracking-[0.04em] text-on-surface">
@@ -30,14 +33,21 @@ export function ThemeGrid({ value, onChange }: ThemeGridProps) {
                 : '',
             ].join(' ')}
           >
-            <Image
-              src={'/themes/' + themeToFilename(theme) + '.svg'}
-              width={200}
-              height={200}
-              alt={theme}
-              className="w-full aspect-square rounded-3xl"
-              unoptimized
-            />
+            {failedImages.has(theme) ? (
+              <div className="w-full aspect-square rounded-3xl bg-surface-container-low flex items-center justify-center">
+                <div className="w-16 h-16 rounded-full bg-surface-container-highest" />
+              </div>
+            ) : (
+              <Image
+                src={'/themes/' + themeToFilename(theme) + '.svg'}
+                width={200}
+                height={200}
+                alt={theme}
+                className="w-full aspect-square rounded-3xl"
+                unoptimized
+                onError={() => setFailedImages(prev => new Set(prev).add(theme))}
+              />
+            )}
             <span className="mt-sm font-serif text-[1rem] font-semibold text-on-surface">
               {theme}
             </span>
