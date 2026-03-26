@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <rect width="200" height="200" rx="24" fill="#fbf9f1"/>
+  <!-- Pirate hat brim -->
+  <ellipse cx="100" cy="78" rx="50" ry="12" fill="#1b1c17"/>
+  <!-- Pirate hat top -->
+  <path d="M55 78 C55 40 145 40 145 78 Z" fill="#1b1c17"/>
+  <!-- Skull on hat -->
+  <circle cx="100" cy="60" r="12" fill="#fbf9f1"/>
+  <circle cx="96" cy="57" r="3" fill="#1b1c17"/>
+  <circle cx="104" cy="57" r="3" fill="#1b1c17"/>
+  <path d="M95 66 L105 66" stroke="#1b1c17" stroke-width="2" stroke-linecap="round"/>
+  <!-- Crossbones -->
+  <line x1="88" y1="72" x2="112" y2="72" stroke="#fbf9f1" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Treasure chest body -->
+  <rect x="40" y="135" width="70" height="45" rx="6" fill="#705d00"/>
+  <!-- Chest lid -->
+  <rect x="40" y="128" width="70" height="16" rx="6" fill="#1b1c17"/>
+  <!-- Chest lock -->
+  <circle cx="75" cy="162" r="7" fill="#fbf9f1" stroke="#1b1c17" stroke-width="2"/>
+  <!-- Chest straps -->
+  <line x1="40" y1="155" x2="110" y2="155" stroke="#1b1c17" stroke-width="3" stroke-linecap="round"/>
+  <!-- Anchor -->
+  <circle cx="155" cy="100" r="12" stroke="#0c6681" stroke-width="4" fill="none"/>
+  <line x1="155" y1="88" x2="155" y2="60" stroke="#0c6681" stroke-width="4" stroke-linecap="round"/>
+  <line x1="140" y1="65" x2="170" y2="65" stroke="#0c6681" stroke-width="4" stroke-linecap="round"/>
+  <path d="M143 112 C143 128 167 128 167 112" stroke="#0c6681" stroke-width="4" stroke-linecap="round" fill="none"/>
+</svg>

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <rect width="200" height="200" rx="24" fill="#fbf9f1"/>
+  <!-- Large tropical leaf -->
+  <path d="M40 180 C40 100 120 60 160 40 C100 80 80 140 80 180 Z" fill="#0c6681"/>
+  <path d="M40 180 C60 140 100 110 160 40 C120 100 80 140 40 180 Z" fill="#1b1c17"/>
+  <!-- Vine -->
+  <path d="M160 25 C150 60 165 90 150 120 C135 150 155 170 145 195" stroke="#1b1c17" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <!-- Leaves on vine -->
+  <ellipse cx="155" cy="70" rx="14" ry="8" fill="#0c6681" transform="rotate(30 155 70)"/>
+  <ellipse cx="145" cy="120" rx="14" ry="8" fill="#0c6681" transform="rotate(-20 145 120)"/>
+  <!-- Toucan body -->
+  <ellipse cx="140" cy="85" rx="20" ry="16" fill="#1b1c17"/>
+  <!-- Toucan head -->
+  <circle cx="152" cy="70" r="13" fill="#1b1c17"/>
+  <!-- Toucan beak (large) -->
+  <path d="M162 68 C185 62 188 78 162 76 Z" fill="#705d00"/>
+  <!-- Toucan eye -->
+  <circle cx="155" cy="66" r="4" fill="#fbf9f1"/>
+  <circle cx="155" cy="66" r="2" fill="#1b1c17"/>
+  <!-- Toucan chest patch -->
+  <ellipse cx="135" cy="85" rx="10" ry="8" fill="#fbf9f1"/>
+  <!-- Second leaf -->
+  <ellipse cx="55" cy="120" rx="20" ry="12" fill="#705d00" transform="rotate(50 55 120)"/>
+</svg>

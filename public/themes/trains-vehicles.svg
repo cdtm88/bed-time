@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <rect width="200" height="200" rx="24" fill="#fbf9f1"/>
+  <!-- Train body -->
+  <rect x="30" y="105" width="130" height="60" rx="10" fill="#0c6681"/>
+  <!-- Train cab (front) -->
+  <rect x="130" y="85" width="38" height="48" rx="8" fill="#1b1c17"/>
+  <!-- Cab window -->
+  <rect x="136" y="92" width="24" height="20" rx="5" fill="#705d00"/>
+  <!-- Train windows -->
+  <rect x="48" y="115" width="24" height="18" rx="4" fill="#fbf9f1"/>
+  <rect x="84" y="115" width="24" height="18" rx="4" fill="#fbf9f1"/>
+  <!-- Wheels -->
+  <circle cx="60" cy="170" r="16" fill="#1b1c17"/>
+  <circle cx="60" cy="170" r="8" fill="#705d00"/>
+  <circle cx="110" cy="170" r="16" fill="#1b1c17"/>
+  <circle cx="110" cy="170" r="8" fill="#705d00"/>
+  <circle cx="155" cy="170" r="16" fill="#1b1c17"/>
+  <circle cx="155" cy="170" r="8" fill="#705d00"/>
+  <!-- Smoke stack -->
+  <rect x="50" y="80" width="16" height="28" rx="6" fill="#1b1c17"/>
+  <!-- Smoke puffs -->
+  <circle cx="52" cy="68" r="10" fill="#1b1c17"/>
+  <circle cx="62" cy="60" r="9" fill="#1b1c17"/>
+  <circle cx="72" cy="54" r="7" fill="#1b1c17"/>
+  <!-- Rail track -->
+  <line x1="20" y1="186" x2="180" y2="186" stroke="#705d00" stroke-width="3" stroke-linecap="round"/>
+</svg>

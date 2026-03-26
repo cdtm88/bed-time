@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <rect width="200" height="200" rx="24" fill="#fbf9f1"/>
+  <!-- Cape -->
+  <path d="M100 70 C130 70 165 130 150 175 L100 155 L50 175 C35 130 70 70 100 70 Z" fill="#0c6681"/>
+  <!-- Hero torso -->
+  <ellipse cx="100" cy="100" rx="24" ry="28" fill="#1b1c17"/>
+  <!-- Hero emblem star -->
+  <polygon points="100,88 103,98 113,98 105,104 108,114 100,108 92,114 95,104 87,98 97,98" fill="#705d00"/>
+  <!-- Mask -->
+  <path d="M72 72 C72 58 88 52 100 56 C112 52 128 58 128 72 C120 68 112 72 100 72 C88 72 80 68 72 72 Z" fill="#1b1c17"/>
+  <!-- Mask eye holes -->
+  <ellipse cx="86" cy="66" rx="7" ry="5" fill="#fbf9f1"/>
+  <ellipse cx="114" cy="66" rx="7" ry="5" fill="#fbf9f1"/>
+  <!-- Star burst -->
+  <circle cx="160" cy="50" r="16" fill="#705d00"/>
+  <polygon points="160,30 163,42 175,42 165,50 169,62 160,54 151,62 155,50 145,42 157,42" fill="#fbf9f1"/>
+</svg>

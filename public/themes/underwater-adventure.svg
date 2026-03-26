@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <rect width="200" height="200" rx="24" fill="#0c6681"/>
+  <!-- Submarine body -->
+  <ellipse cx="95" cy="105" rx="60" ry="28" fill="#705d00"/>
+  <!-- Submarine tower -->
+  <rect x="80" y="70" width="30" height="30" rx="6" fill="#705d00"/>
+  <!-- Submarine periscope -->
+  <line x1="100" y1="70" x2="100" y2="48" stroke="#1b1c17" stroke-width="4" stroke-linecap="round"/>
+  <line x1="100" y1="48" x2="120" y2="48" stroke="#1b1c17" stroke-width="4" stroke-linecap="round"/>
+  <!-- Porthole windows -->
+  <circle cx="70" cy="105" r="12" fill="#0c6681" stroke="#1b1c17" stroke-width="3"/>
+  <circle cx="105" cy="105" r="12" fill="#0c6681" stroke="#1b1c17" stroke-width="3"/>
+  <circle cx="140" cy="105" r="10" fill="#0c6681" stroke="#1b1c17" stroke-width="3"/>
+  <!-- Propeller -->
+  <circle cx="35" cy="105" r="6" fill="#1b1c17"/>
+  <ellipse cx="35" cy="92" rx="5" ry="10" fill="#1b1c17"/>
+  <ellipse cx="35" cy="118" rx="5" ry="10" fill="#1b1c17"/>
+  <!-- Bubbles -->
+  <circle cx="120" cy="52" r="7" stroke="#fbf9f1" stroke-width="2" fill="none"/>
+  <circle cx="135" cy="38" r="5" stroke="#fbf9f1" stroke-width="2" fill="none"/>
+  <circle cx="148" cy="28" r="4" stroke="#fbf9f1" stroke-width="2" fill="none"/>
+  <!-- Seaweed -->
+  <path d="M168 200 C160 185 172 170 165 155 C158 140 168 125 162 110" stroke="#1b1c17" stroke-width="4" stroke-linecap="round" fill="none"/>
+  <path d="M180 200 C188 182 175 168 183 152" stroke="#1b1c17" stroke-width="4" stroke-linecap="round" fill="none"/>
+</svg>

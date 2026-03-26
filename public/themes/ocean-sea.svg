@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <rect width="200" height="200" rx="24" fill="#fbf9f1"/>
+  <!-- Ocean background -->
+  <rect x="0" y="110" width="200" height="90" rx="0" fill="#0c6681"/>
+  <!-- Wave -->
+  <path d="M0 115 C30 100 50 130 80 115 C110 100 130 130 160 115 C190 100 210 120 220 115" stroke="#fbf9f1" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <!-- Fish body -->
+  <ellipse cx="120" cy="150" rx="22" ry="13" fill="#705d00"/>
+  <!-- Fish tail -->
+  <polygon points="98,150 85,140 85,160" fill="#705d00"/>
+  <!-- Fish eye -->
+  <circle cx="133" cy="146" r="4" fill="#fbf9f1"/>
+  <circle cx="134" cy="146" r="2" fill="#1b1c17"/>
+  <!-- Shell -->
+  <ellipse cx="60" cy="160" rx="18" ry="14" fill="#fbf9f1" stroke="#705d00" stroke-width="2"/>
+  <path d="M60 146 C60 174" stroke="#705d00" stroke-width="2" stroke-linecap="round"/>
+  <path d="M50 150 C70 170" stroke="#705d00" stroke-width="2" stroke-linecap="round"/>
+  <path d="M70 150 C50 170" stroke="#705d00" stroke-width="2" stroke-linecap="round"/>
+  <!-- Sun -->
+  <circle cx="160" cy="55" r="22" fill="#705d00"/>
+  <!-- Waves on top -->
+  <path d="M10 108 C35 95 55 120 90 108" stroke="#0c6681" stroke-width="3" stroke-linecap="round" fill="none"/>
+</svg>

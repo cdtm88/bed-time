@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <rect width="200" height="200" rx="24" fill="#fbf9f1"/>
+  <!-- Snowflake (top left) - winter -->
+  <line x1="55" y1="35" x2="55" y2="85" stroke="#0c6681" stroke-width="3" stroke-linecap="round"/>
+  <line x1="30" y1="60" x2="80" y2="60" stroke="#0c6681" stroke-width="3" stroke-linecap="round"/>
+  <line x1="37" y1="42" x2="73" y2="78" stroke="#0c6681" stroke-width="3" stroke-linecap="round"/>
+  <line x1="73" y1="42" x2="37" y2="78" stroke="#0c6681" stroke-width="3" stroke-linecap="round"/>
+  <!-- Snowflake center -->
+  <circle cx="55" cy="60" r="6" fill="#0c6681"/>
+  <!-- Sun (top right) - summer -->
+  <circle cx="150" cy="58" r="22" fill="#705d00"/>
+  <line x1="150" y1="28" x2="150" y2="18" stroke="#705d00" stroke-width="3" stroke-linecap="round"/>
+  <line x1="150" y1="88" x2="150" y2="98" stroke="#705d00" stroke-width="3" stroke-linecap="round"/>
+  <line x1="120" y1="58" x2="110" y2="58" stroke="#705d00" stroke-width="3" stroke-linecap="round"/>
+  <line x1="180" y1="58" x2="190" y2="58" stroke="#705d00" stroke-width="3" stroke-linecap="round"/>
+  <line x1="129" y1="37" x2="122" y2="30" stroke="#705d00" stroke-width="3" stroke-linecap="round"/>
+  <line x1="171" y1="79" x2="178" y2="86" stroke="#705d00" stroke-width="3" stroke-linecap="round"/>
+  <line x1="171" y1="37" x2="178" y2="30" stroke="#705d00" stroke-width="3" stroke-linecap="round"/>
+  <line x1="129" y1="79" x2="122" y2="86" stroke="#705d00" stroke-width="3" stroke-linecap="round"/>
+  <!-- Autumn leaf (bottom center) - fall -->
+  <path d="M100 195 C80 160 85 130 100 110 C115 130 120 160 100 195 Z" fill="#705d00"/>
+  <path d="M100 195 C75 165 70 135 85 115" stroke="#1b1c17" stroke-width="2" stroke-linecap="round" fill="none"/>
+  <path d="M100 195 C125 165 130 135 115 115" stroke="#1b1c17" stroke-width="2" stroke-linecap="round" fill="none"/>
+  <!-- Leaf center vein -->
+  <line x1="100" y1="110" x2="100" y2="195" stroke="#1b1c17" stroke-width="2" stroke-linecap="round"/>
+  <!-- Spring flower (bottom left) - spring -->
+  <circle cx="48" cy="160" r="14" fill="#0c6681"/>
+  <ellipse cx="48" cy="140" rx="8" ry="13" fill="#fbf9f1" stroke="#0c6681" stroke-width="2"/>
+  <ellipse cx="48" cy="180" rx="8" ry="13" fill="#fbf9f1" stroke="#0c6681" stroke-width="2"/>
+  <ellipse cx="28" cy="160" rx="13" ry="8" fill="#fbf9f1" stroke="#0c6681" stroke-width="2"/>
+  <ellipse cx="68" cy="160" rx="13" ry="8" fill="#fbf9f1" stroke="#0c6681" stroke-width="2"/>
+</svg>
