@@ -17,6 +17,11 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   title: "Nightlight Tales",
   description: "Personalized bedtime stories for children",
+  openGraph: {
+    title: "Nightlight Tales",
+    description: "Personalized bedtime stories for children",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
