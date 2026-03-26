@@ -53,3 +53,20 @@ describe('getReadingLevel', () => {
     expect(typeof result.description).toBe('string')
   })
 })
+
+describe('getReadingLevel sensory guidance (D-08)', () => {
+  it('toddler includes tactile and sound sensory words', () => {
+    const result = getReadingLevel(2)
+    expect(result.description).toMatch(/soft|warm|fluffy|splash|hum/i)
+  })
+
+  it('young child includes multi-sense descriptions', () => {
+    const result = getReadingLevel(5)
+    expect(result.description).toMatch(/smell|feel|glow|rain|grass|moonlight/i)
+  })
+
+  it('older child includes rich multi-sense imagery', () => {
+    const result = getReadingLevel(8)
+    expect(result.description).toMatch(/sight|sound|smell|touch|vivid/i)
+  })
+})
