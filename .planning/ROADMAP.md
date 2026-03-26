@@ -108,7 +108,7 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 06-01-PLAN.md — Per-age sensory guidance in reading level descriptions (TDD, D-08)
+- [x] 06-01-PLAN.md — Per-age sensory guidance in reading level descriptions (TDD, D-08)
 - [ ] 06-02-PLAN.md — Rewrite buildSystemPrompt with narrative arc, wind-down, variation, and sensory instructions (TDD, D-01 through D-07, D-09)
 
 ### Phase 06.1: 3-minute duration option (INSERTED)
@@ -116,7 +116,7 @@ Plans:
 **Goal:** [Urgent work - to be planned]
 **Requirements**: TBD
 **Depends on:** Phase 6
-**Plans:** 0 plans
+**Plans:** 1/2 plans executed
 
 Plans:
 - [ ] TBD (run /gsd:plan-phase 06.1 to break down)

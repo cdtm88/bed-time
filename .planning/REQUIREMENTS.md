@@ -13,7 +13,7 @@
 - [x] **STORY-04**: Parent can select a reading duration (5, 10, or 15 minutes); app maps selection to a target word count
 - [ ] **STORY-05**: Generated story follows a complete narrative arc with a beginning, conflict, and resolution
 - [ ] **STORY-06**: Generated story uses calming, wind-down language designed to ease children toward sleep
-- [ ] **STORY-07**: Generated stories use varied narrative structures (not the same template each time), incorporate sensory language and descriptive imagery, and integrate the child's name naturally throughout
+- [x] **STORY-07**: Generated stories use varied narrative structures (not the same template each time), incorporate sensory language and descriptive imagery, and integrate the child's name naturally throughout
 
 ### Safety (SAFE)
 
@@ -76,7 +76,7 @@
 | STORY-04 | Phase 2 | Complete |
 | STORY-05 | Phase 6 | Pending |
 | STORY-06 | Phase 6 | Pending |
-| STORY-07 | Phase 6 | Pending |
+| STORY-07 | Phase 6 | Complete |
 | SAFE-01 | Phase 3 | Complete |
 | SAFE-02 | Phase 3 | Complete |
 | SAFE-03 | Phase 3 | Complete |
