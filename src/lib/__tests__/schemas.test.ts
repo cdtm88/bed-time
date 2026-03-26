@@ -22,8 +22,8 @@ describe('VALID_THEMES', () => {
 })
 
 describe('VALID_DURATIONS', () => {
-  it('is [5, 10, 15]', () => {
-    expect(VALID_DURATIONS).toEqual([5, 10, 15])
+  it('is [3, 5, 10, 15]', () => {
+    expect(VALID_DURATIONS).toEqual([3, 5, 10, 15])
   })
 })
 
@@ -90,9 +90,18 @@ describe('validateInput', () => {
     expect(result).toContain('theme')
   })
 
+  it('accepts duration 3', () => {
+    expect(validateInput({ name: 'Lily', age: 5, theme: 'Dragons', duration: 3 })).toBeNull()
+  })
+
   it('rejects invalid duration', () => {
     const result = validateInput({ name: 'Lily', age: 5, theme: 'Dragons', duration: 7 })
     expect(result).toContain('duration')
+  })
+
+  it('has error message listing all valid durations', () => {
+    const result = validateInput({ name: 'Lily', age: 5, theme: 'Dragons', duration: 7 })
+    expect(result).toContain('3, 5, 10, or 15')
   })
 
   it('accepts age 0 (boundary)', () => {

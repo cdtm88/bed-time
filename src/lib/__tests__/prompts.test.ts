@@ -14,6 +14,10 @@ describe('getWordCount', () => {
   it('returns 2250 for 15 minutes', () => {
     expect(getWordCount(15)).toBe(2250)
   })
+
+  it('returns 450 for 3 minutes', () => {
+    expect(getWordCount(3)).toBe(450)
+  })
 })
 
 describe('getMaxTokens', () => {
@@ -27,6 +31,10 @@ describe('getMaxTokens', () => {
 
   it('returns 4096 for 15 minutes', () => {
     expect(getMaxTokens(15)).toBe(4096)
+  })
+
+  it('returns 900 for 3 minutes', () => {
+    expect(getMaxTokens(3)).toBe(900)
   })
 })
 
