@@ -149,7 +149,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 | 6. Story Quality Tuning | 0/2 | Not started | - |
 | 06.1 3-minute duration | 1/1 | Complete    | 2026-03-26 |
 | 7. Nightlight Tales Branding | 1/1 | Complete   | 2026-03-26 |
-| 8. Theme SVG Assets | 0/TBD | Not started | - |
+| 8. Theme SVG Assets | 0/2 | Not started | - |
 | 9. Production Hardening | 0/TBD | Not started | - |
 | 10. Nyquist Compliance | 0/TBD | Not started | - |
 | 11. UI Polish and Tidy Up | 0/TBD | Not started | - |
@@ -159,10 +159,11 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 **Depends on**: Phase 7
 **Requirements**: STORY-03
 **Gap Closure**: Closes HIGH integration gap from v1.0 audit — 17/18 SVG files missing from `public/themes/`
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] TBD
+- [ ] 08-01-PLAN.md — SVG validation tests + create all 17 missing theme tile SVG illustrations
+- [ ] 08-02-PLAN.md — onError fallback in theme-grid.tsx + visual verification checkpoint
 
 ### Phase 9: Production Hardening
 **Goal**: Rate limiting is enforced in production on Vercel Edge Runtime; Haiku model ID is verified correct; duration type casts removed
