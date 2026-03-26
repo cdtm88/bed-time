@@ -10,7 +10,7 @@ export interface GenerationParams {
   name: string
   age: number
   theme: string
-  duration: 5 | 10 | 15
+  duration: 3 | 5 | 10 | 15
   readingLevel: ReadingLevelConfig
   targetWords: number
   maxTokens: number

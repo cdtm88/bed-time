@@ -43,16 +43,16 @@ export async function POST(request: Request) {
 
   const { name, age, theme, duration } = body as GenerateInput
   const readingLevel = getReadingLevel(age)
-  const targetWords = getWordCount(duration as 5 | 10 | 15)
+  const targetWords = getWordCount(duration as 3 | 5 | 10 | 15)
   const userMessage = buildUserMessage(name, theme)
-  const maxTokens = getMaxTokens(duration as 5 | 10 | 15)
+  const maxTokens = getMaxTokens(duration as 3 | 5 | 10 | 15)
 
   try {
     const params: GenerationParams = {
       name,
       age,
       theme,
-      duration: duration as 5 | 10 | 15,
+      duration: duration as 3 | 5 | 10 | 15,
       readingLevel,
       targetWords,
       maxTokens,

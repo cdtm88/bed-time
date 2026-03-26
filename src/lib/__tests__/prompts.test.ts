@@ -168,7 +168,7 @@ describe('buildSystemPrompt compact arc (Phase 06.1)', () => {
   })
 
   it('uses compact arc ending (1-2 paragraphs) for short stories (D-04)', () => {
-    expect(shortPrompt).toMatch(/1-2 paragraphs.*wind/is)
+    expect(shortPrompt).toMatch(/1-2 paragraphs[\s\S]*wind/i)
   })
 
   it('preserves standard arc (2-3 paragraphs beginning) for targetWords >= 500 (D-06)', () => {
