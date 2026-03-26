@@ -11,8 +11,8 @@
 - [x] **STORY-02**: Parent can enter a child's exact age; app maps age to reading level band internally (0–3 toddler, 4–6 young child, 7–10 older child) to calibrate vocabulary and sentence complexity
 - [x] **STORY-03**: Parent can select a theme from a preset curated list of 15–20 options (e.g. dinosaurs, space, ocean, fairy tales, animals, etc.)
 - [x] **STORY-04**: Parent can select a reading duration (5, 10, or 15 minutes); app maps selection to a target word count
-- [ ] **STORY-05**: Generated story follows a complete narrative arc with a beginning, conflict, and resolution
-- [ ] **STORY-06**: Generated story uses calming, wind-down language designed to ease children toward sleep
+- [x] **STORY-05**: Generated story follows a complete narrative arc with a beginning, conflict, and resolution
+- [x] **STORY-06**: Generated story uses calming, wind-down language designed to ease children toward sleep
 - [x] **STORY-07**: Generated stories use varied narrative structures (not the same template each time), incorporate sensory language and descriptive imagery, and integrate the child's name naturally throughout
 
 ### Safety (SAFE)
@@ -74,8 +74,8 @@
 | STORY-02 | Phase 2 | Complete |
 | STORY-03 | Phase 2 | Complete |
 | STORY-04 | Phase 2 | Complete |
-| STORY-05 | Phase 6 | Pending |
-| STORY-06 | Phase 6 | Pending |
+| STORY-05 | Phase 6 | Complete |
+| STORY-06 | Phase 6 | Complete |
 | STORY-07 | Phase 6 | Complete |
 | SAFE-01 | Phase 3 | Complete |
 | SAFE-02 | Phase 3 | Complete |
