@@ -116,10 +116,10 @@ Plans:
 **Goal:** Add a 3-minute reading duration option with 450-word target, compact narrative arc, and UI toggle update
 **Requirements**: DUR-01
 **Depends on:** Phase 6
-**Plans:** 1 plan
+**Plans:** 1/1 plans complete
 
 Plans:
-- [ ] 06.1-01-PLAN.md — Duration 3 config, validation, UI toggle, and compact narrative arc for short stories (TDD)
+- [x] 06.1-01-PLAN.md — Duration 3 config, validation, UI toggle, and compact narrative arc for short stories (TDD)
 
 ### Phase 7: Nightlight Tales Branding
 **Goal**: All app name references, metadata, and strings consistently use "Nightlight Tales" across package.json, HTML title tags, README, and any hardcoded strings
@@ -143,7 +143,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 | 4. Input Form | 2/2 | Complete   | 2026-03-25 |
 | 5. Reading Experience | 0/2 | Not started | - |
 | 6. Story Quality Tuning | 0/2 | Not started | - |
-| 06.1 3-minute duration | 0/1 | Not started | - |
+| 06.1 3-minute duration | 1/1 | Complete   | 2026-03-26 |
 | 7. Nightlight Tales Branding | 0/0 | Not started | - |
 
 ## Backlog

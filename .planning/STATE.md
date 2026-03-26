@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Ready to plan
-stopped_at: Completed 06-02-PLAN.md
-last_updated: "2026-03-26T03:35:50.253Z"
+status: Phase complete — ready for verification
+stopped_at: Completed 06.1-01-PLAN.md
+last_updated: "2026-03-26T05:05:05.155Z"
 progress:
   total_phases: 9
-  completed_phases: 6
-  total_plans: 11
-  completed_plans: 11
+  completed_phases: 7
+  total_plans: 12
+  completed_plans: 12
 ---
 
 # Project State
@@ -19,12 +19,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-23)
 
 **Core value:** A parent can generate a safe, personalized bedtime story in under a minute and read it aloud to their child tonight.
-**Current focus:** Phase 06 — story-quality-tuning
+**Current focus:** Phase 06.1 — 3-minute-duration-option
 
 ## Current Position
 
-Phase: 06.1
-Plan: Not started
+Phase: 06.1 (3-minute-duration-option) — EXECUTING
+Plan: 1 of 1
 
 ## Performance Metrics
 
@@ -58,6 +58,7 @@ Plan: Not started
 | Phase 05 P02 | 3 | 2 tasks | 2 files |
 | Phase 06 P01 | 1 | 2 tasks | 2 files |
 | Phase 06 P02 | 2 | 2 tasks | 2 files |
+| Phase 06.1 P01 | 2 | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -95,6 +96,7 @@ Recent decisions affecting current work:
 - [Phase 05]: Gold accent scroll progress bar and single CTA at end of story (per visual checkpoint feedback)
 - [Phase 06]: D-08: Per-age sensory guidance in ReadingLevelConfig descriptions, not global prompt
 - [Phase 06]: Prompt organized into labeled sections (Story structure, Opening variety, Voice and craft) for readability
+- [Phase 06.1]: 3-minute stories target 450 words / 900 tokens; compact arc (1-2/2/1-2 paragraphs) for targetWords < 500; ending wind-down identical in both paths
 
 ### Pending Todos
 
@@ -107,6 +109,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-26T03:32:10.485Z
-Stopped at: Completed 06-02-PLAN.md
+Last session: 2026-03-26T05:05:05.152Z
+Stopped at: Completed 06.1-01-PLAN.md
 Resume file: None
