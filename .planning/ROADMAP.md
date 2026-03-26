@@ -19,7 +19,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 5: Reading Experience** - Fullscreen dim-room reading mode optimized for parents reading aloud
 - [ ] **Phase 6: Story Quality Tuning** - Narrative arc, calming language, and varied story structures
 - [x] **Phase 7: Nightlight Tales Branding** - Audit and update app name, metadata, and strings to "Nightlight Tales" consistently (completed 2026-03-26)
-- [ ] **Phase 8: Theme SVG Assets** - Add 17 missing SVG illustration files to restore full theme grid visual display (closes STORY-03)
+- [x] **Phase 8: Theme SVG Assets** - Add 17 missing SVG illustration files to restore full theme grid visual display (closes STORY-03) (completed 2026-03-26)
 - [ ] **Phase 9: Production Hardening** - Fix Edge Runtime rate limiting, verify Haiku model ID, clean up duration type casts (closes INFRA-03)
 - [ ] **Phase 10: Nyquist Compliance** - Fill all draft VALIDATION.md files with real test sampling evidence
 - [ ] **Phase 11: UI Polish and Tidy Up** - Visual polish pass across the app for a cohesive, refined feel
@@ -149,7 +149,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 | 6. Story Quality Tuning | 0/2 | Not started | - |
 | 06.1 3-minute duration | 1/1 | Complete    | 2026-03-26 |
 | 7. Nightlight Tales Branding | 1/1 | Complete   | 2026-03-26 |
-| 8. Theme SVG Assets | 1/2 | In Progress|  |
+| 8. Theme SVG Assets | 2/2 | Complete   | 2026-03-26 |
 | 9. Production Hardening | 0/TBD | Not started | - |
 | 10. Nyquist Compliance | 0/TBD | Not started | - |
 | 11. UI Polish and Tidy Up | 0/TBD | Not started | - |
@@ -163,7 +163,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 
 Plans:
 - [x] 08-01-PLAN.md — SVG validation tests + create all 17 missing theme tile SVG illustrations
-- [ ] 08-02-PLAN.md — onError fallback in theme-grid.tsx + visual verification checkpoint
+- [x] 08-02-PLAN.md — onError fallback in theme-grid.tsx + visual verification checkpoint
 
 ### Phase 9: Production Hardening
 **Goal**: Rate limiting is enforced in production on Vercel Edge Runtime; Haiku model ID is verified correct; duration type casts removed
@@ -200,7 +200,7 @@ Plans:
 
 **Goal:** Research the best font for bedtime story readability. Evaluate alternatives to Noto Serif for the reading view — consider readability in dim-room conditions, on mobile, at 20px+ sizes. Candidates include Georgia, Lora, and system serif options.
 **Requirements:** TBD
-**Plans:** 1/2 plans executed
+**Plans:** 2/2 plans complete
 
 Plans:
 - [ ] TBD (promote with /gsd:review-backlog when ready)
