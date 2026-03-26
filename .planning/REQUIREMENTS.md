@@ -9,7 +9,7 @@
 
 - [x] **STORY-01**: Parent can enter a child's name (letters only, max 30 characters)
 - [x] **STORY-02**: Parent can enter a child's exact age; app maps age to reading level band internally (0–3 toddler, 4–6 young child, 7–10 older child) to calibrate vocabulary and sentence complexity
-- [x] **STORY-03**: Parent can select a theme from a preset curated list of 15–20 options (e.g. dinosaurs, space, ocean, fairy tales, animals, etc.)
+- [ ] **STORY-03**: Parent can select a theme from a preset curated list of 15–20 options (e.g. dinosaurs, space, ocean, fairy tales, animals, etc.) — *17/18 SVG files missing; closes in Phase 8*
 - [x] **STORY-04**: Parent can select a reading duration (3, 5, 10, or 15 minutes); app maps selection to a target word count (extended in Phase 06.1 to include 3-minute/450-word compact option)
 - [x] **STORY-05**: Generated story follows a complete narrative arc with a beginning, conflict, and resolution
 - [x] **STORY-06**: Generated story uses calming, wind-down language designed to ease children toward sleep
@@ -34,7 +34,7 @@
 
 - [x] **INFRA-01**: No login or account required — any parent can visit, enter details, and get a story immediately
 - [x] **INFRA-02**: All Claude API calls are made server-side; the API key is never exposed to the frontend
-- [x] **INFRA-03**: App enforces IP-based rate limiting to prevent abuse in the absence of user authentication
+- [ ] **INFRA-03**: App enforces IP-based rate limiting to prevent abuse in the absence of user authentication — *in-memory Map non-functional on Edge Runtime in production; closes in Phase 9*
 - [x] **INFRA-04**: App is deployed on Vercel with zero-config hosting and edge functions
 
 ## v2 Requirements
@@ -76,7 +76,7 @@
 |-------------|-------|--------|
 | STORY-01 | Phase 2 | Complete |
 | STORY-02 | Phase 2 | Complete |
-| STORY-03 | Phase 2 | Complete |
+| STORY-03 | Phase 8 | Pending |
 | STORY-04 | Phase 2 | Complete |
 | STORY-05 | Phase 6 | Complete |
 | STORY-06 | Phase 6 | Complete |
@@ -88,7 +88,7 @@
 | READ-01 | Phase 5 | Complete |
 | INFRA-01 | Phase 4 | Complete |
 | INFRA-02 | Phase 2 | Complete |
-| INFRA-03 | Phase 4 | Complete |
+| INFRA-03 | Phase 9 | Pending |
 | INFRA-04 | Phase 1 | Complete |
 | DUR-01 | Phase 06.1 | Complete |
 
@@ -96,6 +96,7 @@
 - v1 requirements: 17 total
 - Mapped to phases: 17/17
 - Unmapped: 0
+- Pending (gap closure): STORY-03 (Phase 8), INFRA-03 (Phase 9)
 
 ---
 *Requirements defined: 2026-03-23*

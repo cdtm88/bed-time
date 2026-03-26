@@ -19,6 +19,9 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 5: Reading Experience** - Fullscreen dim-room reading mode optimized for parents reading aloud
 - [ ] **Phase 6: Story Quality Tuning** - Narrative arc, calming language, and varied story structures
 - [x] **Phase 7: Nightlight Tales Branding** - Audit and update app name, metadata, and strings to "Nightlight Tales" consistently (completed 2026-03-26)
+- [ ] **Phase 8: Theme SVG Assets** - Add 17 missing SVG illustration files to restore full theme grid visual display (closes STORY-03)
+- [ ] **Phase 9: Production Hardening** - Fix Edge Runtime rate limiting, verify Haiku model ID, clean up duration type casts (closes INFRA-03)
+- [ ] **Phase 10: Nyquist Compliance** - Fill all draft VALIDATION.md files with real test sampling evidence
 
 ## Phase Details
 
@@ -133,7 +136,7 @@ Plans:
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
+Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
@@ -145,6 +148,39 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 | 6. Story Quality Tuning | 0/2 | Not started | - |
 | 06.1 3-minute duration | 1/1 | Complete    | 2026-03-26 |
 | 7. Nightlight Tales Branding | 1/1 | Complete   | 2026-03-26 |
+| 8. Theme SVG Assets | 0/TBD | Not started | - |
+| 9. Production Hardening | 0/TBD | Not started | - |
+| 10. Nyquist Compliance | 0/TBD | Not started | - |
+
+### Phase 8: Theme SVG Assets
+**Goal**: All 18 theme tiles display correctly with SVG illustrations; the theme grid is fully functional visually
+**Depends on**: Phase 7
+**Requirements**: STORY-03
+**Gap Closure**: Closes HIGH integration gap from v1.0 audit — 17/18 SVG files missing from `public/themes/`
+**Plans**: TBD
+
+Plans:
+- [ ] TBD
+
+### Phase 9: Production Hardening
+**Goal**: Rate limiting is enforced in production on Vercel Edge Runtime; Haiku model ID is verified correct; duration type casts removed
+**Depends on**: Phase 7
+**Requirements**: INFRA-03
+**Gap Closure**: Closes MEDIUM gap (rate limiting non-functional on Edge), LOW gap (Haiku model ID), tech debt (duration type cast)
+**Plans**: TBD
+
+Plans:
+- [ ] TBD
+
+### Phase 10: Nyquist Compliance
+**Goal**: All phase VALIDATION.md files are filled with real test sampling evidence; Phase 06.1 VALIDATION.md created
+**Depends on**: Phase 9
+**Requirements**: N/A (documentation gap)
+**Gap Closure**: Closes Nyquist compliance gap across all 8 phases — draft templates replaced with exercised validation
+**Plans**: TBD
+
+Plans:
+- [ ] TBD
 
 ## Backlog
 
