@@ -66,6 +66,8 @@ Plan: Not started
 ### Roadmap Evolution
 
 - Phase 06.1 inserted after Phase 6: 3-minute duration option (URGENT)
+- Phases 8-10 added after v1.0 audit gap closure (STORY-03 SVG assets, INFRA-03 rate limiting, Nyquist compliance)
+- Phase 11 added: UI polish and tidy up
 
 ### Decisions
 
