@@ -143,7 +143,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 | 4. Input Form | 2/2 | Complete   | 2026-03-25 |
 | 5. Reading Experience | 0/2 | Not started | - |
 | 6. Story Quality Tuning | 0/2 | Not started | - |
-| 06.1 3-minute duration | 1/1 | Complete   | 2026-03-26 |
+| 06.1 3-minute duration | 1/1 | Complete    | 2026-03-26 |
 | 7. Nightlight Tales Branding | 0/0 | Not started | - |
 
 ## Backlog
