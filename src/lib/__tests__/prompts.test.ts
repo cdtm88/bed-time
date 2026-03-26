@@ -97,3 +97,49 @@ describe('buildSystemPrompt', () => {
     expect(prompt).toMatch(/no title|no header|without.*title|just.*story/i)
   })
 })
+
+describe('buildSystemPrompt quality tuning (Phase 6)', () => {
+  const config = getReadingLevel(5)
+  const prompt = buildSystemPrompt(config, 1500)
+
+  it('includes three-part narrative arc guidance (D-01)', () => {
+    expect(prompt).toMatch(/beginning/i)
+    expect(prompt).toMatch(/middle/i)
+    expect(prompt).toMatch(/ending/i)
+  })
+
+  it('specifies wonder framing for middle beat (D-02)', () => {
+    expect(prompt).toMatch(/wonder/i)
+  })
+
+  it('instructs sentence length taper in ending (D-03)', () => {
+    expect(prompt).toMatch(/shorter.*sentence|sentence.*shorter|progressively.*short/i)
+  })
+
+  it('names sleepy sensory cues (D-04)', () => {
+    expect(prompt).toMatch(/eyelid/i)
+    expect(prompt).toMatch(/breath/i)
+    expect(prompt).toMatch(/blanket/i)
+    expect(prompt).toMatch(/yawn/i)
+  })
+
+  it('includes explicit sleep invitation (D-05)', () => {
+    expect(prompt).toMatch(/close.*eyes|drift.*off|eyes.*heavy/i)
+  })
+
+  it('enumerates four opening styles (D-06)', () => {
+    expect(prompt).toMatch(/in medias res|middle of action/i)
+    expect(prompt).toMatch(/question|mystery/i)
+    expect(prompt).toMatch(/setting/i)
+    expect(prompt).toMatch(/character/i)
+  })
+
+  it('instructs never to repeat opening styles (D-07)', () => {
+    expect(prompt).toMatch(/never begin two stories the same way/i)
+  })
+
+  it('includes global sensory grounding instruction (D-09)', () => {
+    expect(prompt).toMatch(/senses|sensory/i)
+    expect(prompt).toMatch(/calming|comforting/i)
+  })
+})
