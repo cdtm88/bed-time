@@ -12,7 +12,7 @@ A parent can generate a safe, personalized bedtime story in under a minute and r
 
 ### Validated
 
-- [x] Parent inputs: child's name, exact age, theme (preset list), reading duration (5 / 10 / 15 min) — *Validated in Phase 02: core-generation-pipeline*
+- [x] Parent inputs: child's name, exact age, theme (preset list), reading duration (3 / 5 / 10 / 15 min) — *Validated in Phase 02: core-generation-pipeline, extended in Phase 06.1: 3-minute-duration-option*
 - [x] Stories are personalized — child's name, age, and chosen theme woven throughout naturally — *Validated in Phase 02: core-generation-pipeline*
 - [x] Age input is mapped internally to reading level bands (Toddler 0–3, Young child 4–6, Older child 7–10) to calibrate vocabulary and complexity — *Validated in Phase 02: core-generation-pipeline*
 
@@ -87,4 +87,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-03-26 — Phase 06 complete: story quality tuning live (narrative arc, wind-down, sensory guidance, opening variety)*
+*Last updated: 2026-03-26 — Phase 06.1 complete: 3-minute duration option live (450-word compact arc, validation, UI toggle, TypeScript types clean)*
