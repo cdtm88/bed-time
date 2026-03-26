@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { buildSystemPrompt, buildUserMessage, getWordCount, getMaxTokens } from '@/lib/prompts'
+import { buildSystemPrompt, buildUserMessage, getWordCount, getMaxTokens, buildReinforcedSystemPrompt } from '@/lib/prompts'
 import { getReadingLevel } from '@/lib/age-levels'
 
 describe('getWordCount', () => {
@@ -149,5 +149,37 @@ describe('buildSystemPrompt quality tuning (Phase 6)', () => {
   it('includes global sensory grounding instruction (D-09)', () => {
     expect(prompt).toMatch(/senses|sensory/i)
     expect(prompt).toMatch(/calming|comforting/i)
+  })
+})
+
+describe('buildSystemPrompt compact arc (Phase 06.1)', () => {
+  const config = getReadingLevel(5)
+  const shortPrompt = buildSystemPrompt(config, 450)
+  const standardPrompt = buildSystemPrompt(config, 750)
+
+  it('uses compact arc beginning (1-2 paragraphs) for targetWords < 500 (D-04)', () => {
+    expect(shortPrompt).toMatch(/1-2 paragraphs/)
+    expect(shortPrompt).toMatch(/establish.*world|warm.*inviting/i)
+  })
+
+  it('uses compact arc middle (2 paragraphs, no tension) for short stories (D-04)', () => {
+    expect(shortPrompt).toContain('2 paragraphs')
+    expect(shortPrompt).toMatch(/no tension/i)
+  })
+
+  it('uses compact arc ending (1-2 paragraphs) for short stories (D-04)', () => {
+    expect(shortPrompt).toMatch(/1-2 paragraphs.*wind/is)
+  })
+
+  it('preserves standard arc (2-3 paragraphs beginning) for targetWords >= 500 (D-06)', () => {
+    expect(standardPrompt).toMatch(/2-3 paragraphs/)
+  })
+
+  it('preserves ending wind-down instructions unchanged for short stories (D-05)', () => {
+    expect(shortPrompt).toMatch(/eyelid/i)
+    expect(shortPrompt).toMatch(/breath/i)
+    expect(shortPrompt).toMatch(/blanket/i)
+    expect(shortPrompt).toMatch(/yawn/i)
+    expect(shortPrompt).toMatch(/close.*eyes|drift.*off/i)
   })
 })
