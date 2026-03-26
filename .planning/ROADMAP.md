@@ -196,6 +196,15 @@ Plans:
 
 ## Backlog
 
+### Phase 999.2: Improve SVG Theme Tile Illustrations (BACKLOG)
+
+**Goal:** Redesign all 17 new SVG theme tiles to better fit the kid-friendly nighttime aesthetic — warmer, softer, more whimsical artwork with bedtime mood (dark sky tones, glowing accents, sleep-appropriate imagery). Current illustrations are too sparse and don't evoke the nighttime storybook feel of the app.
+**Requirements:** TBD
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (promote with /gsd:review-backlog when ready)
+
 ### Phase 999.1: Reading Font Readability Research (BACKLOG)
 
 **Goal:** Research the best font for bedtime story readability. Evaluate alternatives to Noto Serif for the reading view — consider readability in dim-room conditions, on mobile, at 20px+ sizes. Candidates include Georgia, Lora, and system serif options.
