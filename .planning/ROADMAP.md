@@ -122,13 +122,13 @@ Plans:
 - [x] 06.1-01-PLAN.md — Duration 3 config, validation, UI toggle, and compact narrative arc for short stories (TDD)
 
 ### Phase 7: Nightlight Tales Branding
-**Goal**: All app name references, metadata, and strings consistently use "Nightlight Tales" across package.json, HTML title tags, README, and any hardcoded strings
+**Goal**: All app name references, metadata, and strings consistently use "Nightlight Tales" across package.json, HTML title tags, README, Open Graph tags, and favicon
 **Depends on**: Phase 6
 **Requirements**: TBD
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
-- [ ] TBD (run /gsd:plan-phase 7 to break down)
+- [ ] 07-01-PLAN.md — Package rename, README rewrite, Open Graph metadata, moon emoji favicon
 
 ## Progress
 
@@ -144,7 +144,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 | 5. Reading Experience | 0/2 | Not started | - |
 | 6. Story Quality Tuning | 0/2 | Not started | - |
 | 06.1 3-minute duration | 1/1 | Complete    | 2026-03-26 |
-| 7. Nightlight Tales Branding | 0/0 | Not started | - |
+| 7. Nightlight Tales Branding | 0/1 | Not started | - |
 
 ## Backlog
 
