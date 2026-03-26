@@ -35,7 +35,7 @@ A parent can generate a safe, personalized bedtime story in under a minute and r
 - [x] No accounts or login required for MVP — generate and read, no friction — *Validated in Phase 04: input-form*
 
 **Platform**
-- [ ] Web app for MVP (accessible on phone browser for bedside use)
+- [x] Web app for MVP (accessible on phone browser for bedside use) — *Validated in Phase 07: nightlight-tales-branding*
 
 ### Out of Scope
 
@@ -87,4 +87,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-03-26 — Phase 06.1 complete: 3-minute duration option live (450-word compact arc, validation, UI toggle, TypeScript types clean)*
+*Last updated: 2026-03-26 — Phase 07 complete: Nightlight Tales branding live — package renamed, README rewritten, Open Graph metadata added, moon emoji favicon deployed*
