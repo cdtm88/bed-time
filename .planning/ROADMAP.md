@@ -18,7 +18,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 4: Input Form** - Parent-facing web form with no-login flow and rate limiting (completed 2026-03-25)
 - [ ] **Phase 5: Reading Experience** - Fullscreen dim-room reading mode optimized for parents reading aloud
 - [ ] **Phase 6: Story Quality Tuning** - Narrative arc, calming language, and varied story structures
-- [ ] **Phase 7: Nightlight Tales Branding** - Audit and update app name, metadata, and strings to "Nightlight Tales" consistently
+- [x] **Phase 7: Nightlight Tales Branding** - Audit and update app name, metadata, and strings to "Nightlight Tales" consistently (completed 2026-03-26)
 
 ## Phase Details
 
@@ -128,7 +128,7 @@ Plans:
 **Plans**: 1 plan
 
 Plans:
-- [ ] 07-01-PLAN.md — Package rename, README rewrite, Open Graph metadata, moon emoji favicon
+- [x] 07-01-PLAN.md — Package rename, README rewrite, Open Graph metadata, moon emoji favicon
 
 ## Progress
 
@@ -144,7 +144,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 | 5. Reading Experience | 0/2 | Not started | - |
 | 6. Story Quality Tuning | 0/2 | Not started | - |
 | 06.1 3-minute duration | 1/1 | Complete    | 2026-03-26 |
-| 7. Nightlight Tales Branding | 0/1 | Not started | - |
+| 7. Nightlight Tales Branding | 1/1 | Complete   | 2026-03-26 |
 
 ## Backlog
 
@@ -152,7 +152,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 
 **Goal:** Research the best font for bedtime story readability. Evaluate alternatives to Noto Serif for the reading view — consider readability in dim-room conditions, on mobile, at 20px+ sizes. Candidates include Georgia, Lora, and system serif options.
 **Requirements:** TBD
-**Plans:** 0 plans
+**Plans:** 1/1 plans complete
 
 Plans:
 - [ ] TBD (promote with /gsd:review-backlog when ready)
