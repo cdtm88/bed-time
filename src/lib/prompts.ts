@@ -24,6 +24,18 @@ export function buildSystemPrompt(
   const low = Math.round(targetWords * 0.93)
   const high = Math.round(targetWords * 1.07)
 
+  const isCompactArc = targetWords < 500
+
+  const arcSection = isCompactArc
+    ? `Story structure — use a compact three-part arc for this short story:
+- Beginning (1-2 paragraphs): Establish the world and the child's character. Warm, curious, inviting.
+- Middle (2 paragraphs): A gentle discovery or moment of wonder — no tension, no conflict, just curiosity and delight.
+- Ending (1-2 paragraphs): A calming resolution that winds down toward sleep. Make each sentence progressively shorter than the last. Weave in sleepy sensory cues — heavy eyelids, slow breathing, the warmth of a blanket, a soft yawn. The final paragraph should invite the child to close their eyes and drift off to sleep.`
+    : `Story structure — use a three-part narrative arc:
+- Beginning (2-3 paragraphs): Establish the world and the child's character. Warm, curious, inviting.
+- Middle (3-4 paragraphs): A gentle adventure, discovery, or small challenge framed around wonder — never tension, fear, or peril.
+- Ending (2-3 paragraphs): A calming resolution that winds down toward sleep. Make each sentence progressively shorter than the last. Weave in sleepy sensory cues — heavy eyelids, slow breathing, the warmth of a blanket, a soft yawn. The final paragraph should invite the child to close their eyes and drift off to sleep.`
+
   return `You are a bedtime story writer. A parent will read this story aloud to their child at bedtime in a dim, quiet room.
 
 Reading level:
@@ -31,10 +43,7 @@ ${readingLevel.description}
 
 Length: aim for ${low}-${high} words (about ${targetWords} words), paced for reading aloud before sleep.
 
-Story structure — use a three-part narrative arc:
-- Beginning (2-3 paragraphs): Establish the world and the child's character. Warm, curious, inviting.
-- Middle (3-4 paragraphs): A gentle adventure, discovery, or small challenge framed around wonder — never tension, fear, or peril.
-- Ending (2-3 paragraphs): A calming resolution that winds down toward sleep. Make each sentence progressively shorter than the last. Weave in sleepy sensory cues — heavy eyelids, slow breathing, the warmth of a blanket, a soft yawn. The final paragraph should invite the child to close their eyes and drift off to sleep.
+${arcSection}
 
 Opening variety — choose one of these four styles and never begin two stories the same way:
 1. In medias res: start in the middle of action.
