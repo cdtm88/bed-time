@@ -149,7 +149,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 | 6. Story Quality Tuning | 0/2 | Not started | - |
 | 06.1 3-minute duration | 1/1 | Complete    | 2026-03-26 |
 | 7. Nightlight Tales Branding | 1/1 | Complete   | 2026-03-26 |
-| 8. Theme SVG Assets | 0/2 | Not started | - |
+| 8. Theme SVG Assets | 1/2 | In Progress|  |
 | 9. Production Hardening | 0/TBD | Not started | - |
 | 10. Nyquist Compliance | 0/TBD | Not started | - |
 | 11. UI Polish and Tidy Up | 0/TBD | Not started | - |
@@ -162,7 +162,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 **Plans**: 2 plans
 
 Plans:
-- [ ] 08-01-PLAN.md — SVG validation tests + create all 17 missing theme tile SVG illustrations
+- [x] 08-01-PLAN.md — SVG validation tests + create all 17 missing theme tile SVG illustrations
 - [ ] 08-02-PLAN.md — onError fallback in theme-grid.tsx + visual verification checkpoint
 
 ### Phase 9: Production Hardening
@@ -200,7 +200,7 @@ Plans:
 
 **Goal:** Research the best font for bedtime story readability. Evaluate alternatives to Noto Serif for the reading view — consider readability in dim-room conditions, on mobile, at 20px+ sizes. Candidates include Georgia, Lora, and system serif options.
 **Requirements:** TBD
-**Plans:** 1/1 plans complete
+**Plans:** 1/2 plans executed
 
 Plans:
 - [ ] TBD (promote with /gsd:review-backlog when ready)
