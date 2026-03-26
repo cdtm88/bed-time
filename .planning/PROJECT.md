@@ -19,8 +19,10 @@ A parent can generate a safe, personalized bedtime story in under a minute and r
 ### Active
 
 **Story Generation**
-- [ ] Stories follow a real narrative arc: beginning, conflict, resolution
-- [ ] Stories use calming, winding-down language appropriate for bedtime
+- [x] Stories follow a real narrative arc: beginning, middle, resolution with structured wind-down — *Validated in Phase 06: story-quality-tuning*
+- [x] Stories use calming, winding-down language appropriate for bedtime (sentence taper, sleepy sensory cues, sleep invitation) — *Validated in Phase 06: story-quality-tuning*
+- [x] Stories use age-appropriate sensory vocabulary calibrated to reading level — *Validated in Phase 06: story-quality-tuning*
+- [x] Stories vary opening styles (in medias res, wonder, setting, character voice) — *Validated in Phase 06: story-quality-tuning*
 
 **Safety**
 - [x] All generated stories are age-appropriate and strictly safe — *Validated in Phase 03: safety-validation-layer*
@@ -85,4 +87,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-03-25 — Phase 04 complete: parent-facing input form live*
+*Last updated: 2026-03-26 — Phase 06 complete: story quality tuning live (narrative arc, wind-down, sensory guidance, opening variety)*
