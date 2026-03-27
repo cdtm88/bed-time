@@ -150,7 +150,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 | 06.1 3-minute duration | 1/1 | Complete    | 2026-03-26 |
 | 7. Nightlight Tales Branding | 1/1 | Complete   | 2026-03-26 |
 | 8. Theme SVG Assets | 2/2 | Complete   | 2026-03-26 |
-| 9. Production Hardening | 0/TBD | Not started | - |
+| 9. Production Hardening | 0/2 | Not started | - |
 | 10. Nyquist Compliance | 0/TBD | Not started | - |
 | 11. UI Polish and Tidy Up | 0/TBD | Not started | - |
 
@@ -170,10 +170,11 @@ Plans:
 **Depends on**: Phase 7
 **Requirements**: INFRA-03
 **Gap Closure**: Closes MEDIUM gap (rate limiting non-functional on Edge), LOW gap (Haiku model ID), tech debt (duration type cast)
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] TBD
+- [ ] 09-01-PLAN.md — Install Upstash packages, rewrite rate-limit.ts with sliding-window Redis, update tests and route.ts call sites, narrow duration type
+- [ ] 09-02-PLAN.md — Human setup checkpoint: create Upstash database, add credentials to Vercel, verify 429 in production
 
 ### Phase 10: Nyquist Compliance
 **Goal**: All phase VALIDATION.md files are filled with real test sampling evidence; Phase 06.1 VALIDATION.md created
