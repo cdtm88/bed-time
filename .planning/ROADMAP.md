@@ -174,7 +174,7 @@ Plans:
 
 Plans:
 - [x] 09-01-PLAN.md — Install Upstash packages, rewrite rate-limit.ts with sliding-window Redis, update tests and route.ts call sites, narrow duration type
-- [ ] 09-02-PLAN.md — Human setup checkpoint: create Upstash database, add credentials to Vercel, verify 429 in production
+- [x] 09-02-PLAN.md — Human setup checkpoint: create Upstash database, add credentials to Vercel, verify 429 in production
 
 ### Phase 10: Nyquist Compliance
 **Goal**: All phase VALIDATION.md files are filled with real test sampling evidence; Phase 06.1 VALIDATION.md created
