@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Ready to plan
-stopped_at: Completed 08-02-PLAN.md
-last_updated: "2026-03-26T10:58:43.606Z"
+stopped_at: Completed 09-01-PLAN.md
+last_updated: "2026-03-29T13:22:13Z"
 progress:
   total_phases: 14
   completed_phases: 9
-  total_plans: 15
-  completed_plans: 15
+  total_plans: 17
+  completed_plans: 16
 ---
 
 # Project State
@@ -19,12 +19,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-23)
 
 **Core value:** A parent can generate a safe, personalized bedtime story in under a minute and read it aloud to their child tonight.
-**Current focus:** Phase 08 — theme-svg-assets
+**Current focus:** Phase 09 — production-hardening
 
 ## Current Position
 
 Phase: 09
-Plan: Not started
+Plan: 2 (01 complete)
 
 ## Performance Metrics
 
@@ -62,6 +62,7 @@ Plan: Not started
 | Phase 07 P01 | 5 | 3 tasks | 5 files |
 | Phase 08 P01 | 4 | 2 tasks | 18 files |
 | Phase 08-theme-svg-assets P02 | 5 | 2 tasks | 1 files |
+| Phase 09-production-hardening P01 | 7 | 3 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -106,6 +107,8 @@ Recent decisions affecting current work:
 - [Phase 07]: OG metadata explicitly duplicates title/description (OG spec does not inherit from HTML meta)
 - [Phase 08]: dinosaurs.svg excluded from viewBox/palette/size/prohibited validation checks — it is a legacy 2048x2048 asset predating Phase 8 constraints
 - [Phase 08-theme-svg-assets]: Fallback placeholder uses bg-surface-container-low + bg-surface-container-highest circle; per-item load failures tracked via useState Set pattern
+- [Phase 09]: Upstash lazy-init: getRatelimit() guards on UPSTASH_REDIS_REST_URL to avoid module-scope throws
+- [Phase 09]: Dev bypass returns { allowed: true } when no Upstash env vars present
 
 ### Pending Todos
 
@@ -118,6 +121,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-26T10:55:20.419Z
-Stopped at: Completed 08-02-PLAN.md
+Last session: 2026-03-29T13:22:13Z
+Stopped at: Completed 09-01-PLAN.md
 Resume file: None

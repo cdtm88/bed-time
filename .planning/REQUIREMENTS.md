@@ -34,7 +34,7 @@
 
 - [x] **INFRA-01**: No login or account required — any parent can visit, enter details, and get a story immediately
 - [x] **INFRA-02**: All Claude API calls are made server-side; the API key is never exposed to the frontend
-- [ ] **INFRA-03**: App enforces IP-based rate limiting to prevent abuse in the absence of user authentication — *in-memory Map non-functional on Edge Runtime in production; closes in Phase 9*
+- [x] **INFRA-03**: App enforces IP-based rate limiting to prevent abuse in the absence of user authentication — *Upstash Redis sliding window implemented in Phase 9*
 - [x] **INFRA-04**: App is deployed on Vercel with zero-config hosting and edge functions
 
 ## v2 Requirements
@@ -88,7 +88,7 @@
 | READ-01 | Phase 5 | Complete |
 | INFRA-01 | Phase 4 | Complete |
 | INFRA-02 | Phase 2 | Complete |
-| INFRA-03 | Phase 9 | Pending |
+| INFRA-03 | Phase 9 | Complete |
 | INFRA-04 | Phase 1 | Complete |
 | DUR-01 | Phase 06.1 | Complete |
 
@@ -96,7 +96,7 @@
 - v1 requirements: 17 total
 - Mapped to phases: 17/17
 - Unmapped: 0
-- Pending (gap closure): STORY-03 (Phase 8), INFRA-03 (Phase 9)
+- Pending (gap closure): STORY-03 (Phase 8)
 
 ---
 *Requirements defined: 2026-03-23*
