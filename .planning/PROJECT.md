@@ -37,6 +37,9 @@ A parent can generate a safe, personalized bedtime story in under a minute and r
 **Platform**
 - [x] Web app for MVP (accessible on phone browser for bedside use) — *Validated in Phase 07: nightlight-tales-branding*
 
+**Infrastructure**
+- [x] IP-based rate limiting enforces in production (Upstash Redis sliding window, 10 req/hr/IP) — *Validated in Phase 09: production-hardening*
+
 ### Out of Scope
 
 - User accounts / saved profiles — deferred post-MVP; adds complexity before value is proven
@@ -87,4 +90,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-03-26 — Phase 07 complete: Nightlight Tales branding live — package renamed, README rewritten, Open Graph metadata added, moon emoji favicon deployed*
+*Last updated: 2026-03-29 — Phase 09 complete: Production hardening — Upstash Redis rate limiting live, duration type narrowed, type casts removed*
