@@ -25,7 +25,7 @@ export interface GenerateInput {
   name: string
   age: number
   theme: string
-  duration: number
+  duration: (typeof VALID_DURATIONS)[number]
 }
 
 const NAME_REGEX = /^[a-zA-Z\s]{1,30}$/

@@ -15,7 +15,7 @@ const client = new Anthropic()
 
 export async function POST(request: Request) {
   const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || '127.0.0.1'
-  const { allowed } = checkRateLimit(ip)
+  const { allowed } = await checkRateLimit(ip)
   if (!allowed) {
     return new Response(
       JSON.stringify({ error: "You've created a few stories recently. Try again in a bit." }),
@@ -43,16 +43,16 @@ export async function POST(request: Request) {
 
   const { name, age, theme, duration } = body as GenerateInput
   const readingLevel = getReadingLevel(age)
-  const targetWords = getWordCount(duration as 3 | 5 | 10 | 15)
+  const targetWords = getWordCount(duration)
   const userMessage = buildUserMessage(name, theme)
-  const maxTokens = getMaxTokens(duration as 3 | 5 | 10 | 15)
+  const maxTokens = getMaxTokens(duration)
 
   try {
     const params: GenerationParams = {
       name,
       age,
       theme,
-      duration: duration as 3 | 5 | 10 | 15,
+      duration,
       readingLevel,
       targetWords,
       maxTokens,
