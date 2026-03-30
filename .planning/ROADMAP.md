@@ -151,7 +151,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 | 7. Nightlight Tales Branding | 1/1 | Complete   | 2026-03-26 |
 | 8. Theme SVG Assets | 2/2 | Complete   | 2026-03-26 |
 | 9. Production Hardening | 0/2 | Not started | - |
-| 10. Nyquist Compliance | 0/2 | Not started | - |
+| 10. Nyquist Compliance | 1/2 | In Progress|  |
 | 11. UI Polish and Tidy Up | 0/TBD | Not started | - |
 
 ### Phase 8: Theme SVG Assets
@@ -185,7 +185,7 @@ Plans:
 
 Plans:
 - [ ] 10-01-PLAN.md — Update Phases 1-5 VALIDATION.md with real test evidence and sign-off
-- [ ] 10-02-PLAN.md — Update Phases 6-9 VALIDATION.md, create Phase 06.1 VALIDATION.md, fix Phase 9 npm test commands
+- [x] 10-02-PLAN.md — Update Phases 6-9 VALIDATION.md, create Phase 06.1 VALIDATION.md, fix Phase 9 npm test commands
 
 ### Phase 11: UI Polish and Tidy Up
 **Goal**: Visual polish pass across the app — typography, spacing, colour, and interaction details refined for a polished, cohesive feel
@@ -202,7 +202,7 @@ Plans:
 
 **Goal:** Redesign all 17 new SVG theme tiles to better fit the kid-friendly nighttime aesthetic — warmer, softer, more whimsical artwork with bedtime mood (dark sky tones, glowing accents, sleep-appropriate imagery). Current illustrations are too sparse and don't evoke the nighttime storybook feel of the app.
 **Requirements:** TBD
-**Plans:** 0 plans
+**Plans:** 1/2 plans executed
 
 Plans:
 - [ ] TBD (promote with /gsd:review-backlog when ready)
