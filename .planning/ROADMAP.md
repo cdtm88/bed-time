@@ -151,7 +151,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 | 7. Nightlight Tales Branding | 1/1 | Complete   | 2026-03-26 |
 | 8. Theme SVG Assets | 2/2 | Complete   | 2026-03-26 |
 | 9. Production Hardening | 0/2 | Not started | - |
-| 10. Nyquist Compliance | 2/2 | Complete   | 2026-03-30 |
+| 10. Nyquist Compliance | 2/2 | Complete    | 2026-03-30 |
 | 11. UI Polish and Tidy Up | 0/TBD | Not started | - |
 
 ### Phase 8: Theme SVG Assets
