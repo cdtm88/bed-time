@@ -90,4 +90,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-03-29 — Phase 09 complete: Production hardening — Upstash Redis rate limiting live, duration type narrowed, type casts removed*
+*Last updated: 2026-03-30 — Phase 10 complete: Nyquist compliance — all 10 phase VALIDATION.md files backfilled with real test evidence, nyquist_compliant: true*
