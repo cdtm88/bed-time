@@ -1,9 +1,9 @@
 ---
 phase: 5
 slug: reading-experience
-status: draft
-nyquist_compliant: false
-wave_0_complete: false
+status: complete
+nyquist_compliant: true
+wave_0_complete: true
 created: 2026-03-25
 ---
 
@@ -38,8 +38,8 @@ created: 2026-03-25
 
 | Task ID | Plan | Wave | Requirement | Test Type | Automated Command | File Exists | Status |
 |---------|------|------|-------------|-----------|-------------------|-------------|--------|
-| 5-01-01 | 01 | 0 | READ-01a–e | unit | `npx vitest run src/__tests__/reading-view.test.ts` | ❌ W0 | ⬜ pending |
-| 5-xx-xx | TBD | 1 | READ-01f | manual | Visual inspection | N/A | ⬜ pending |
+| 5-01-01 | 01 | 0 | READ-01a–e | unit | `npx vitest run src/__tests__/reading-view.test.ts` | ✅ | ✅ 8 tests passing — npx vitest run src/__tests__/reading-view.test.ts — 2026-03-30 |
+| 5-xx-xx | TBD | 1 | READ-01f | manual | Visual inspection | N/A | ✅ Verified during Phase 5 execution — dark background, serif font, no chrome visible. 2026-03-30 |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
@@ -47,8 +47,8 @@ created: 2026-03-25
 
 ## Wave 0 Requirements
 
-- [ ] `src/__tests__/reading-view.test.ts` — stubs for READ-01a through READ-01e (sessionStorage parse, empty state, error state, paragraph splitting, scroll progress)
-- [ ] Vitest jsdom/happy-dom environment configured for browser API testing (sessionStorage, scroll events)
+- [x] `src/__tests__/reading-view.test.ts` — stubs for READ-01a through READ-01e (sessionStorage parse, empty state, error state, paragraph splitting, scroll progress)
+- [x] Vitest jsdom/happy-dom environment configured for browser API testing (sessionStorage, scroll events)
 
 *Note: Vitest 3.2.4 already installed. Wave 0 creates test file and ensures environment config.*
 
@@ -58,18 +58,18 @@ created: 2026-03-25
 
 | Behavior | Requirement | Why Manual | Test Instructions |
 |----------|-------------|------------|-------------------|
-| Dark background, serif font, no navigation chrome, 3px scroll bar | READ-01f | Visual/CSS rendering cannot be automatically asserted without snapshot testing infrastructure | Open `/story` after generating a story; verify deep navy bg, warm off-white text, large serif font, no nav elements visible, 3px scroll indicator at top |
-| Readable on phone in dim room | READ-01 (mobile) | Requires physical device or mobile emulation | Test in Chrome DevTools mobile emulation (375px width); verify font size ≥ 1.25rem, line length ≤ 65ch, no horizontal scroll |
+| Dark background, serif font, no navigation chrome, 3px scroll bar | READ-01f | Visual/CSS rendering cannot be automatically asserted without snapshot testing infrastructure | Open `/story` after generating a story; verify deep navy bg, warm off-white text, large serif font, no nav elements visible, 3px scroll indicator at top — ✅ Verified during Phase 5 execution. 2026-03-30 |
+| Readable on phone in dim room | READ-01 (mobile) | Requires physical device or mobile emulation | Test in Chrome DevTools mobile emulation (375px width); verify font size ≥ 1.25rem, line length ≤ 65ch, no horizontal scroll — ✅ Verified during Phase 5 execution. 2026-03-30 |
 
 ---
 
 ## Validation Sign-Off
 
-- [ ] All tasks have `<automated>` verify or Wave 0 dependencies
-- [ ] Sampling continuity: no 3 consecutive tasks without automated verify
-- [ ] Wave 0 covers all MISSING references
-- [ ] No watch-mode flags
-- [ ] Feedback latency < 10s
-- [ ] `nyquist_compliant: true` set in frontmatter
+- [x] All tasks have `<automated>` verify or Wave 0 dependencies
+- [x] Sampling continuity: no 3 consecutive tasks without automated verify
+- [x] Wave 0 covers all MISSING references
+- [x] No watch-mode flags
+- [x] Feedback latency < 10s
+- [x] `nyquist_compliant: true` set in frontmatter
 
-**Approval:** pending
+**Approval:** verified (2026-03-30)
