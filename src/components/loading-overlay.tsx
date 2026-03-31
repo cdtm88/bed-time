@@ -7,7 +7,7 @@ interface LoadingOverlayProps {
 export function LoadingOverlay({ name }: LoadingOverlayProps) {
   return (
     <div
-      className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-surface"
+      className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-reading-surface"
       role="alert"
       aria-live="polite"
     >
@@ -51,10 +51,10 @@ export function LoadingOverlay({ name }: LoadingOverlayProps) {
         />
       </div>
 
-      <h2 className="font-serif text-[1.75rem] text-on-surface">
+      <h2 className="font-serif text-[1.75rem] text-reading-on-surface">
         Crafting {name}&apos;s story&hellip;
       </h2>
-      <p className="font-serif text-[1rem] leading-relaxed text-on-surface mt-md">
+      <p className="font-serif text-[1rem] leading-relaxed text-reading-on-surface-muted mt-md">
         This takes about 30 seconds.
       </p>
     </div>
