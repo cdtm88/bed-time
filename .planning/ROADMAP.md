@@ -22,7 +22,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 8: Theme SVG Assets** - Add 17 missing SVG illustration files to restore full theme grid visual display (closes STORY-03) (completed 2026-03-26)
 - [ ] **Phase 9: Production Hardening** - Fix Edge Runtime rate limiting, verify Haiku model ID, clean up duration type casts (closes INFRA-03)
 - [x] **Phase 10: Nyquist Compliance** - Fill all draft VALIDATION.md files with real test sampling evidence (completed 2026-03-30)
-- [ ] **Phase 11: UI Polish and Tidy Up** - Visual polish pass across the app for a cohesive, refined feel
+- [x] **Phase 11: UI Polish and Tidy Up** - Visual polish pass across the app for a cohesive, refined feel (completed 2026-03-31)
 
 ## Phase Details
 
@@ -152,7 +152,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 | 8. Theme SVG Assets | 2/2 | Complete   | 2026-03-26 |
 | 9. Production Hardening | 0/2 | Not started | - |
 | 10. Nyquist Compliance | 2/2 | Complete    | 2026-03-30 |
-| 11. UI Polish and Tidy Up | 0/2 | Not started | - |
+| 11. UI Polish and Tidy Up | 2/2 | Complete   | 2026-03-31 |
 
 ### Phase 8: Theme SVG Assets
 **Goal**: All 18 theme tiles display correctly with SVG illustrations; the theme grid is fully functional visually
@@ -195,8 +195,8 @@ Plans:
 **UI hint**: yes
 
 Plans:
-- [ ] 11-01-PLAN.md — Hero moon/stars illustration, solid Generate button, form layout spacing refinements
-- [ ] 11-02-PLAN.md — Gold theme tile selection state, dark navy loading overlay, visual verification checkpoint
+- [x] 11-01-PLAN.md — Hero moon/stars illustration, solid Generate button, form layout spacing refinements
+- [x] 11-02-PLAN.md — Gold theme tile selection state, dark navy loading overlay, visual verification checkpoint
 
 ## Backlog
 

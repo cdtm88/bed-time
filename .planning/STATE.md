@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Ready to plan
-stopped_at: Completed 10-01-PLAN.md
-last_updated: "2026-03-30T14:26:11.911Z"
+status: Phase complete — ready for verification
+stopped_at: Completed 11-02-PLAN.md
+last_updated: "2026-03-31T13:48:49.423Z"
 progress:
   total_phases: 14
-  completed_phases: 11
-  total_plans: 19
-  completed_plans: 19
+  completed_phases: 12
+  total_plans: 21
+  completed_plans: 21
 ---
 
 # Project State
@@ -19,12 +19,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-23)
 
 **Core value:** A parent can generate a safe, personalized bedtime story in under a minute and read it aloud to their child tonight.
-**Current focus:** Phase 10 — nyquist-compliance
+**Current focus:** Phase 11 — ui-polish-and-tidy-up
 
 ## Current Position
 
-Phase: 11
-Plan: Not started
+Phase: 11 (ui-polish-and-tidy-up) — EXECUTING
+Plan: 2 of 2
 
 ## Performance Metrics
 
@@ -65,6 +65,8 @@ Plan: Not started
 | Phase 09-production-hardening P01 | 7 | 3 tasks | 6 files |
 | Phase 10 P02 | 8 | 2 tasks | 5 files |
 | Phase 10-nyquist-compliance P01 | 3 | 2 tasks | 5 files |
+| Phase 11 P01 | 1 | 1 tasks | 2 files |
+| Phase 11 P02 | 3 | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -115,6 +117,10 @@ Recent decisions affecting current work:
 - [Phase 10]: npm test command corrected to npx vitest run in Phase 9 (package.json has no test script)
 - [Phase 10]: Phase 06.1 VALIDATION.md created from scratch following established template structure
 - [Phase 10-nyquist-compliance]: Evidence notes use consistent format: [N] tests passing — npx vitest run [file] — 2026-03-30; Phase 1 build-only uses build success evidence; manual verifications backdated per D-04
+- [Phase 11]: Hero illustration uses 4s breathe cycle (slower than loading 3s) for calmer form page
+- [Phase 11]: Stars static (no twinkle) on form page to avoid distraction
+- [Phase 11]: Gold ring uses full-opacity secondary-container token with 10% background tint
+- [Phase 11]: Loading overlay reuses reading-mode CSS tokens for dark navy background
 
 ### Pending Todos
 
@@ -127,6 +133,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-30T14:22:07.335Z
-Stopped at: Completed 10-01-PLAN.md
+Last session: 2026-03-31T13:48:49.420Z
+Stopped at: Completed 11-02-PLAN.md
 Resume file: None
