@@ -57,8 +57,10 @@ Exceptions: none -- all spacing uses the established token scale.
 |------|------|--------|-------------|------|
 | Body | 1rem (16px) | 400 (regular) | 1.6 | Noto Serif |
 | Label | 0.75rem (12px) | 600 (semibold) | 1.5 | Plus Jakarta Sans |
-| Heading | 1.75rem (28px) | 500 (medium) | 1.2 | Noto Serif |
+| Heading | 1.75rem (28px) | 400 (regular) | 1.2 | Noto Serif |
 | Display | 3.5rem (56px) | 400 (regular) | 1.1 | Noto Serif |
+
+**Weight scale:** 2 weights only -- 400 (regular) and 600 (semibold). Verified against codebase: all headings use `font-normal` (400) or inherit the default (no weight class, which resolves to 400). All labels and buttons use `font-semibold` (600). No usage of `font-medium` (500) exists anywhere in `src/`.
 
 **Phase 11 typography notes:**
 - No typography changes in this phase. All sizes, weights, and line-heights remain as established.
