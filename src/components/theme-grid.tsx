@@ -29,7 +29,7 @@ export function ThemeGrid({ value, onChange }: ThemeGridProps) {
             className={[
               'rounded-3xl bg-surface-container-low p-md flex flex-col items-center transition-all duration-300 ease-in-out',
               value === theme
-                ? 'bg-primary-container/15 ring-2 ring-primary/30'
+                ? 'bg-secondary-container/10 ring-2 ring-secondary-container'
                 : '',
             ].join(' ')}
           >
