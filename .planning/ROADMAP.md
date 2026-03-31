@@ -152,7 +152,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10
 | 8. Theme SVG Assets | 2/2 | Complete   | 2026-03-26 |
 | 9. Production Hardening | 0/2 | Not started | - |
 | 10. Nyquist Compliance | 2/2 | Complete    | 2026-03-30 |
-| 11. UI Polish and Tidy Up | 0/TBD | Not started | - |
+| 11. UI Polish and Tidy Up | 0/2 | Not started | - |
 
 ### Phase 8: Theme SVG Assets
 **Goal**: All 18 theme tiles display correctly with SVG illustrations; the theme grid is fully functional visually
@@ -190,11 +190,13 @@ Plans:
 ### Phase 11: UI Polish and Tidy Up
 **Goal**: Visual polish pass across the app — typography, spacing, colour, and interaction details refined for a polished, cohesive feel
 **Depends on**: Phase 10
-**Requirements**: TBD
-**Plans**: TBD
+**Requirements**: D-01, D-02, D-03, D-04, D-05, D-06, D-07, D-08
+**Plans**: 2 plans
+**UI hint**: yes
 
 Plans:
-- [ ] TBD
+- [ ] 11-01-PLAN.md — Hero moon/stars illustration, solid Generate button, form layout spacing refinements
+- [ ] 11-02-PLAN.md — Gold theme tile selection state, dark navy loading overlay, visual verification checkpoint
 
 ## Backlog
 
