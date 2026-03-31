@@ -6,6 +6,7 @@ import { AgeStepper } from './age-stepper'
 import { DurationToggle } from './duration-toggle'
 import { ThemeGrid } from './theme-grid'
 import { LoadingOverlay } from './loading-overlay'
+import { HeroIllustration } from './hero-illustration'
 
 export function StoryForm() {
   const [name, setName] = useState('')
@@ -59,7 +60,8 @@ export function StoryForm() {
 
   return (
     <main className="min-h-screen bg-surface">
-      <div className="mx-auto max-w-[480px] px-lg pt-3xl pb-3xl">
+      <div className="mx-auto max-w-[480px] px-lg pt-2xl pb-3xl">
+        <HeroIllustration />
         {/* Title */}
         <h1 className="text-center font-serif text-[1.75rem] text-on-surface">
           Nightlight Tales
@@ -86,7 +88,7 @@ export function StoryForm() {
           onClick={handleSubmit}
           disabled={!canSubmit}
           aria-disabled={!canSubmit}
-          className="mt-xl w-full h-[52px] rounded-full bg-gradient-to-br from-primary to-primary-container font-sans text-[0.75rem] font-semibold uppercase tracking-[0.04em] text-white transition-all duration-300 ease-in-out hover:brightness-110 disabled:opacity-40 disabled:cursor-not-allowed"
+          className="mt-xl w-full h-[52px] rounded-full bg-primary font-sans text-[0.75rem] font-semibold uppercase tracking-[0.04em] text-white transition-all duration-300 ease-in-out hover:brightness-110 disabled:opacity-40 disabled:cursor-not-allowed"
         >
           Generate Story
         </button>
