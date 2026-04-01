@@ -5,11 +5,11 @@ import { validateInput, GenerateInput } from "@/lib/schemas"
 import { checkRateLimit } from "@/lib/rate-limit"
 import { getReadingLevel } from "@/lib/age-levels"
 import {
+  buildSystemPrompt,
   buildUserMessage,
   getWordCount,
   getMaxTokens,
 } from "@/lib/prompts"
-import { generateSafeStory, GenerationParams } from "@/lib/safety"
 
 const client = new Anthropic()
 
@@ -46,36 +46,41 @@ export async function POST(request: Request) {
   const targetWords = getWordCount(duration)
   const userMessage = buildUserMessage(name, theme)
   const maxTokens = getMaxTokens(duration)
+  const systemPrompt = buildSystemPrompt(readingLevel, targetWords)
 
   try {
-    const params: GenerationParams = {
-      name,
-      age,
-      theme,
-      duration,
-      readingLevel,
-      targetWords,
-      maxTokens,
-      userMessage,
-    }
+    const stream = client.messages.stream({
+      model: "claude-sonnet-4-6",
+      max_tokens: maxTokens,
+      system: systemPrompt,
+      messages: [{ role: "user", content: userMessage }],
+    })
 
-    const result = await generateSafeStory(client, params)
+    const encoder = new TextEncoder()
 
-    if (result.ok) {
-      return new Response(result.story, {
-        headers: { "Content-Type": "text/plain; charset=utf-8" },
-      })
-    }
+    const readable = new ReadableStream({
+      async start(controller) {
+        try {
+          for await (const event of stream) {
+            if (
+              event.type === "content_block_delta" &&
+              event.delta.type === "text_delta"
+            ) {
+              controller.enqueue(encoder.encode(event.delta.text))
+            }
+          }
+          controller.close()
+        } catch {
+          controller.close()
+        }
+      },
+    })
 
-    // Per D-07: warm, non-technical error message. Per D-08: status 500.
-    return new Response(
-      JSON.stringify({
-        error: "We weren't able to create a story right now. Please try again.",
-      }),
-      { status: 500, headers: { "Content-Type": "application/json" } }
-    )
+    return new Response(readable, {
+      headers: { "Content-Type": "text/plain; charset=utf-8" },
+    })
   } catch {
-    // Per D-07/D-08: same friendly error for unexpected failures
+    // Per D-07/D-08: warm, non-technical error message
     return new Response(
       JSON.stringify({
         error: "We weren't able to create a story right now. Please try again.",
