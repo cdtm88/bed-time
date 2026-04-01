@@ -24,7 +24,7 @@ export function DurationToggle({ value, onChange }: DurationToggleProps) {
             className={[
               'rounded-full h-[44px] px-[20px] font-sans text-[0.75rem] font-semibold uppercase tracking-[0.04em] transition-all duration-300 ease-in-out',
               value === dur
-                ? 'bg-gradient-to-br from-primary to-primary-container text-white'
+                ? 'bg-primary text-white'
                 : 'bg-surface-container-low text-on-surface',
             ].join(' ')}
           >
