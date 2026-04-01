@@ -8,6 +8,20 @@ A web app that lets parents enter their child's name, age (1–10), and theme, c
 
 A parent can generate a safe, personalized bedtime story in under a minute and read it aloud to their child tonight.
 
+## Current Milestone: v2.0 v2.0 Features
+
+**Goal:** Enrich the reading experience with progressive streaming, visuals, voice narration, and story persistence.
+
+**Target features:**
+- Progressive story streaming (first words in 1–2 seconds)
+- Screen Wake Lock (no device sleep during reading)
+- Improved SVG theme illustrations (warmer, nighttime aesthetic)
+- Reading font evaluation (Noto Serif alternatives for mobile)
+- AI scene illustrations (2–3 per story, on-demand as you scroll)
+- Text-to-speech narration with voice selection (service TBD via research)
+- Story library (local device storage, re-readable)
+- Shareable story links (Upstash Redis, TTL-based)
+
 ## Current State
 
 **v1.0 shipped 2026-04-01.** Fully functional MVP:
@@ -39,20 +53,23 @@ A parent can generate a safe, personalized bedtime story in under a minute and r
 - ✓ Web app deployed on Vercel with Edge Runtime — v1.0
 - ✓ 3-minute compact story option (450 words) — v1.0
 
-### Active (v1.1+)
+### Active (v2.0)
 
 - [ ] Story text streams progressively (first words appear within 1–2 seconds)
 - [ ] Screen Wake Lock prevents device sleep during reading
 - [ ] Improved SVG theme tile illustrations — warmer, more whimsical, nighttime aesthetic
 - [ ] Reading font evaluation — assess alternatives to Noto Serif for dim-room mobile readability
+- [ ] AI-generated scene illustrations (2–3 per story, loaded on-demand while reading)
+- [ ] Text-to-speech narration with voice selection (service TBD via research phase)
+- [ ] Story library saved to local device (localStorage/IndexedDB), re-readable
+- [ ] Shareable story links (unique URL per story, stored in Upstash Redis with TTL)
 
 ### Out of Scope
 
-- User accounts / saved profiles — deferred post-MVP; adds complexity before value is proven
-- Text-to-speech / audio narration — must be excellent (multiple voices, ambient sound) to be worth shipping; deferred
-- Native iOS app — deferred until web MVP is validated
+- User accounts / saved profiles — library is local-first; cloud sync deferred
+- Native iOS app — deferred until web features are validated
 - Custom freeform theme input — preset list keeps quality and safety more controlled
-- Story editing or regeneration controls — keep MVP flow simple
+- Story editing or regeneration controls — keep reading flow simple
 
 ## Context
 
@@ -60,7 +77,7 @@ A parent can generate a safe, personalized bedtime story in under a minute and r
 - The reading screen is used in a dark bedroom on a phone — large text and dim-friendly design are critical.
 - Age 0 (infant) is technically supported by the API but not selectable in the UI (chip grid shows 1–10). Accepted product decision.
 - `dinosaurs.svg` is a legacy 461KB asset predating Phase 8 size constraints — renders correctly but may load slowly.
-- Future TTS should feel like a proper narrated audiobook (multiple voices, ambient sounds) — worth doing right or not at all.
+- TTS narration is in scope for v2.0 — service selection (Web Speech API vs OpenAI TTS vs ElevenLabs) requires dedicated research before planning.
 - Safety is non-negotiable: the app must never surface a story with any doubt about its appropriateness.
 
 ## Constraints
@@ -97,4 +114,4 @@ A parent can generate a safe, personalized bedtime story in under a minute and r
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-01 after v1.0 milestone — MVP shipped*
+*Last updated: 2026-04-01 — v2.0 milestone started*

@@ -1,30 +1,32 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.0
-milestone_name: milestone
-status: v1.0 milestone complete
-stopped_at: Completed 11-02-PLAN.md
-last_updated: "2026-04-01T08:10:18.947Z"
+milestone: v2.0
+milestone_name: v2.0 Features
+status: defining requirements
+stopped_at: —
+last_updated: "2026-04-01T00:00:00.000Z"
 progress:
-  total_phases: 14
-  completed_phases: 12
-  total_plans: 21
-  completed_plans: 21
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
 ---
 
 # Project State
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-03-23)
+See: .planning/PROJECT.md (updated 2026-04-01)
 
 **Core value:** A parent can generate a safe, personalized bedtime story in under a minute and read it aloud to their child tonight.
-**Current focus:** Phase 11 — ui-polish-and-tidy-up
+**Current focus:** Milestone v2.0 — defining requirements
 
 ## Current Position
 
-Phase: 11 (ui-polish-and-tidy-up) — EXECUTING
-Plan: 2 of 2
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-04-01 — Milestone v2.0 started
 
 ## Performance Metrics
 
