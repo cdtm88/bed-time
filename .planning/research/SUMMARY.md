@@ -1,174 +1,78 @@
-# Project Research Summary
+# Research Summary: Nightlight Tales v2.0 Stack
 
-**Project:** Bedtime Story Generator
-**Domain:** AI-powered children's content generation (parent-read bedtime stories)
-**Researched:** 2026-03-23
-**Confidence:** MEDIUM
+**Domain:** AI-powered children's bedtime story app -- v2.0 feature additions
+**Researched:** 2026-04-03
+**Overall confidence:** HIGH
 
 ## Executive Summary
 
-This is a single-purpose AI generation app: a parent enters a child's name, age, theme, and desired reading duration, and the app produces a calming, age-appropriate bedtime story via Claude. Experts build apps like this as thin wrappers around LLM APIs with server-side generation, streaming responses, and layered content safety. The recommended stack is intentionally minimal -- Next.js 16 with App Router, Tailwind CSS 4, the Anthropic TypeScript SDK, and Zod for validation. No database, no auth, no state management library. The complexity lives in prompt engineering and the reading experience, not infrastructure.
+The v2.0 feature set (streaming, AI illustrations, TTS narration, Wake Lock, story persistence, shareable links) requires only four new npm packages: `@fal-ai/client`, `@fal-ai/server-proxy`, `openai`, and `idb-keyval`. Two features (Wake Lock, reading font) use browser-native APIs with zero dependencies. One feature (shareable links) reuses the existing Upstash Redis stack. The streaming enhancement requires architectural changes to the existing generation pipeline, not new libraries.
 
-The recommended approach is to treat the prompt as the product and the reading screen as the primary surface. The generation pipeline (input validation, age/duration mapping, prompt construction, Claude API call, safety validation, retry logic) should be built and testable via curl before any UI work begins. The reading screen -- dark/warm background, large serif font, Wake Lock, no chrome -- deserves as much design attention as the generation logic because parents spend 5-15 minutes reading and 30 seconds on the form.
+The most important architectural decision is the streaming-plus-safety pattern. The current codebase has a gap: `route.ts` streams story text directly without safety validation, while `safety.ts` buffers and validates but does not stream. The v2.0 approach must be "buffer-validate-then-stream" -- generate the full story server-side, validate with Haiku, then progressively stream the validated text to the client. This means first-word latency is 3-5 seconds (not the aspirational 1-2 seconds), but safety is non-negotiable for a children's app.
 
-The dominant risk is content safety. This is a children's product where a single inappropriate story destroys trust permanently. The mitigation is defense in depth: constrained inputs (preset themes, sanitized name field), a safety-focused system prompt, post-generation validation via a cheaper model (Haiku), retry with modified prompts (capped at 2 retries), and graceful failure. Secondary risks are LLM latency (mitigated by streaming), bland story quality (mitigated by investing in prompt engineering), and API cost spiraling from retries (mitigated by strong first-pass prompts and cost monitoring).
+For AI illustrations, fal.ai with FLUX Dev is the clear choice: 30-50% cheaper than Replicate, built-in Next.js proxy handler, and storybook-quality output at ~$0.025/megapixel. For TTS narration, OpenAI's gpt-4o-mini-tts at $0.015/minute is the right balance of quality and cost for a free app, with browser Web Speech API as a free fallback. For local storage, idb-keyval at 573 bytes provides the exact API surface needed (get/set/del/keys) without the overhead of larger IndexedDB wrappers. For the reading font, Literata (designed for Google Play Books) is purpose-built for the exact use case of reading stories on mobile screens.
 
 ## Key Findings
 
-### Recommended Stack
-
-An intentionally minimal stack for a form-to-display app with one API integration. Every library earns its place.
-
-**Core technologies:**
-- **Next.js 16.2:** Full-stack framework -- App Router for server components, API routes keep the Claude key server-side, Turbopack for dev speed
-- **Tailwind CSS 4.2:** Utility-first CSS with built-in dark mode variants, Typography plugin for the reading experience, no runtime overhead
-- **@anthropic-ai/sdk ^0.80.0:** Direct Anthropic SDK for full control over prompts, streaming, retries -- no abstraction layer needed for a single-model app
-- **Zod ^3.25:** Input/output validation shared between client and server; compatible with the Anthropic SDK for structured output
-- **Vercel:** Zero-config deployment for Next.js with edge functions and generous free tier
-
-**What to avoid:** Vercel AI SDK (unnecessary abstraction for single-provider), databases (no data to persist in MVP), auth libraries (zero-friction first use), state management libraries (form + display flow needs only useState), LangChain (massive dependency for one API call).
-
-### Expected Features
-
-**Must have (table stakes):**
-- Child name personalization (name woven naturally into narrative)
-- Age-appropriate content calibration (vocabulary, sentence length, complexity per age band)
-- Preset theme selection (15-20 curated themes; no freeform input)
-- Reading duration control (5/10/15 minutes mapped to word counts)
-- Multi-layer safety filtering (prompt + validation + retry + graceful failure)
-- Mobile-first dim-room reading view (dark/warm, large text, no chrome)
-- Streaming response display (first text within 1-2 seconds)
-- Narrative arc with calming wind-down design (the core differentiator)
-- No account required (zero friction to first story)
-
-**Should have (add after validation):**
-- Story history via local storage
-- Sibling support (multiple child names)
-- Dim-room UI refinements (amber mode, brightness presets)
-- Reading duration accuracy tuning (calibrate against real read-aloud timing)
-- Offline story caching
-
-**Defer (v2+):**
-- User accounts and saved profiles
-- AI-generated story illustrations
-- Multi-voice TTS narration with ambient sounds
-- Themed story series / continuing adventures
-- Native iOS app
-- Freeform theme input (moderated)
-
-**Anti-features (do not build):** Freeform prompts (safety nightmare), child-facing UI (COPPA, screen time), social sharing (moderation burden), gamification/streaks (undermines calm purpose), interactive branching stories (extends bedtime, breaks wind-down arc).
-
-### Architecture Approach
-
-A server-rendered monolith with two pages (form + reading mode) and one API endpoint. All generation runs server-side with a generate-then-validate pipeline. The client receives only validated, safe stories via SSE streaming. State management is React useState -- no global store needed for a linear form-to-display flow.
-
-**Major components:**
-1. **Input Form** -- Collects name, age, theme, duration with client+server validation
-2. **Prompt Engineering Service** -- Pure functions that map inputs to structured Claude prompts (system prompt + user message); the core product logic
-3. **Claude API Client** -- Anthropic SDK wrapper handling streaming, token limits, and error classification
-4. **Safety Evaluation Layer** -- Post-generation validation via cheaper model (Haiku), retry orchestration with modified prompts, graceful failure
-5. **Reading Mode** -- Fullscreen dark/warm display with large serif font, Wake Lock, no navigation chrome
-
-**Key architectural decision:** Do NOT stream stories directly to the client during generation. Buffer the full story server-side, validate safety, THEN stream the validated text to the client. This prevents showing unsafe content and then yanking it away.
-
-### Critical Pitfalls
-
-1. **Single-layer safety filtering** -- One check will eventually fail. Implement defense in depth: input constraints, prompt-level safety, output validation, retry with guidance, graceful failure. Address in Phase 1.
-2. **Prompt injection via the name field** -- The only user-provided text interpolated into the prompt. Validate aggressively (30 char max, alpha only, XML-delimited in prompt). Address in Phase 1.
-3. **LLM latency destroying the bedtime moment** -- 15-30 second waits are unacceptable in context. Stream responses, show personality in loading states, set hard timeouts. Address in Phase 1.
-4. **Stories that sound AI-generated** -- Bland, preachy, formulaic stories kill retention. Invest in prompt engineering: narrative voice, sensory language, varied structures, example openings. Ongoing from Phase 1.
-5. **Reading screen as an afterthought** -- The reading screen IS the product (5-15 min vs 30 sec on form). Dark/warm background, large serif font, Wake Lock, short line lengths, no chrome. Address in Phase 1.
-6. **API costs spiraling from retries** -- Each retry doubles the cost. Strong first-pass prompts minimize retries. Use Haiku for validation. Track retry rates. Budget early.
+**Stack:** 4 new npm packages (`@fal-ai/client`, `@fal-ai/server-proxy`, `openai`, `idb-keyval`), 2 new env vars (`FAL_KEY`, `OPENAI_API_KEY`), Literata font via `next/font/google`
+**Architecture:** Buffer-validate-then-stream pattern resolves the safety/streaming tension; fal.ai proxy route for images; OpenAI TTS proxy for narration; idb-keyval for client-side story library; Upstash Redis reuse for shareable links
+**Critical pitfall:** fal.ai CDN image URLs expire -- saved stories must handle stale image references gracefully, or cache image data locally
 
 ## Implications for Roadmap
 
 Based on research, suggested phase structure:
 
-### Phase 1: Foundation and Core Pipeline
-**Rationale:** The architecture research identifies a clear dependency chain: types and validation first, then the generation pipeline, then safety. All three must exist before any UI makes sense. This phase proves the core product works (even via curl) before investing in presentation.
-**Delivers:** Working story generation pipeline with safety validation, callable via API
-**Addresses:** Input validation, age mapping, duration mapping, prompt engineering, Claude API integration, safety evaluation with retry logic, rate limiting
-**Avoids:** Single-layer safety (Pitfall 1), prompt injection (Pitfall 2), unbounded retries (Pitfall 7), API key exposure
+1. **Foundation: Safety + Streaming + Wake Lock + Font** - Resolve the core architectural tension (safety validation + progressive streaming), add Wake Lock (trivial effort, massive UX win), and swap to Literata font
+   - Addresses: Progressive streaming, Wake Lock, reading font
+   - Avoids: Shipping streaming without safety validation
 
-### Phase 2: Input UI
-**Rationale:** With the pipeline proven, build the form that feeds it. The input form is low-risk and well-understood (4 controlled inputs + preset selectors). Group it separately from the reading experience because they have different design concerns.
-**Delivers:** Parent-facing input form with theme picker, duration selector, name/age inputs, client-side validation
-**Addresses:** Child name personalization, preset theme selection, reading duration control, no-account-required flow
-**Avoids:** Freeform input (anti-feature), over-engineered state management (Anti-pattern 4)
+2. **Story Persistence: Library + Shareable Links** - Give stories identity and longevity via idb-keyval local storage, then add Redis-backed shareable links
+   - Addresses: Story library, shareable story links
+   - Avoids: Building sharing before stories have a stable data format
 
-### Phase 3: Reading Experience
-**Rationale:** The reading screen is the primary product surface. It deserves its own phase because it requires specific UX attention: dark/warm theme, typography, Wake Lock, streaming text rendering, mobile optimization. Rushing it as "just display the text" is a documented pitfall.
-**Delivers:** Fullscreen dim-room reading mode with streaming text display, loading states with personality, error states
-**Addresses:** Mobile-friendly dim-room reading view, streaming response display, calming wind-down presentation
-**Avoids:** Reading screen as afterthought (Pitfall 6), LLM latency perception (Pitfall 3), non-streaming rendering
+3. **Rich Media: AI Illustrations** - Add fal.ai integration for on-demand scene illustrations via IntersectionObserver
+   - Addresses: AI scene illustrations, improved visual experience
+   - Avoids: Paying for images during development of other features
 
-### Phase 4: Story Quality and Calibration
-**Rationale:** With the full loop working (form -> generate -> read), this phase focuses on the quality of the output. Prompt refinement, age calibration accuracy, duration accuracy, and narrative variety are best tuned with the full system in place.
-**Delivers:** Refined prompts producing genuinely good stories with accurate age calibration and duration targeting
-**Addresses:** Narrative arc quality, calming wind-down language design (core differentiator), age-appropriate calibration, reading duration accuracy
-**Avoids:** Bland/formulaic stories (Pitfall 4), age calibration that does not work (Pitfall 5)
+4. **Narration: TTS** - Add OpenAI TTS with voice selection, text chunking for the 4096-char limit, and audio playback UI
+   - Addresses: Text-to-speech narration
+   - Avoids: Building the most complex feature before simpler features are stable
 
-### Phase 5: Polish, Monitoring, and Post-Launch Features
-**Rationale:** After the core product is solid, add the should-have features that improve retention and operational visibility. Story history, sibling support, and cost monitoring are all low-complexity additions that build on the existing foundation.
-**Delivers:** Story history (local storage), sibling support, API cost monitoring, expanded theme list, offline caching
-**Addresses:** Story history/favorites, sibling support, dim-room UI refinements, cost tracking
-**Avoids:** API cost spiraling (Pitfall 7) via monitoring
+5. **Polish: SVG Illustrations** - Refresh the 18 theme tile SVGs with warmer nighttime aesthetic
+   - Addresses: Improved SVG theme illustrations
+   - Avoids: Design work blocking engineering work (can run in parallel)
 
-### Phase Ordering Rationale
+**Phase ordering rationale:**
+- Safety + streaming first because it is the architectural foundation everything else builds on
+- Story library before shareable links because sharing requires a stable story data format
+- Illustrations before TTS because illustrations are simpler (single API call per image vs text chunking + audio streaming)
+- SVG refresh is independent design work that can ship anytime
 
-- **Pipeline before UI** because the generation pipeline is the core product risk and the architecture research explicitly recommends proving it works before building UI. Building UI first leads to rework when the API shape changes.
-- **Input form before reading mode** because you need the form to drive the pipeline during development, but the reading mode is its own phase because it deserves dedicated design attention (not tacked onto the form phase).
-- **Quality tuning after full loop** because prompt refinement requires seeing stories rendered in context. You cannot tune "calming wind-down" quality without reading the story in a dark room on a phone.
-- **Monitoring and extras last** because they build on a stable foundation and are not needed for initial validation.
-
-### Research Flags
-
-Phases likely needing deeper research during planning:
-- **Phase 1 (Safety layer):** The two-phase generate-then-validate pattern needs careful API design. Research specific Claude safety classification prompts and structured output for binary safe/unsafe decisions.
-- **Phase 3 (Reading experience):** Wake Lock API browser compatibility (especially Safari iOS), streaming text rendering performance on mobile, and warm-amber color palette design need investigation.
-- **Phase 4 (Story quality):** Prompt engineering is iterative and domain-specific. No amount of upfront research replaces testing with real parents reading aloud.
-
-Phases with standard patterns (skip research-phase):
-- **Phase 2 (Input form):** Standard React form with controlled inputs, preset selectors, and Zod validation. Well-documented patterns.
-- **Phase 5 (Polish/monitoring):** Local storage, cost dashboards, and feature additions are all established patterns.
+**Research flags for phases:**
+- Phase 1: Needs careful implementation of the buffer-validate-then-stream pattern -- the module singleton for passing ReadableStream across navigation is non-trivial
+- Phase 3: Needs prompt engineering for consistent illustration style across scenes; fal.ai CDN URL expiry needs investigation
+- Phase 4: The 4096-character TTS input limit requires paragraph-boundary chunking logic; audio streaming vs buffered playback decision
 
 ## Confidence Assessment
 
 | Area | Confidence | Notes |
 |------|------------|-------|
-| Stack | HIGH | Core technologies (Next.js 16, Tailwind 4, Anthropic SDK) verified against official sources. Minor version uncertainty on TypeScript and Zod. |
-| Features | MEDIUM | Based on training data knowledge of competitors (Oscar Stories, Sleepytales, DreamyTales). Competitor features may have changed; spot-check before finalizing. |
-| Architecture | MEDIUM | Server-side generation with streaming and safety validation is a well-established LLM app pattern. Specific SDK method signatures should be verified. |
-| Pitfalls | MEDIUM-HIGH | Safety, prompt injection, and latency are well-documented concerns in LLM apps. Children's content safety is a well-understood domain. |
+| Stack (new packages) | HIGH | All npm versions verified, pricing confirmed from official sources |
+| Streaming + safety architecture | HIGH | Pattern is well-understood; implementation verified against existing codebase |
+| fal.ai for images | HIGH | Pricing, Next.js integration, and Flux model comparison all verified |
+| OpenAI TTS | HIGH | Pricing ($0.015/min) and streaming support confirmed from official docs |
+| idb-keyval | HIGH | Version 6.2.2 verified, 573 bytes confirmed, API surface matches needs |
+| Literata font | MEDIUM | Purpose-built for the use case, but font choice is subjective -- recommend A/B test |
+| Cost estimates | MEDIUM | Per-image and per-narration costs verified, but total cost depends on usage patterns |
 
-**Overall confidence:** MEDIUM -- the patterns and technologies are well-established, but web search was unavailable during research. Specific API details (model names, pricing, SDK methods) should be verified against current Anthropic documentation before implementation begins.
+## Gaps to Address
 
-### Gaps to Address
-
-- **Claude model pricing and rate limits:** Exact current pricing for Sonnet and Haiku should be verified to set per-story cost budgets. Rate limits affect architecture at scale.
-- **Vercel serverless function timeout:** Free tier has 10-second timeout which is insufficient for story generation (10-30s). Confirm Pro tier timeout limits and pricing.
-- **Wake Lock API on Safari iOS:** Browser support and behavior should be verified -- Safari has historically been inconsistent with this API.
-- **Competitor feature verification:** Feature research is based on training data. Spot-check Oscar Stories, Sleepytales, and DreamyTales before finalizing the differentiator strategy.
-- **Read-aloud word count calibration:** The assumed 130-150 wpm for parent read-aloud needs empirical validation with actual parents and actual generated stories.
+- fal.ai CDN URL expiry policy: need to determine how long generated image URLs remain valid, and whether to cache images in IndexedDB alongside story text
+- OpenAI TTS text chunking: the 4096-character limit chunking strategy needs implementation-time testing to ensure audio continuity across chunk boundaries
+- Literata vs Noto Serif: subjective preference -- recommend brief A/B test with 3-5 parents before committing
+- gpt-4o-mini-tts voice selection: need to listen to each available voice and curate 3-4 that fit the "calm bedtime narration" context
+- Image prompt engineering: consistent illustration style across 2-3 scenes per story requires prompt tuning at implementation time
 
 ## Sources
 
-### Primary (HIGH confidence)
-- Next.js 16.2 release blog (nextjs.org/blog) -- verified March 2026
-- Anthropic TypeScript SDK v0.80.0 releases (github.com/anthropics/anthropic-sdk-typescript) -- verified March 2026
-- Tailwind CSS v4.2 blog (tailwindcss.com/blog) -- verified
-
-### Secondary (MEDIUM confidence)
-- Training data knowledge of competitor apps (Oscar Stories, Sleepytales, DreamyTales, Moshi)
-- Training data knowledge of LLM safety patterns, prompt injection, COPPA
-- Children's literacy research on read-aloud pacing (~100-150 wpm)
-- General LLM application architecture patterns
-
-### Tertiary (LOW confidence)
-- TypeScript ~5.7 version (accept whatever ships with Next.js 16)
-- Zod ^3.25 compatibility (verify on install)
-- ESLint/Prettier versions (non-critical, accept latest stable)
-
----
-*Research completed: 2026-03-23*
-*Ready for roadmap: yes*
+See STACK.md for complete source list with URLs and confidence levels.

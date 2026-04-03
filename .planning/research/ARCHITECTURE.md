@@ -1,385 +1,569 @@
-# Architecture Research
+# Architecture Patterns
 
-**Domain:** AI-powered bedtime story generator web app
-**Researched:** 2026-03-23
-**Confidence:** MEDIUM (based on training data for LLM app patterns; web search unavailable for verification)
+**Domain:** Bedtime story generator v2.0 feature integration
+**Researched:** 2026-04-03
+**Confidence:** HIGH (grounded in actual codebase review + verified web sources)
 
-## Standard Architecture
+---
 
-### System Overview
+## Current Architecture (v1.0 Shipped)
+
+### Actual Code Flow
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                      Presentation Layer                         │
-│  ┌──────────────┐  ┌──────────────┐  ┌───────────────────┐     │
-│  │  Input Form   │  │ Loading/     │  │  Reading Mode     │     │
-│  │  (name, age,  │  │ Progress     │  │  (fullscreen,     │     │
-│  │  theme, dur.) │  │ Screen       │  │  dim-friendly)    │     │
-│  └──────┬───────┘  └──────┬───────┘  └───────────────────┘     │
-│         │                 │                     ▲               │
-├─────────┴─────────────────┴─────────────────────┼───────────────┤
-│                     API Layer                    │               │
-│  ┌──────────────────────────────────────────────┐│               │
-│  │              /api/generate-story             ││               │
-│  │  ┌────────────────────────────────────────┐  ││               │
-│  │  │          Request Validation            │  ││               │
-│  │  └──────────────┬─────────────────────────┘  ││               │
-│  │                 ▼                             ││               │
-│  │  ┌────────────────────────────────────────┐  ││               │
-│  │  │     Prompt Engineering Service         │  ││               │
-│  │  │  (age mapping, theme, duration calc)   │  ││               │
-│  │  └──────────────┬─────────────────────────┘  ││               │
-│  │                 ▼                             ││               │
-│  │  ┌────────────────────────────────────────┐  ││               │
-│  │  │       Claude API Client                │  ││               │
-│  │  │  (streaming story generation)          │  ││               │
-│  │  └──────────────┬─────────────────────────┘  ││               │
-│  │                 ▼                             ││               │
-│  │  ┌────────────────────────────────────────┐  ││               │
-│  │  │       Safety Evaluation Layer          │  ││               │
-│  │  │  (validate → retry or reject)          │──┘│               │
-│  │  └────────────────────────────────────────┘   │               │
-│  └───────────────────────────────────────────────┘               │
-├──────────────────────────────────────────────────────────────────┤
-│                    External Services                             │
-│  ┌──────────────────────────────────────────────┐                │
-│  │            Anthropic Claude API              │                │
-│  │  (Messages API, streaming responses)         │                │
-│  └──────────────────────────────────────────────┘                │
-└──────────────────────────────────────────────────────────────────┘
+[StoryForm]
+  |
+  POST /api/generate {name, age, theme, duration}
+  |
+[/api/generate (Edge Runtime)]
+  |
+  client.messages.stream() -> Claude Sonnet
+  |
+  ReadableStream pipes raw text chunks to client
+  |                    (NO safety validation in this path)
+  |
+[StoryForm]
+  |
+  await res.text()   <-- buffers entire stream client-side
+  |
+  sessionStorage.setItem('nightlight-story', JSON.stringify({story, name, theme}))
+  |
+  window.location.href = '/story'
+  |
+[ReadingView]
+  |
+  reads sessionStorage on mount -> renders paragraphs
 ```
 
-### Component Responsibilities
+### Key Observations from Code Review
 
-| Component | Responsibility | Typical Implementation |
-|-----------|----------------|------------------------|
-| Input Form | Collect child name, age, theme, duration | React component with controlled inputs, preset theme selector |
-| Loading Screen | Show progress while story generates | Streaming indicator or animated placeholder; receives SSE/streaming chunks |
-| Reading Mode | Display finished story fullscreen | Dedicated route/view; large serif font, dark background, no chrome |
-| API Route | Orchestrate generation pipeline | Next.js API route or server action; single endpoint |
-| Request Validator | Sanitize and validate inputs | Zod schema; reject bad inputs before hitting Claude |
-| Prompt Engineering Service | Build Claude prompt from inputs | Pure function: inputs -> system prompt + user message |
-| Claude API Client | Call Anthropic API, handle streaming | Anthropic SDK; streaming for perceived speed |
-| Safety Evaluation Layer | Validate story safety, manage retries | Post-generation check + retry loop (max 2 retries) |
+1. **`/api/generate/route.ts` streams raw Sonnet output with NO Haiku validation.** The route uses `client.messages.stream()` and pipes `text_delta` events directly to the client via a `ReadableStream`. The `generateSafeStory()` function in `safety.ts` (which does Haiku validation + 3-attempt retry) exists and is tested but is NOT called by the route handler.
 
-## Recommended Project Structure
+2. **`StoryForm` buffers everything anyway.** Despite the server streaming, the client calls `await res.text()` which buffers the entire response before storing to sessionStorage and navigating. There is zero progressive display in v1.0.
+
+3. **`ReadingView` is a one-shot render.** It reads from sessionStorage on mount, splits by `\n\n`, and renders all paragraphs immediately. No animation, no progressive reveal.
+
+4. **Data shape in sessionStorage:** `{story: string, name: string, theme: string}` -- notably missing `age` and `duration`.
+
+5. **Upstash Redis** is used only for rate limiting (10 req/hr/IP) at `/api/generate`. The `@upstash/redis` package is already installed.
+
+6. **Edge Runtime** is declared on the generate route. The Anthropic SDK is confirmed Edge-compatible.
+
+### Critical Finding: Safety Gap
+
+The v1.0 route streams from Sonnet but does NOT run Haiku validation. The `generateSafeStory` function with its 3-attempt loop uses `client.messages.create` (non-streaming, buffered). The safety guarantee documented in PROJECT.md ("all stories pass safety validation before display") is NOT enforced at the API level -- it relies on the unverified assumption that Sonnet's own alignment is sufficient.
+
+**This must be reconciled as the first v2.0 task.** Restoring safety validation is prerequisite to all other features.
+
+---
+
+## Streaming + Safety: The Central Design Decision
+
+### The Constraint
+
+PROJECT.md states: "Safety is non-negotiable: the app must never surface a story with any doubt about its appropriateness." This means the Haiku classifier must see the COMPLETE story text before any content reaches the user's screen.
+
+### Recommended Approach: Server-Side Buffer-Validate-Restream
+
+Generate the full story server-side, validate with Haiku, then re-stream the validated text to the client in chunks. The client navigates to the reading view immediately and renders text progressively as it arrives from the re-stream.
+
+```
+[Client POSTs /api/generate]
+         |
+[Server: rate limit check, input validation]
+         |
+[Server: generateSafeStory() -- Sonnet creates full story into buffer]
+         |  (~8-12 seconds for 10-min story)
+[Server: Haiku validates full buffered story]
+         |  (~1-2 seconds)
+    +----+----+
+  UNSAFE     SAFE
+    |          |
+[retry up   [Server re-streams validated text to client
+ to 2x]      via ReadableStream in paragraph-sized chunks]
+                |
+          [Client renders paragraphs progressively
+           with fade-in animation as they arrive]
+```
+
+### Why Not Other Approaches
+
+| Approach | Why Rejected |
+|----------|-------------|
+| Stream directly, validate in parallel, abort if unsafe | A parent may have already read unsafe content aloud. One flash of inappropriate text destroys trust permanently. |
+| Stream directly with Claude's built-in refusal mechanism | Claude's streaming refusals (stop_reason: "refusal") only catch Claude's own policy violations, not the custom Haiku bedtime-safety classifier which has stricter criteria (no mild peril, no friendly monsters, etc.). |
+| Generate a safe summary first, then swap in full story | Doubles API calls, adds cost, and the visible content swap mid-read is jarring. |
+| Client-only progressive reveal (no server re-stream) | Viable alternative -- buffer full JSON response, then animate reveal client-side. Simpler than server re-streaming but means the entire response must arrive before any text appears. See "Alternative" below. |
+
+### Viable Alternative: Full Buffer + Client-Side Progressive Reveal
+
+If server re-streaming adds too much complexity, a simpler approach works:
+
+1. `/api/generate` calls `generateSafeStory()`, returns complete validated story as JSON
+2. Client navigates to `/story` immediately with a loading animation
+3. Once the full JSON response arrives, `TextRevealer` component animates paragraph-by-paragraph reveal
+
+**Tradeoff:** The first visible word appears only after generation + validation completes (~10-15 seconds). But the reading EXPERIENCE feels progressive because text fades in paragraph by paragraph. For a bedtime context where the parent is settling the child, 10-15 seconds with a warm loading animation ("Weaving a tale about dragons for Emma...") is acceptable.
+
+**Recommendation:** Start with this simpler approach. The warm loading state already exists (`LoadingOverlay` component). Server re-streaming is an optimization for later if users report the wait feels too long.
+
+---
+
+## Runtime Decision: Edge vs Node.js
+
+### The Problem
+
+`generateSafeStory()` runs synchronous buffered API calls: Sonnet generation (~8-12s) + Haiku validation (~1-2s) + potential retries. Total worst case with 2 retries: ~30-40 seconds. Edge Runtime on Vercel has a 30-second default timeout.
+
+The v1.0 route used streaming to keep the connection alive (each chunk resets the timeout), but `generateSafeStory()` does NOT stream -- it buffers internally.
+
+### Recommendation: Switch to Node.js Runtime with maxDuration
+
+```typescript
+// /api/generate/route.ts
+export const runtime = 'nodejs'  // was 'edge'
+export const maxDuration = 60    // seconds -- covers worst-case retry scenario
+```
+
+**Rationale:**
+- Node.js runtime on Vercel Pro supports `maxDuration` up to 300 seconds
+- The original reason for Edge was to avoid timeout issues with streaming -- but we are now buffering, so the streaming advantage is gone
+- The Anthropic SDK works on both runtimes
+- Upstash Redis uses HTTP/REST, works on both runtimes
+- No Edge-specific APIs are used in the current route
+
+**Keep Edge Runtime for:** `/api/illustrate` and `/api/share` which are fast, simple proxy routes that benefit from Edge latency.
+
+---
+
+## New Routes and Pages
+
+| Route | Method | Runtime | Purpose | Input | Output |
+|-------|--------|---------|---------|-------|--------|
+| `/api/generate` | POST | **Node.js** (MODIFIED) | Generate + validate story | `{name, age, theme, duration}` | JSON `{story, metadata}` |
+| `/api/illustrate` | POST | Edge | AI image generation proxy | `{excerpt, theme, sceneIndex}` | JSON `{url}` |
+| `/api/share` | POST | Edge | Store story in Redis with TTL | `{story, name, theme, duration}` | JSON `{id, shareUrl}` |
+| `/api/share/[id]` | GET | Edge | Retrieve shared story | path param | JSON `{story, name, theme, ...}` or 404 |
+
+| Page | Type | Purpose |
+|------|------|---------|
+| `/story/[id]` | Server Component | Shared story reading view (fetches from Redis) |
+| `/library` | Client Component | Story library listing from IndexedDB |
+
+---
+
+## Component Architecture
+
+### Modified Components
+
+| Component | Current | v2.0 Changes |
+|-----------|---------|-------------|
+| `story-form.tsx` | Fetches stream, buffers with `res.text()`, saves to sessionStorage, navigates | Fetches JSON response, saves to sessionStorage AND IndexedDB, navigates to `/story` |
+| `reading-view.tsx` | Reads sessionStorage, renders all paragraphs at once | Adds: progressive text reveal, wake lock hook, illustration slots, narration controls, share button. Must handle three modes: fresh story (from sessionStorage), library story (from IndexedDB), shared story (from props/Redis) |
+| `/api/generate/route.ts` | Streams raw Sonnet output, no validation | Calls `generateSafeStory()`, returns JSON with validated story. Switches to Node.js runtime |
+
+### New Components
+
+| Component | Purpose | Dependencies |
+|-----------|---------|-------------|
+| `text-revealer.tsx` | Paragraph-by-paragraph fade-in animation | Receives full story text as prop |
+| `illustration-slot.tsx` | Lazy AI illustration with IntersectionObserver | `/api/illustrate`, shows placeholder until image loads |
+| `narration-controls.tsx` | Play/pause TTS, voice picker, sentence highlighting | Web Speech API (v2.0), upgradeable to OpenAI TTS (v3.0) |
+| `share-button.tsx` | Generate shareable link, copy to clipboard | `/api/share` |
+| `story-card.tsx` | Card component for library listing | `story-store.ts` |
+
+### New Library Files
+
+| File | Purpose |
+|------|---------|
+| `lib/story-store.ts` | IndexedDB CRUD via `idb-keyval` (~600B). Save, list, delete, get stories |
+| `lib/wake-lock.ts` | `useWakeLock()` hook -- acquire on mount, release on unmount, re-acquire on visibility change |
+| `lib/share.ts` | nanoid generation, Redis key formatting, SharedStory type, URL helpers |
+| `lib/narration.ts` | Web Speech API wrapper: utterance creation, voice filtering, sentence boundary detection |
+| `lib/illustration.ts` | Illustration prompt builder, paragraph-to-scene-description mapper, insertion point logic |
+
+---
+
+## Data Flow: Each Feature
+
+### 1. Progressive Story Generation (modified flow)
+
+```
+StoryForm submits POST /api/generate {name, age, theme, duration}
+    |
+/api/generate calls generateSafeStory()
+    |  Sonnet generates -> Haiku validates -> retry if unsafe
+    |
+Returns JSON: {
+  story: string,
+  metadata: { name, theme, age, duration, createdAt }
+}
+    |
+StoryForm receives JSON:
+    |-- saves to sessionStorage (for immediate reading)
+    |-- saves to IndexedDB via story-store.ts (for library)
+    |-- navigates to /story
+    |
+ReadingView:
+    |-- reads from sessionStorage
+    |-- TextRevealer animates paragraph-by-paragraph fade-in
+    |-- useWakeLock() keeps screen on
+```
+
+### 2. Screen Wake Lock
+
+```
+ReadingView mounts
+    |
+useWakeLock() hook:
+    |-- navigator.wakeLock.request('screen')
+    |-- document.addEventListener('visibilitychange', reacquire)
+    |
+ReadingView unmounts or user navigates away
+    |
+useWakeLock() cleanup:
+    |-- sentinel.release()
+    |-- removeEventListener
+```
+
+Screen Wake Lock API is supported in all major browsers since early 2025 (Chrome, Firefox, Safari, Edge). HTTPS required (Vercel provides this). No polyfill needed. Silent failure for unsupported contexts.
+
+### 3. AI Scene Illustrations
+
+```
+ReadingView identifies 2-3 insertion points (story split into thirds by paragraph count)
+    |
+IllustrationSlot renders at each insertion point with themed placeholder
+    |
+IntersectionObserver fires when slot enters viewport
+    |
+POST /api/illustrate {
+  excerpt: "relevant paragraph text",
+  theme: "Space & Stars",
+  sceneIndex: 1
+}
+    |
+/api/illustrate:
+    |-- Builds safe image prompt (watercolor children's book style, no real faces)
+    |-- Calls OpenAI Images API (gpt-image-1-mini at $0.005-0.052/image)
+    |-- Returns {url: "https://..."}
+    |
+IllustrationSlot fades in the image
+    |
+Image URL cached in the story's IndexedDB record for re-reads
+```
+
+**Cost control:** Use `gpt-image-1-mini` (50-70% cheaper than flagship). Portrait aspect ratio (1024x1536) for mobile reading. Separate rate limit: 6 images/hr/IP. Graceful fallback if generation fails (story remains fully readable).
+
+### 4. TTS Narration
+
+```
+NarrationControls appear as floating bar on ReadingView
+    |
+User taps Play:
+    |-- Web Speech API: new SpeechSynthesisUtterance(paragraphText)
+    |-- Utterance.voice = selected voice from picker
+    |-- speechSynthesis.speak(utterance)
+    |
+Sentence highlighting:
+    |-- utterance.onboundary event marks current word/sentence
+    |-- ReadingView highlights the current paragraph
+    |
+Paragraph advance:
+    |-- utterance.onend -> load next paragraph -> speak
+    |
+User taps Pause:
+    |-- speechSynthesis.pause()
+```
+
+**v2.0: Web Speech API only.** Free, no server cost, works offline. Voice quality varies by device but is "good enough" for initial launch. Voice picker shows system voices filtered by language.
+
+**v3.0 upgrade path:** Replace Web Speech API with POST `/api/tts` proxying to OpenAI TTS (`gpt-4o-mini-tts`). Requires text chunking (4096-char limit per request), audio streaming, and `OPENAI_API_KEY` env var. The NarrationControls UI stays the same -- only the audio source changes.
+
+### 5. Story Library
+
+```
+Story saved to IndexedDB on generation (from StoryForm):
+    |
+story-store.ts: set(storyId, {story, name, theme, age, duration, createdAt})
+    |
+/library page:
+    |-- story-store.ts: entries() -> list all stories
+    |-- Renders StoryCard for each: title, date, duration, theme icon, first-line preview
+    |
+User taps a card:
+    |-- Loads story into sessionStorage
+    |-- Navigates to /story (reuses ReadingView)
+    |
+User deletes a story:
+    |-- Confirm dialog
+    |-- story-store.ts: del(storyId)
+```
+
+**Storage choice: IndexedDB via `idb-keyval`.**
+- localStorage: 5MB limit (~20-30 stories), synchronous, blocks main thread. Not enough.
+- IndexedDB: Effectively unlimited, async, can store illustration blobs too.
+- `idb-keyval` library: ~600 bytes, Promise-based get/set/del/entries. No need for heavier libraries like Dexie.
+
+**Safari caveat:** Safari may evict IndexedDB data if no user interaction for 7 days. Mitigate with `navigator.storage.persist()` request and clear "saved on this device" labeling.
+
+### 6. Shareable Links
+
+```
+User taps ShareButton on ReadingView:
+    |
+POST /api/share {story, name, theme, duration}
+    |
+/api/share:
+    |-- Generate nanoid(10) as ID
+    |-- redis.set("story:{id}", JSON.stringify({story, name, theme, duration, createdAt}), {ex: 7776000})
+    |       (90-day TTL)
+    |-- Return {id, shareUrl: `https://bed-time-nu.vercel.app/story/${id}`}
+    |
+ShareButton copies URL to clipboard, shows confirmation
+    |
+Recipient opens /story/{id}:
+    |
+/story/[id]/page.tsx (Server Component):
+    |-- Reads Redis directly (no API round-trip): redis.get("story:{id}")
+    |-- If found: passes story data as props to ReadingView (static mode, no animation)
+    |-- If expired/missing: renders "This story has expired" with CTA to create a new one
+    |-- generateMetadata() sets OG tags: title="{name}'s {theme} Story", description, theme image
+```
+
+**Redis storage details:**
+- Key: `story:{nanoid(10)}` -- URL-safe, short
+- Value: JSON string ~2-5KB per story
+- TTL: 90 days (7,776,000 seconds) -- covers "grandparent reads it weeks later" use case
+- No TTL refresh on read
+- Uses existing `@upstash/redis` dependency and Upstash instance
+- `nanoid` uses `crypto.getRandomValues()` -- Edge Runtime compatible
+
+---
+
+## File Structure Changes
 
 ```
 src/
-├── app/                        # Next.js App Router pages
-│   ├── page.tsx                # Home — input form
-│   ├── story/
-│   │   └── page.tsx            # Reading mode (receives story via state/params)
-│   ├── api/
-│   │   └── generate/
-│   │       └── route.ts        # Story generation API endpoint
-│   └── layout.tsx              # Root layout, global styles
-├── components/
-│   ├── story-form.tsx          # Input form component
-│   ├── theme-selector.tsx      # Theme picker (preset list)
-│   ├── duration-selector.tsx   # Reading duration picker
-│   ├── loading-screen.tsx      # Generation progress display
-│   └── story-reader.tsx        # Full-screen reading mode component
-├── lib/
-│   ├── prompts/
-│   │   ├── system-prompt.ts    # Base system prompt for Claude
-│   │   ├── story-prompt.ts     # Story generation prompt builder
-│   │   └── safety-prompt.ts    # Safety evaluation prompt
-│   ├── claude.ts               # Anthropic SDK client wrapper
-│   ├── safety.ts               # Safety check + retry orchestration
-│   ├── age-mapping.ts          # Age -> reading level band mapping
-│   ├── duration.ts             # Duration -> word count / complexity mapping
-│   └── validation.ts           # Zod schemas for request validation
-├── types/
-│   └── story.ts                # Shared TypeScript types
-└── styles/
-    └── reading-mode.css        # Dedicated reading mode styles
+  app/
+    api/
+      generate/route.ts          # MODIFIED: use generateSafeStory(), return JSON, Node.js runtime
+      illustrate/route.ts        # NEW: AI image generation proxy (Edge)
+      share/route.ts             # NEW: POST to save story to Redis (Edge)
+      share/[id]/route.ts        # NEW: GET to retrieve shared story (Edge)
+    story/
+      page.tsx                   # EXISTING: session-based reading (minor prop changes)
+      [id]/page.tsx              # NEW: shared story page (server component -> Redis)
+    library/
+      page.tsx                   # NEW: story library listing
+    layout.tsx                   # EXISTING: may need nav link to /library
+  components/
+    reading-view.tsx             # MODIFIED: three modes, wake lock, illustration slots, narration
+    text-revealer.tsx            # NEW: progressive paragraph reveal animation
+    illustration-slot.tsx        # NEW: lazy AI illustration with IntersectionObserver
+    narration-controls.tsx       # NEW: TTS play/pause/voice picker
+    share-button.tsx             # NEW: generate share link, copy to clipboard
+    story-card.tsx               # NEW: library card component
+    story-form.tsx               # MODIFIED: save to IndexedDB, updated response handling
+    loading-overlay.tsx          # EXISTING: may update messaging
+  lib/
+    safety.ts                    # EXISTING: generateSafeStory (NOW USED by route)
+    story-store.ts               # NEW: IndexedDB CRUD via idb-keyval
+    wake-lock.ts                 # NEW: useWakeLock hook
+    illustration.ts              # NEW: prompt builder, insertion point logic
+    share.ts                     # NEW: nanoid, Redis key format, SharedStory type
+    narration.ts                 # NEW: Web Speech API wrapper
+    schemas.ts                   # EXISTING: may extend with StoryMetadata type
+    prompts.ts                   # EXISTING: may add illustration prompt builder
+    rate-limit.ts                # EXISTING: add separate limits for /illustrate, /share
 ```
 
-### Structure Rationale
+---
 
-- **app/:** Next.js App Router convention. Only two real pages (form + reading mode) plus one API route keeps routing minimal.
-- **components/:** Flat component directory is fine for an app this size. No need for atomic design or nested folders with fewer than 10 components.
-- **lib/prompts/:** Prompts are isolated as their own module because they are the core product logic. They will be iterated constantly and need to be easy to find and modify without touching application code.
-- **lib/:** Business logic separated from UI. Every file here is independently testable. The safety module is its own file because it orchestrates a multi-step flow (generate -> evaluate -> retry/reject).
+## Patterns to Follow
 
-## Architectural Patterns
+### Pattern 1: ReadingView Multi-Mode
 
-### Pattern 1: Server-Side Generation with Streaming Response
+ReadingView must handle three distinct data sources:
 
-**What:** Story generation runs entirely server-side. The API route calls Claude, streams the response back to the client via Server-Sent Events (SSE). The client progressively renders text as chunks arrive.
+| Mode | Source | Behavior |
+|------|--------|----------|
+| Fresh story | sessionStorage (after generation) | Progressive text reveal animation, wake lock |
+| Library re-read | sessionStorage (loaded from IndexedDB) | Full static render, wake lock |
+| Shared story | Props from server component | Full static render, wake lock, "create your own" CTA |
 
-**When to use:** Always for MVP. Claude API keys must never reach the client. Streaming gives the user visual feedback during the 5-15 second generation time.
+Use a prop like `mode: 'fresh' | 'static'` and `storyData` passed directly for shared stories vs read from sessionStorage for the other two modes.
 
-**Trade-offs:** Streaming adds some complexity to both the API route and client-side rendering, but the UX improvement is significant. A 10-second blank wait feels broken; streaming text feels alive.
+### Pattern 2: Hook-Based Wake Lock
 
-**Example:**
 ```typescript
-// api/generate/route.ts — simplified
-export async function POST(req: Request) {
-  const input = storyInputSchema.parse(await req.json());
-  const prompt = buildStoryPrompt(input);
-
-  const stream = await anthropic.messages.stream({
-    model: 'claude-sonnet-4-20250514',
-    max_tokens: calculateMaxTokens(input.duration),
-    system: getSystemPrompt(input.ageGroup),
-    messages: [{ role: 'user', content: prompt }],
-  });
-
-  // Return as SSE stream to client
-  return new Response(stream.toReadableStream(), {
-    headers: { 'Content-Type': 'text/event-stream' },
-  });
-}
-```
-
-### Pattern 2: Two-Phase Generation (Generate then Validate)
-
-**What:** Story generation and safety validation are two distinct phases. Phase 1 generates the full story. Phase 2 evaluates it for safety. If validation fails, Phase 1 reruns with a modified prompt (up to N retries). If all retries fail, a friendly error is returned.
-
-**When to use:** This is the safety architecture specified in the requirements.
-
-**Trade-offs:** Two-phase means the user waits for both generation AND validation. This doubles latency if done naively. Mitigation: validate the story as it streams (accumulate chunks, run safety check on the completed text). The user sees streaming text, and the safety check runs immediately after completion. If the story fails, the stream is "replaced" with a retry (show a brief "polishing your story..." message).
-
-**Important design decision:** Do NOT stream an unsafe story to the client and then yank it away. Buffer the full story server-side, validate, then stream to the client only after it passes. This means the user waits for full generation + validation before seeing any text, but there is no risk of showing unsafe content.
-
-**Example:**
-```typescript
-// lib/safety.ts
-const MAX_RETRIES = 2;
-
-export async function generateSafeStory(input: StoryInput): Promise<SafeStoryResult> {
-  for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
-    const story = await generateStory(input, attempt);
-    const safetyResult = await evaluateSafety(story, input);
-
-    if (safetyResult.safe) {
-      return { success: true, story };
+// lib/wake-lock.ts
+export function useWakeLock() {
+  useEffect(() => {
+    let sentinel: WakeLockSentinel | null = null
+    async function acquire() {
+      try {
+        if ('wakeLock' in navigator) {
+          sentinel = await navigator.wakeLock.request('screen')
+        }
+      } catch { /* silent fail -- user may have denied permission */ }
     }
-    // Retry with adjusted prompt hints based on what failed
-  }
-  return { success: false, error: 'friendly-error' };
+    acquire()
+    const handleVisibility = () => {
+      if (document.visibilityState === 'visible') acquire()
+    }
+    document.addEventListener('visibilitychange', handleVisibility)
+    return () => {
+      sentinel?.release()
+      document.removeEventListener('visibilitychange', handleVisibility)
+    }
+  }, [])
 }
 ```
 
-### Pattern 3: Prompt as Product Logic
+Re-acquire on visibility change is required by the spec -- the lock is released when the tab becomes hidden.
 
-**What:** The system prompt and prompt template are the core product. They encode tone, narrative structure, age-appropriateness, duration targeting, and safety guardrails. Treat prompts as first-class code: version-controlled, well-commented, parameterized.
+### Pattern 3: Lazy Illustration via IntersectionObserver
 
-**When to use:** Always. The prompt IS the product for an AI generation app.
+Only request AI illustrations when the user scrolls to that section. Avoids unnecessary API cost, does not block initial reading, and images appear naturally as the parent reads.
 
-**Trade-offs:** Prompts are inherently fragile and hard to test deterministically. Mitigate with example-based testing (run prompt, check output properties) rather than exact-match testing.
+### Pattern 4: IndexedDB via idb-keyval
 
-**Key prompt components:**
-- **System prompt:** Persona (children's story author), tone (calming, bedtime-appropriate), constraints (no violence, no scary content, no leaving home alone, etc.)
-- **Age band calibration:** Toddler (0-3): simple sentences, repetition, familiar objects. Young child (4-6): short chapters, simple conflict, animal characters. Older child (7-10): real narrative arc, richer vocabulary, light themes.
-- **Duration mapping:** 5 min ~ 500-700 words. 10 min ~ 1000-1400 words. 15 min ~ 1500-2100 words.
-- **Personalization:** Child's name woven into narrative (as protagonist or named character), theme integrated into plot.
+Simple Promise-based get/set/del for story library. No need for Dexie or raw IndexedDB API complexity.
 
-## Data Flow
+### Pattern 5: Existing Redis Instance for Share Storage
 
-### Story Generation Flow (Primary Flow)
+No new infrastructure. The Upstash Redis instance already configured for rate limiting can store shared stories with TTL. The `@upstash/redis` package is already installed.
 
-```
-[Parent fills form]
-    ↓
-[Client: POST /api/generate with {name, age, theme, duration}]
-    ↓
-[Server: Validate input (Zod schema)]
-    ↓ (invalid → 400 error)
-[Server: Map age → reading level band]
-    ↓
-[Server: Map duration → target word count + complexity]
-    ↓
-[Server: Build system prompt + user prompt]
-    ↓
-[Server: Call Claude API (full generation, not streaming to client yet)]
-    ↓
-[Server: Receive complete story text]
-    ↓
-[Server: Run safety evaluation (second Claude call with safety prompt)]
-    ↓ (unsafe → retry from prompt building, max 2 retries)
-    ↓ (all retries fail → return friendly error)
-[Server: Stream validated story to client via SSE]
-    ↓
-[Client: Render story progressively in reading mode]
-    ↓
-[Client: Transition to full reading mode when complete]
-```
+---
 
-### State Management
+## Anti-Patterns to Avoid
 
-This app has minimal client-side state. No global store needed.
+### 1. Server-Side Streaming with Post-hoc Validation
 
-```
-[Form State] (React useState / form library)
-    ↓ (submit)
-[Generation State] (loading | streaming | complete | error)
-    ↓
-[Story State] (accumulated story text from stream)
-    ↓
-[Reading Mode] (display final story, no further state changes)
-```
+Streaming tokens to the client while running validation afterward. If validation fails after the user has seen partial content, a parent may have already read unsafe text aloud to their child.
 
-No Redux, no Zustand, no context providers. React component state is sufficient for this flow. The app is essentially a stateless pipeline: input -> generate -> display.
+**Instead:** Buffer-validate-then-deliver. Generate and validate on server. Deliver completed story to client.
 
-### Key Data Flows
+### 2. localStorage for Story Library
 
-1. **Input to prompt:** Form data is validated, age is mapped to a reading level band (pure function), duration is mapped to word count target, then all parameters are interpolated into a prompt template. This is the most important data transformation in the app.
-2. **Claude response to display:** The Claude API returns streaming text chunks. Server accumulates the full response, validates safety, then re-streams to the client. Client appends chunks to a string state variable and renders.
-3. **Safety retry loop:** On safety failure, the system modifies the prompt (adds explicit constraints based on what failed) and regenerates. This loop is entirely server-side; the client only sees a longer wait time.
+5MB limit, synchronous API blocks main thread, no structured querying.
 
-## Scaling Considerations
+**Instead:** IndexedDB via idb-keyval.
 
-| Scale | Architecture Adjustments |
-|-------|--------------------------|
-| 0-100 users | Monolith is perfect. Single Next.js app on Vercel. No database, no caching. |
-| 100-1k users | Add rate limiting per IP to prevent abuse. Consider basic request logging. Claude API costs become a real concern (~$0.01-0.05 per story). |
-| 1k-10k users | Add a database (stories table) to cache/save generated stories. Add basic analytics. Consider Anthropic API rate limits and request queuing. |
-| 10k+ users | User accounts (planned post-MVP). Story caching to reduce redundant API calls. CDN for static assets. Queue-based generation for burst handling. |
+### 3. Server-Side TTS for v2.0
 
-### Scaling Priorities
+OpenAI TTS or ElevenLabs adds $0.01-0.10 per story narration, requires audio streaming infrastructure, and raises voice quality expectations.
 
-1. **First bottleneck: Claude API rate limits and cost.** Each story requires 1-2 API calls (generation + safety check, potentially more on retries). At scale, implement request queuing and consider caching stories for common theme+age combinations.
-2. **Second bottleneck: Serverless function timeout.** Story generation can take 10-30 seconds. Vercel's default timeout is 10s (free) or 60s (pro). Need Pro plan or use edge-compatible streaming to keep the connection alive.
+**Instead:** Web Speech API for v2.0 (free, zero infra). Evaluate paid TTS for v3.0.
 
-## Anti-Patterns
+### 4. Eager Illustration Generation
 
-### Anti-Pattern 1: Client-Side Claude API Calls
+Generating all 2-3 illustrations at story creation time adds 10-30 seconds to wait time and costs money for images the user may never scroll to.
 
-**What people do:** Put the Anthropic API key in client-side code (even in environment variables exposed to the browser) and call Claude directly from the frontend.
-**Why it's wrong:** API key is exposed to anyone inspecting network requests. Trivially exploitable. Also prevents server-side safety validation.
-**Do this instead:** All Claude API calls go through your server-side API route. The API key lives in server-only environment variables.
+**Instead:** Lazy-load via IntersectionObserver. Generate only when the user scrolls to that section.
 
-### Anti-Pattern 2: Streaming Unsafe Content to Users
+### 5. Using `openai` npm Package on Edge Runtime
 
-**What people do:** Stream the Claude response directly to the client in real-time, then run safety checks after the user has already read part of the story.
-**Why it's wrong:** If the story contains inappropriate content, the user sees it before you can catch it. You cannot un-show text.
-**Do this instead:** Buffer the complete story server-side, run the safety check, then stream the validated story to the client. The slight increase in perceived latency is worth the guarantee of safety.
+The `openai` npm package may have Node.js-only dependencies. For Edge Runtime routes (`/api/illustrate`, `/api/share`), use raw `fetch()` to OpenAI API endpoints.
 
-### Anti-Pattern 3: Monolithic Prompt String
+**For Node.js routes** (`/api/generate`): the `openai` package is fine, but `generateSafeStory()` only uses the Anthropic SDK so this is not relevant there.
 
-**What people do:** Build prompts as one giant concatenated string with inline conditionals and hardcoded values.
-**Why it's wrong:** Prompts are the core product logic. A monolithic string is impossible to test, hard to iterate, and prone to subtle bugs when you change one part and break another.
-**Do this instead:** Decompose prompts into composable sections (system persona, age calibration, theme instructions, duration guidance, safety constraints). Each section is a function that returns a string. The final prompt is assembled from these parts. Each section can be tested independently.
+---
 
-### Anti-Pattern 4: Over-Engineering State Management
-
-**What people do:** Set up Redux/Zustand/MobX for a form-to-display app with no persistent state.
-**Why it's wrong:** This app has three states: filling form, generating story, reading story. That is linear, one-directional flow with no shared state between components. A state management library adds complexity and indirection for zero benefit.
-**Do this instead:** React useState for form fields, a single generation status state, and the story text. Pass via props or use a simple context if the component tree gets deep (unlikely with 2 pages).
-
-### Anti-Pattern 5: Complex Retry Logic Without Bounds
-
-**What people do:** Retry indefinitely on safety failures, or retry with the exact same prompt hoping for different output.
-**Why it's wrong:** Unbounded retries waste API credits and make the user wait forever. Same prompt may produce similar unsafe content repeatedly.
-**Do this instead:** Cap retries at 2 (3 total attempts). On each retry, modify the prompt to add explicit constraints addressing what the safety check flagged. If all attempts fail, return a graceful error. The error should feel friendly: "We could not create a story right now. Please try a different theme."
-
-## Integration Points
-
-### External Services
-
-| Service | Integration Pattern | Notes |
-|---------|---------------------|-------|
-| Anthropic Claude API | Anthropic TypeScript SDK (`@anthropic-ai/sdk`) | Use `messages.create()` with streaming. Model: Claude Sonnet for cost/speed balance. Haiku for safety evaluation calls (cheaper, faster, sufficient for classification). |
-| Vercel (hosting) | Next.js deployment | Use serverless functions for API route. Set function timeout appropriately (30s minimum). Edge runtime is NOT suitable because the Anthropic SDK uses Node.js APIs. |
-
-### Internal Boundaries
-
-| Boundary | Communication | Notes |
-|----------|---------------|-------|
-| Client <-> API Route | HTTP POST + SSE stream | Single endpoint. Client sends JSON, receives event stream. |
-| API Route <-> Prompt Service | Direct function call | Same process. Prompt service is a pure function, no I/O. |
-| API Route <-> Claude Client | Async function call | Wrapper around Anthropic SDK. Returns full text (not stream) for safety check. |
-| API Route <-> Safety Service | Async function call | Orchestrates retry loop. Returns SafeStoryResult. |
-| Safety Service <-> Claude Client | Async function call | Safety evaluation is a separate, smaller Claude call. |
-
-## Build Order (Dependency Graph)
-
-The architecture implies this build sequence:
+## Build Order (Dependency-Aware)
 
 ```
-Phase 1: Foundation
-├── Project setup (Next.js, TypeScript, Tailwind)
-├── lib/validation.ts (Zod schemas — no external deps)
-├── lib/age-mapping.ts (pure function — no external deps)
-├── lib/duration.ts (pure function — no external deps)
-└── types/story.ts (shared types)
-
-Phase 2: Core Generation Pipeline
-├── lib/claude.ts (Anthropic SDK wrapper — needs API key)
-├── lib/prompts/system-prompt.ts (prompt templates)
-├── lib/prompts/story-prompt.ts (prompt builder, depends on age-mapping + duration)
-└── api/generate/route.ts (wires it all together, no safety yet)
-
-Phase 3: Safety Layer
-├── lib/prompts/safety-prompt.ts (safety evaluation prompt)
-├── lib/safety.ts (retry orchestration, depends on claude.ts + prompts)
-└── Update api/generate/route.ts to use safety pipeline
-
-Phase 4: UI — Input Form
-├── components/story-form.tsx
-├── components/theme-selector.tsx
-├── components/duration-selector.tsx
-└── app/page.tsx (home page with form)
-
-Phase 5: UI — Reading Experience
-├── components/loading-screen.tsx
-├── components/story-reader.tsx
-├── app/story/page.tsx (reading mode page)
-└── styles/reading-mode.css (dim-room optimized styles)
+Phase 1: Restore Safety + Progressive Display
+    |  - Switch /api/generate to Node.js runtime + generateSafeStory()
+    |  - Return JSON instead of raw stream
+    |  - Update StoryForm to handle JSON response
+    |  - Add TextRevealer for progressive paragraph fade-in
+    |  - Extend sessionStorage data shape to include metadata
+    |
+    v
+Phase 2: Screen Wake Lock
+    |  - useWakeLock() hook in ReadingView
+    |  - No server changes, no dependencies on Phase 1 data shape
+    |  - Very small scope (~1 day)
+    |
+    v
+Phase 3: Story Library
+    |  - Add idb-keyval, create story-store.ts
+    |  - Save stories on generation in StoryForm
+    |  - Create /library page with StoryCard components
+    |  - ReadingView accepts library-loaded stories
+    |
+    v
+Phase 4: Shareable Links
+    |  - Add nanoid, create /api/share route
+    |  - Create /story/[id] server component page
+    |  - Add ShareButton to ReadingView
+    |  - OG meta tags via generateMetadata()
+    |  - Depends on: stable story data shape from Phase 3
+    |
+    v
+Phase 5: TTS Narration
+    |  - Web Speech API wrapper in narration.ts
+    |  - NarrationControls component in ReadingView
+    |  - Sentence/paragraph highlighting
+    |  - Voice picker (filtered system voices)
+    |  - Independent of Phases 3-4 but benefits from stable ReadingView
+    |
+    v
+Phase 6: AI Scene Illustrations
+       - Add /api/illustrate route (Edge, raw fetch to OpenAI)
+       - Add OPENAI_API_KEY env var
+       - IllustrationSlot with IntersectionObserver
+       - Illustration prompt builder
+       - Cache generated image URLs in IndexedDB
+       - Most complex, most expensive -- build last
 ```
 
-**Why this order:**
-- Foundation types and pure functions have zero dependencies — build and test them first.
-- The generation pipeline is the core product risk. Get it working end-to-end (even via curl) before building UI.
-- Safety layer wraps the generation pipeline — it needs a working pipeline to test against.
-- UI is last because it is the lowest-risk, most-changeable layer. Building UI before the API is stable leads to rework.
+**Ordering rationale:**
+- Phase 1 first because safety validation is currently missing and is the foundation
+- Phase 2 is tiny and high-value, no dependencies
+- Phase 3 before Phase 4 because the story data schema from the library informs the Redis schema for sharing
+- Phase 5 after the reading view is stable from Phases 1-4
+- Phase 6 last because it introduces a new external API dependency (OpenAI), has the highest per-use cost, and is most complex
 
-## Safety Architecture Deep Dive
+---
 
-Safety is the most architecturally significant requirement. Here is the detailed design:
+## Scalability Considerations
 
-### Safety Strategy: Defense in Depth
+| Concern | Current (v1.0) | v2.0 Impact | Mitigation |
+|---------|----------------|-------------|------------|
+| API cost per story | ~$0.01 (Sonnet stream) | +$0.005 (Haiku validation) = ~$0.015 base | Acceptable; Haiku is very cheap |
+| Illustration cost | N/A | $0.005-0.052/image x 2-3 = $0.01-0.16/story | Lazy loading, gpt-image-1-mini, cap at 3 |
+| Redis storage | Rate limit keys only | +2-5KB per shared story | 90-day TTL auto-cleanup |
+| Function duration | ~5-15s (streaming) | ~10-20s (buffer + validate) | Node.js runtime, maxDuration=60 |
+| Client storage | sessionStorage (~5KB) | IndexedDB (many stories + illustration URLs) | Persist API, offer "clear library" |
+| Rate limiting | 10 req/hr for /generate | + /illustrate (6/hr), /share (10/hr) | Separate Upstash limiters per route |
 
-1. **Input sanitization** (first line): Validate and constrain inputs. Preset theme list prevents injection via theme. Name is sanitized (strip special characters, cap length). Age is bounded (0-12).
+---
 
-2. **Prompt-level safety** (second line): The system prompt explicitly instructs Claude to produce safe, age-appropriate content. It includes a detailed negative list (no violence, no death, no abandonment, no scary imagery, no real-world dangers, no bathroom humor for young ages, etc.).
+## Critical Risk: Edge Function Timeout (RESOLVED)
 
-3. **Output validation** (third line): After generation, a separate Claude call evaluates the story against safety criteria. This uses a smaller, cheaper model (Haiku) with a focused classification prompt: "Is this story safe and age-appropriate for a [age-band] child? Reply YES or NO with brief reasoning."
+The switch from Edge to Node.js runtime for `/api/generate` resolves the timeout concern. Node.js runtime on Vercel supports `maxDuration` configuration (up to 300s on Pro plan). The 60-second limit comfortably covers generation (~12s) + validation (~2s) + two retries (~28s additional) = ~42s worst case.
 
-4. **Retry with guidance** (fourth line): If safety check fails, the system retries generation with additional prompt constraints derived from the safety check's reasoning. For example, if the safety check flags "story includes a character getting lost in a dark forest," the retry prompt adds "the story must not include characters being lost or in dark/scary settings."
+New Edge Runtime routes (`/api/illustrate`, `/api/share`) are simple proxy/CRUD operations that complete well within the 30-second Edge limit.
 
-5. **Graceful failure** (final line): After max retries, display a warm, friendly message. Never show the unsafe story. Never blame the user.
-
-### Safety Prompt Design
-
-The safety evaluation prompt should be:
-- **Binary:** Return SAFE or UNSAFE (not a score or scale)
-- **Specific:** List exact criteria to check against
-- **Age-aware:** Different criteria for toddlers vs older children
-- **Fast:** Use Claude Haiku for speed and cost; safety classification does not need a large model
-- **Conservative:** When in doubt, flag as unsafe (false positives are much better than false negatives)
-
-### Cost of Safety
-
-Each story generation costs:
-- 1x Claude Sonnet call for story (~$0.003-0.015 depending on length)
-- 1x Claude Haiku call for safety check (~$0.0003-0.001)
-- On retry: additional Sonnet + Haiku calls
-- Worst case (2 retries): 3x Sonnet + 3x Haiku ~ $0.01-0.05 per story
-
-This is acceptable for MVP. At scale, consider caching safety-validated stories.
+---
 
 ## Sources
 
-- Anthropic Claude API documentation (training data, not live-verified)
-- Next.js App Router patterns (training data)
-- General LLM application architecture patterns (training data)
-
-**Confidence note:** Web search was unavailable during this research. All recommendations are based on training data knowledge of these technologies. The core architectural patterns (server-side generation, safety validation, streaming) are well-established and unlikely to have changed, but specific API details (SDK methods, model names, pricing) should be verified against current Anthropic documentation before implementation.
+- Screen Wake Lock API: https://web.dev/blog/screen-wake-lock-supported-in-all-browsers (all major browsers since early 2025)
+- Wake Lock MDN reference: https://developer.mozilla.org/en-US/docs/Web/API/Screen_Wake_Lock_API
+- Web Speech API SpeechSynthesis: https://caniuse.com/speech-synthesis (Chrome, Edge, Safari supported)
+- Web Speech API cross-browser issues: https://webreflection.medium.com/taming-the-web-speech-api-ef64f5a245e1
+- OpenAI Images API pricing: https://platform.openai.com/docs/pricing (gpt-image-1-mini $0.005-0.052/image)
+- IndexedDB vs localStorage: https://dev.to/tene/localstorage-vs-indexeddb-javascript-guide-storage-limits-best-practices-fl5
+- Next.js streaming guide: https://nextjs.org/docs/app/guides/streaming
+- Anthropic streaming refusals: https://docs.claude.com/en/docs/test-and-evaluate/strengthen-guardrails/handle-streaming-refusals
+- Upstash Redis TTL: https://upstash.com/docs/redis/sdks/py/commands/generic/ttl
+- Actual codebase: `src/app/api/generate/route.ts`, `src/lib/safety.ts`, `src/components/story-form.tsx`, `src/components/reading-view.tsx`
 
 ---
-*Architecture research for: AI bedtime story generator*
-*Researched: 2026-03-23*
+
+*Architecture research for: Nightlight Tales v2.0*
+*Updated: 2026-04-03 (supersedes 2026-04-01 version)*

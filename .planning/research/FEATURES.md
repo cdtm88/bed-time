@@ -1,203 +1,164 @@
-# Feature Research
+# Feature Landscape
 
-**Domain:** AI-powered bedtime story generator for parents
-**Researched:** 2026-03-23
-**Confidence:** MEDIUM (based on training data knowledge of competitors like Oscar Stories, Sleepytales, DreamyTales, Moshi; web verification was unavailable)
+**Domain:** Bedtime story web app (parent reads aloud to child in dim room on mobile)
+**Researched:** 2026-04-03
+**Milestone:** v2.0 -- enriched reading experience
 
-## Feature Landscape
+---
 
-### Table Stakes (Users Expect These)
+## Table Stakes
 
-Features users assume exist. Missing these = product feels incomplete or broken.
+Features users expect once they encounter the product category. Missing = product feels incomplete for a "bedtime reading app."
 
 | Feature | Why Expected | Complexity | Notes |
 |---------|--------------|------------|-------|
-| Child name personalization | Every competitor does this; a "personalized" story without the child's name is just a generic story | LOW | Straightforward prompt injection; ensure name appears naturally 3-5 times, not forced |
-| Age-appropriate content | Parents will not use an app that produces content wrong for their child's age | MEDIUM | Map age to reading level bands (Toddler 0-3, Young 4-6, Older 7-10); calibrate vocabulary, sentence length, concept complexity |
-| Theme/topic selection | Parents want some control over what the story is about; competitors all offer this | LOW | Preset list is the right MVP call -- keeps safety high and prompt quality controllable |
-| Reading duration control | Parents need stories that fit their bedtime routine length; 5/10/15 min is standard | LOW | Map durations to approximate word counts (~500/1000/1500 words based on ~100 wpm read-aloud pace) |
-| Safety/content filtering | Non-negotiable for children's content; a single inappropriate story kills trust permanently | HIGH | Multi-layer: prompt engineering + output validation + retry logic + graceful failure. This is the hardest table-stakes feature to get right |
-| Mobile-friendly reading view | Parents read on phones at bedside; if the reading experience is poor on mobile the app fails its core use case | MEDIUM | Large text, dark/dim mode, no distracting UI, scrollable or paginated, no screen timeout triggers |
-| Fast generation (under 30s) | A tired parent holding a phone next to a child will not wait minutes; competitors generate in 10-20 seconds | MEDIUM | Streaming response display helps perceived speed even if generation takes 20-30s |
-| Narrative arc (beginning, middle, end) | AI-generated stories that meander or end abruptly feel broken; parents expect a real story, not random paragraphs | MEDIUM | Prompt engineering challenge -- explicit story structure instructions, possibly multi-step generation |
-| No account required for first use | Friction kills bedtime apps -- parent discovers it at 8pm, wants a story NOW, not after email verification | LOW | Session-based, no auth. This is already in PROJECT.md and is the right call |
+| Progressive story streaming | Every AI text app streams in 2026. A 15-30s spinner before any text appears feels broken. First words in 1-2s is the baseline expectation. | Medium | Server already streams (`client.messages.stream` in route.ts). Client currently buffers full response via `await res.text()`. Restructure needed: reading view must consume the stream incrementally. |
+| Screen Wake Lock | Parents hold phone in dark room for 3-15 minutes. Screen dimming mid-story is the #1 frustration for reading apps. Every e-reader and recipe app handles this. | Very Low | Wake Lock API supported in all major browsers (Chrome 85+, Firefox 124+, Safari 16.6+, ~88% global coverage). ~15 lines of code. HTTPS required (Vercel provides). |
+| Story library (local storage) | Users generate stories they love and want to re-read. Without persistence, every story vanishes on page close. Any content-creation app needs a "my stuff" section. | Medium | IndexedDB over localStorage: stories with metadata will exceed 5MB limit at ~20+ stories. Safari may evict IndexedDB data after 7 days without interaction -- mitigate with `navigator.storage.persist()`. |
 
-### Differentiators (Competitive Advantage)
+## Differentiators
 
-Features that set the product apart. Not required day one, but create competitive moats.
+Features that elevate beyond basic. Not expected, but valued -- especially in the bedtime niche.
 
 | Feature | Value Proposition | Complexity | Notes |
 |---------|-------------------|------------|-------|
-| Calming/wind-down language design | Most competitors generate "exciting adventure stories" -- explicitly designing for sleep wind-down is rare and valuable | MEDIUM | Prompt engineering to ensure descending energy arc: active beginning, calming middle, sleepy resolution. This is the core differentiator for PROJECT.md |
-| Reading duration accuracy | Competitors often miss on story length; actually hitting 5/10/15 minute targets makes parents trust the product | MEDIUM | Requires calibration: measure word count vs. read-aloud time, iterate on prompt word count targets, possibly trim or extend post-generation |
-| Dim-room optimized UI | Most competitors have standard white UIs; a truly dim-room-friendly reading experience (warm amber tones, OLED-friendly, auto-dim) stands out | MEDIUM | Dark theme with warm color temperature, adjustable brightness, no sudden white flashes during transitions |
-| Story illustrations (AI-generated) | Competitors like Oscar Stories include illustrations; children love pictures with their stories | HIGH | Adds significant cost (image generation API calls), latency, and content safety complexity. Defer to post-MVP but plan the architecture to support it |
-| Multi-voice TTS narration | High-quality narration with character voices, ambient sounds (rain, crickets), and music transforms the experience | HIGH | Explicitly out of scope for MVP per PROJECT.md. When built, needs to be exceptional -- bad TTS is worse than no TTS |
-| Story history / favorites | Parents find a story their kid loves and want to read it again tomorrow | LOW | Requires persistence. Could do local storage (no account) initially, then sync with accounts later |
-| Sibling support (multiple children) | Families have multiple kids; stories that include siblings or are tailored per child | LOW | Simple input extension. Valuable differentiator because most competitors focus on single-child |
-| Bedtime routine integration | Timer/alarm that suggests "time for a story," wind-down music before and after, sleep tracking integration | HIGH | Future native app feature. Over-engineering for MVP |
-| Themed story series / continuity | "Chapter 3 of Maya's Space Adventure" -- continuing stories across nights | MEDIUM | Requires story state persistence and careful prompt engineering to maintain narrative continuity. Very compelling for retention |
-| Offline story caching | Pre-generate stories for airplane/camping/no-signal bedtimes | LOW | Cache generated stories in local storage or service worker. Simple to implement once stories exist |
+| AI scene illustrations (2-3 per story) | Transforms "text generator" into "storybook experience." Parents show illustrations to child while reading. Emotional delight moment. | High | OpenAI GPT Image or DALL-E 3 API. On-demand via IntersectionObserver as user scrolls. ~$0.04-0.08/image. Must enforce child-safe illustration prompts. Watercolor/painterly style avoids uncanny child faces. |
+| TTS narration with voice selection | Hands-free reading. Parent holds child while app reads aloud. Huge for tired parents in a dark room. | High | Three tiers: (1) Web Speech API -- free, local, inconsistent quality across devices; (2) OpenAI TTS -- $15/M chars, 11 voices, consistent quality; (3) ElevenLabs -- best naturalness (82% pronunciation accuracy vs OpenAI's lower scores), 3000+ voices, subscription model. Recommend Web Speech API as free default, cloud TTS as premium upgrade. |
+| Shareable story links | "Read this to your kid" -- parents share with partner, grandparents, friends. Organic growth driver. Link previews in iMessage/WhatsApp matter enormously. | Medium | Upstash Redis already in stack. nanoid key + TTL (30-90 days). Route: `/s/[id]`. OG meta tags critical for share previews (theme SVG as OG image). |
+| Improved SVG theme illustrations | Warmer, more whimsical nighttime aesthetic on theme tiles elevates the form page from functional to delightful. Sets the bedtime mood before the story even begins. | Low | Design/asset work, not engineering. Replace 18 existing SVGs. Consistent visual language: deep blues, warm golds, soft glows, stars/moons. No new dependencies. |
+| Reading font optimization | Current Noto Serif may cause eye strain in dim rooms. Research shows sans-serif fonts cause 25% less eye strain in dark mode, but serif conveys "storybook" feel. | Low | Candidates: Literata (designed for e-readers), Merriweather (dark-mode variant exists), Lora (readable, open). Font size already good at 1.25rem/20px. Line height 1.8 is correct. Ship as user preference or A/B test. |
 
-### Anti-Features (Commonly Requested, Often Problematic)
+## Anti-Features
 
-Features that seem good but create problems -- especially for a children's bedtime product.
+Features to explicitly NOT build in v2.0.
 
-| Feature | Why Requested | Why Problematic | Alternative |
-|---------|---------------|-----------------|-------------|
-| Freeform theme/prompt input | Parents want total creative control | Opens massive safety surface area; adversarial inputs, injection attacks, inappropriate content requests. Every freeform input is a content moderation problem | Curated preset theme list that grows over time based on user requests. Offer 15-20 rich themes that cover the space well |
-| Child-facing UI / "let the kid pick" | Seems fun to let kids interact | Product is for parents reading to children. Child-facing UI means: accessibility requirements change, safety surface increases (child typing), screen time concerns, regulatory implications (COPPA) | Parent-only input UI. Child's role is listener, not user |
-| Social sharing of stories | Parents want to share cute stories | Sharing AI-generated children's content publicly creates moderation nightmares, privacy concerns (child names in shared URLs), and potential for misuse | Private "save to favorites" with manual copy-paste if parents want to share |
-| User-generated theme marketplace | Community-driven content sounds engaging | Moderation burden is enormous for children's content. One bad actor submitting an inappropriate theme poisons trust | Curated editorial theme list. Accept theme suggestions via feedback form, vet manually |
-| Story editing / prompt tweaking | "Regenerate the ending" or "make it longer" | Turns a simple bedtime flow into a creative writing tool. Parent spends 15 minutes tweaking instead of reading. Breaks the "generate and read" simplicity | Single "generate new story" button. Accept that some stories are better than others |
-| Gamification / rewards / streaks | Engagement metrics, retention | This is a bedtime app. Gamification creates anxiety ("don't break the streak!"), screen time guilt, and undermines the calm wind-down purpose | Track usage passively for parents who want to see patterns, but no badges/streaks/notifications |
-| In-story interactive choices ("choose your adventure") | Engagement, replayability | Extends bedtime, creates decision fatigue for tired children, breaks the winding-down arc. Parent is reading aloud -- branching narrative is awkward | Linear narrative with natural arc. Save interactivity for a daytime reading product |
-| Real-time collaborative story building | Parent and AI co-write | Destroys the simplicity. Parent is holding a phone in a dark room next to a sleepy child. They need to press one button, not co-author | One-tap generation. The AI is the author; the parent is the narrator |
-| Detailed content controls (violence level, vocabulary sliders, etc.) | Fine-grained customization | Analysis paralysis at bedtime. Most parents want "safe and appropriate" -- not a 10-slider configuration panel | Age input handles calibration automatically. Trust the system to get it right |
+| Anti-Feature | Why Avoid | What to Do Instead |
+|--------------|-----------|-------------------|
+| User accounts / cloud sync | Auth complexity delays every other feature. Core value is "zero friction to first story." Accounts create friction. | Local-first storage (IndexedDB). Cloud sync deferred to v3.0 once library proves valuable. |
+| Story editing / regeneration controls | Breaks bedtime flow. Parent should not be editing text at 8pm with a tired child. Implies story is a draft, not a gift. | "Generate another" button. Each story is complete and final. |
+| Custom freeform theme input | Safety risk -- user could input inappropriate themes. Preset list is a safety guardrail disguised as a feature. Harder to generate matching illustrations for freeform themes. | Keep 18 preset themes. Add more curated themes over time. |
+| Character-by-character typewriter streaming | Appropriate for ChatGPT chat bubbles; actively bad for 800-word stories. Draws attention to generation process, not content. Disorienting for read-aloud tracking. | Paragraph-reveal with subtle fade-in. Sentence/paragraph chunks, not characters. |
+| Auto-play TTS narration | Parent must explicitly choose TTS. Some parents read aloud themselves. Auto-play in a quiet bedroom is disruptive and startling. | Play button, clearly visible but not auto-triggered. |
+| Public story index / discover stories | Shared stories contain children's names. Must only be accessible via direct link, never discoverable through search or public feed. | Direct-link-only access. No browsing, no indexing, no sitemap inclusion. |
+| Permanent shareable links | Stories contain children's names. Permanent public URLs are a privacy risk. | TTL of 30-90 days. Expired link shows graceful "story has expired" message. |
+| Background music / ambient sounds | Scope creep. Audio licensing complexity. Competes with TTS. Parents often run white noise machines already. | TTS narration only. No ambient audio layer. |
+| Photorealistic AI illustrations of children | Uncanny valley with AI-generated child faces. Privacy/ethical concerns with realistic child imagery. | Watercolor/painterly illustration style. Scene-focused, not character-portrait-focused. |
+| Auto-deletion of saved stories | High emotional attachment to children's stories. "Lila's unicorn story from her birthday" being auto-deleted destroys trust. | No auto-deletion. User-initiated delete only, with confirmation. |
 
 ## Feature Dependencies
 
 ```
-[Age-appropriate content]
-    └──requires──> [Age input + reading level mapping]
+INDEPENDENT (ship anytime, no prerequisites):
+  - Screen Wake Lock
+  - Improved SVG theme illustrations
+  - Reading font evaluation
 
-[Safety/content filtering]
-    └──requires──> [Prompt engineering layer]
-    └──requires──> [Output validation layer]
-    └──enhances──> [Age-appropriate content]
+DEPENDENCY CHAIN:
 
-[Reading duration control]
-    └──requires──> [Word count calibration per reading level]
-
-[Dim-room UI]
-    └──enhances──> [Mobile-friendly reading view]
-
-[Story history / favorites]
-    └──requires──> [Local storage or user accounts]
-
-[Themed story series / continuity]
-    └──requires──> [Story history / favorites]
-    └──requires──> [User accounts] (for cross-device)
-
-[AI illustrations]
-    └──requires──> [Story generation pipeline]
-    └──requires──> [Image safety filtering]
-    └──enhances──> [Reading experience]
-
-[Multi-voice TTS narration]
-    └──requires──> [Story generation pipeline]
-    └──enhances──> [Reading experience]
-    └──conflicts──> [No-account MVP simplicity] (TTS costs need monetization)
-
-[Sibling support]
-    └──enhances──> [Name personalization]
-    └──requires──> [Prompt engineering updates]
-
-[Offline story caching]
-    └──requires──> [Story history / favorites]
-    └──enhances──> [Mobile-friendly reading view]
+  Progressive Streaming
+       |
+       |--- enables ---> Story Library (needs completed story to persist)
+       |                      |
+       |                      |--- enhances ---> Shareable Links
+       |                                         (share from saved stories,
+       |                                          or share directly after generation)
+       |
+       |--- enables ---> TTS Narration (needs story text to read aloud;
+       |                   can start per-paragraph as stream completes)
+       |
+       |--- enables ---> Scene Illustrations (needs story text to derive
+                          scene prompts; fires as paragraphs accumulate)
 ```
 
-### Dependency Notes
+### Critical Architecture Decision: Streaming vs. Safety Validation
 
-- **Safety filtering requires prompt engineering + output validation:** Safety cannot be a single layer. Prompt engineering reduces bad outputs, output validation catches what slips through, retry logic handles edge cases. All three are needed before launch.
-- **Reading duration requires word count calibration:** The mapping from "5 minutes" to word count depends on reading level band. A toddler story read aloud is slower (simpler words, more pauses) than an older-child story. Calibrate empirically.
-- **Story series requires persistence:** Continuing stories across sessions needs state. This blocks on either local storage (fragile, single device) or user accounts (adds friction). Defer until accounts exist.
-- **TTS conflicts with no-account MVP:** High-quality TTS is expensive per-request. Offering it free with no accounts means no way to rate-limit or monetize. TTS should launch alongside accounts and a pricing model.
+The v1.0 codebase has a tension that v2.0 MUST resolve:
 
-## MVP Definition
+- **route.ts** streams Anthropic response directly to client WITHOUT safety validation. Fast, but no Haiku safety check.
+- **safety.ts** has `generateSafeStory()` that buffers full response, validates with Haiku, then returns. Safe, but no streaming.
 
-### Launch With (v1)
+The current production code (route.ts) chose speed over safety validation. The `safety.ts` module exists but is NOT called by the route.
 
-Minimum viable product -- validate that parents want AI bedtime stories at all.
+**v2.0 options:**
 
-- [x] Child name + age input -- core personalization
-- [x] Preset theme list (15-20 themes) -- controlled creative scope
-- [x] Reading duration selector (5/10/15 min) -- fits bedtime routines
-- [x] AI story generation with narrative arc -- the core product
-- [x] Calming/wind-down language design -- the key differentiator
-- [x] Safety filtering (prompt + validation + retry + graceful error) -- non-negotiable
-- [x] Mobile-first dim-room reading view -- the primary use context
-- [x] No account required -- zero friction to first story
-- [x] Streaming response display -- perceived speed while generating
+| Option | UX | Safety | Complexity |
+|--------|-----|--------|-----------|
+| **Buffer-validate-then-stream** (recommended) | ~15-30s wait, then progressive text reveal | Full safety guarantee | Medium -- generate full story, validate, then re-stream validated text to client |
+| Stream first, validate in background | First words in 1-2s | Risk: user sees partial unsafe content before halt | High -- race conditions, partial content cleanup |
+| Trust prompt engineering only | First words in 1-2s | No post-hoc validation; prompt constraints only | Low -- current approach in route.ts |
+| Paragraph-level validation | ~3-5s per paragraph | Catches issues per paragraph | High -- multiple Haiku calls, complex orchestration |
 
-### Add After Validation (v1.x)
+**Recommendation:** Buffer-validate-then-stream for v2.0. Generate full story server-side, run Haiku validation, then stream the validated text to client with paragraph-level fade-in animation. The 15-30s generation wait is acceptable with the existing `LoadingOverlay`. The progressive text reveal after validation gives the "streaming feel" without compromising safety. True real-time streaming with inline safety monitoring is a v3.0 optimization.
 
-Features to add once core is working and users confirm value.
+### Dependency Details
 
-- [ ] Story history via local storage -- when users say "my kid loved last night's story"
-- [ ] Dim-room UI refinements (amber mode, brightness controls) -- when usage data confirms bedtime phone use
-- [ ] Sibling support (multiple names) -- when users request it
-- [ ] Reading duration accuracy tuning -- after measuring real read-aloud times vs. targets
-- [ ] Expanded theme list -- based on which themes users pick most and what they request
-- [ ] Offline caching of recent stories -- when mobile signal complaints surface
+1. **Progressive Streaming is the foundation.** The current architecture buffers the full response client-side (`await res.text()`), navigates to `/story`, and reads from `sessionStorage`. Streaming requires restructuring: the reading view must render incrementally as text arrives (or simulate progressive reveal of validated text).
 
-### Future Consideration (v2+)
+2. **Story Library enables Shareable Links.** Sharing a story implies it has an identity (ID, metadata). The library gives stories structure. Shareable links store that same structured data in Redis.
 
-Features to defer until product-market fit is established.
+3. **TTS needs story text.** Can begin reading per-paragraph as a buffer-then-stream delivers text, or wait for full story. Either way, the text pipeline must be in place.
 
-- [ ] User accounts + saved profiles -- needed for cross-device, story history sync, and monetization
-- [ ] AI-generated story illustrations -- high cost and complexity, but high value
-- [ ] Multi-voice TTS narration with ambient sounds -- the "audiobook" experience, must be exceptional
-- [ ] Themed story series / continuing adventures -- requires accounts + story persistence
-- [ ] Native iOS app -- after web MVP proves the concept
-- [ ] Freeform theme input (carefully moderated) -- only if preset themes feel limiting to validated users
+4. **Scene Illustrations need story text.** Must extract scene descriptions from accumulated paragraphs to build image prompts. Can fire requests lazily via IntersectionObserver.
 
-## Feature Prioritization Matrix
+## Suggested Build Order
 
-| Feature | User Value | Implementation Cost | Priority |
-|---------|------------|---------------------|----------|
-| Child name personalization | HIGH | LOW | P1 |
-| Age-appropriate content calibration | HIGH | MEDIUM | P1 |
-| Preset theme selection | HIGH | LOW | P1 |
-| Reading duration control | HIGH | LOW | P1 |
-| Safety/content filtering | HIGH | HIGH | P1 |
-| Mobile-friendly dim-room reading view | HIGH | MEDIUM | P1 |
-| Narrative arc (real story structure) | HIGH | MEDIUM | P1 |
-| Calming wind-down language | HIGH | MEDIUM | P1 |
-| Streaming response display | MEDIUM | LOW | P1 |
-| Story history (local storage) | MEDIUM | LOW | P2 |
-| Sibling support | MEDIUM | LOW | P2 |
-| Dim-room UI refinements | MEDIUM | MEDIUM | P2 |
-| Offline story caching | LOW | LOW | P2 |
-| Reading duration accuracy tuning | MEDIUM | MEDIUM | P2 |
-| AI-generated illustrations | HIGH | HIGH | P3 |
-| Multi-voice TTS narration | HIGH | HIGH | P3 |
-| User accounts + profiles | MEDIUM | MEDIUM | P3 |
-| Story series / continuity | MEDIUM | MEDIUM | P3 |
-| Native iOS app | HIGH | HIGH | P3 |
+### Wave 1: Foundation (independent, immediate value)
+1. **Screen Wake Lock** -- 0.5 days, massive UX win for the core bedtime use case
+2. **Reading font evaluation** -- 1 day, improves every story read
+3. **Improved SVG theme illustrations** -- 2-3 days (design), no code dependencies
 
-**Priority key:**
-- P1: Must have for launch
-- P2: Should have, add when validated
-- P3: Nice to have, future consideration
+### Wave 2: Core Pipeline (streaming + persistence)
+4. **Progressive streaming** (buffer-validate-then-stream) -- 2-3 days, modernizes the feel, resolves safety architecture tension
+5. **Story library** (IndexedDB) -- 3-4 days, gives stories longevity and identity
 
-## Competitor Feature Analysis
+### Wave 3: Sharing + Rich Features
+6. **Shareable story links** -- 2 days, builds on story identity from library, uses existing Upstash Redis
+7. **AI scene illustrations** -- 4-5 days, image generation API integration, on-demand loading, prompt engineering for consistent style
+8. **TTS narration** -- 5-7 days, most complex feature, requires service selection, audio playback UI, sentence highlighting
 
-*Note: Based on training data knowledge. Competitors may have added/changed features since. Confidence: MEDIUM.*
+## MVP Recommendation
 
-| Feature | Oscar Stories | Sleepytales | DreamyTales | Our Approach |
-|---------|-------------|-------------|-------------|--------------|
-| Name personalization | Yes | Yes | Yes | Yes -- table stakes |
-| Age calibration | Basic (age ranges) | Yes | Limited | Internal age-to-reading-level mapping |
-| Theme selection | Freeform + presets | Presets | Freeform | Presets only (safety-first) |
-| AI illustrations | Yes (per story) | No | Some | Deferred (P3) |
-| TTS / audio | Basic TTS | Yes (multiple voices) | No | Deferred until it can be exceptional (P3) |
-| Reading duration control | No (fixed length) | Some | No | Yes -- 5/10/15 min selector (differentiator at launch) |
-| Wind-down language design | Not explicit | Somewhat | No | Core differentiator -- stories designed for sleep |
-| Dark/dim reading mode | Basic dark mode | No | No | Dim-room optimized UI (warm amber, large text) |
-| Account required | Yes | Yes | Yes | No -- zero friction MVP |
-| Story saving | Yes (with account) | Yes (with account) | Yes | Local storage (no account needed) in v1.x |
-| Safety filtering | Moderate | Moderate | Basic | Multi-layer with retry (non-negotiable) |
-| Free tier | Limited | Limited | Limited | Fully free MVP (validate first, monetize later) |
+**Prioritize for immediate v2.0 impact:**
+1. Screen Wake Lock -- solves the most frustrating UX problem, trivial effort
+2. Progressive streaming (buffer-validate-then-stream) -- modernizes feel, resolves safety tension
+3. Story library -- gives stories longevity, enables sharing
+4. Shareable links -- organic growth, partner/grandparent sharing
+
+**Defer to later v2.0 phases:**
+- AI scene illustrations: High complexity, per-generation cost, needs prompt engineering for consistent style
+- TTS narration: Highest complexity, service selection required, cost implications
+
+**Ship anytime (low effort, no dependencies):**
+- SVG illustration refresh: pure asset work
+- Font evaluation: A/B test or user preference toggle
+
+## Complexity Budget
+
+| Feature | Eng Days (est) | Risk | Cost Impact |
+|---------|---------------|------|-------------|
+| Screen Wake Lock | 0.5 | Low | None |
+| Reading font evaluation | 1 | Low | None (Google Fonts, free) |
+| SVG illustration refresh | 2-3 (design-heavy) | Low | None |
+| Progressive streaming | 2-3 | Medium -- safety architecture redesign | None |
+| Story library (IndexedDB) | 3-4 | Medium -- Safari eviction edge case | None |
+| Shareable links | 2 | Low | Minimal (Upstash Redis already in stack) |
+| AI scene illustrations | 4-5 | High -- new API, cost, safety for images | ~$0.04-0.08/image, 2-3/story |
+| TTS narration | 5-7 | High -- service selection, cross-device compat | Web Speech: free; OpenAI TTS: ~$0.01/story; ElevenLabs: subscription |
+
+**Total estimate:** 20-26 engineering days for all v2.0 features.
 
 ## Sources
 
-- Training data knowledge of Oscar Stories, Sleepytales, DreamyTales, Moshi Kids, and general AI children's content apps (confidence: MEDIUM -- may be 6-18 months stale)
-- Children's literacy research on read-aloud pacing (~100-130 words per minute for parent read-aloud, varying by child age)
-- COPPA and children's digital product safety considerations (training data)
-- Web verification was unavailable during this research session; competitor features should be spot-checked before finalizing roadmap
-
----
-*Feature research for: AI-powered bedtime story generator*
-*Researched: 2026-03-23*
+- [Screen Wake Lock API - MDN](https://developer.mozilla.org/en-US/docs/Web/API/Screen_Wake_Lock_API)
+- [Wake Lock supported in all browsers - web.dev](https://web.dev/blog/screen-wake-lock-supported-in-all-browsers)
+- [Wake Lock browser support - Can I Use](https://caniuse.com/wake-lock)
+- [LocalStorage vs IndexedDB guide - DEV Community](https://dev.to/tene/localstorage-vs-indexeddb-javascript-guide-storage-limits-best-practices-fl5)
+- [Browser Storage Comparison 2026](https://recca0120.github.io/en/2026/03/06/browser-storage-comparison/)
+- [ElevenLabs vs OpenAI TTS - Vapi](https://vapi.ai/blog/elevenlabs-vs-openai)
+- [Best TTS APIs 2026 - Speechmatics](https://www.speechmatics.com/company/articles-and-news/best-tts-apis-in-2025-top-12-text-to-speech-services-for-developers)
+- [AI Image Generation Models 2026 - Gradually.ai](https://www.gradually.ai/en/ai-image-models/)
+- [Dark Mode Typography - Design Shack](https://designshack.net/articles/typography/dark-mode-typography/)
+- [Serif fonts in dark mode - TypeDrawers](https://typedrawers.com/discussion/4989/serif-typefaces-that-work-well-in-dark-mode)
+- [Streaming Content Monitoring for LLM Safety - arXiv](https://arxiv.org/abs/2506.09996)
+- [Upstash Redis URL Shortener Tutorial](https://upstash.com/docs/redis/tutorials/python_url_shortener)
+- [Best reading fonts - Fontfabric](https://www.fontfabric.com/blog/best-fonts-for-reading/)
