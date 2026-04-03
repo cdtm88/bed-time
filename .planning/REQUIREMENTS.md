@@ -16,7 +16,7 @@ Requirements for the v2.0 milestone. Each maps to roadmap phases.
 ### Visuals
 
 - [ ] **VISUAL-01**: Theme tile illustrations display warmer, more whimsical nighttime artwork (18 SVGs redesigned)
-- [ ] **VISUAL-02**: User sees AI-generated scene illustrations appear between story paragraphs while reading (2–3 per story, loaded on-demand via fal.ai)
+- [ ] **VISUAL-02**: User sees AI-generated scene illustrations appear between story paragraphs while reading (2-3 per story, loaded on-demand via fal.ai)
 
 ### Story Persistence
 
@@ -52,20 +52,20 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| STREAM-01 | TBD | Pending |
-| STREAM-02 | TBD | Pending |
-| STREAM-03 | TBD | Pending |
-| VISUAL-01 | TBD | Pending |
-| VISUAL-02 | TBD | Pending |
-| PERSIST-01 | TBD | Pending |
-| PERSIST-02 | TBD | Pending |
-| PERSIST-03 | TBD | Pending |
+| STREAM-01 | Phase 12 | Pending |
+| STREAM-02 | Phase 12 | Pending |
+| STREAM-03 | Phase 12 | Pending |
+| VISUAL-01 | Phase 15 | Pending |
+| VISUAL-02 | Phase 14 | Pending |
+| PERSIST-01 | Phase 13 | Pending |
+| PERSIST-02 | Phase 13 | Pending |
+| PERSIST-03 | Phase 13 | Pending |
 
 **Coverage:**
 - v2.0 requirements: 8 total
-- Mapped to phases: 0 (roadmap not yet created)
-- Unmapped: 8 ⚠️
+- Mapped to phases: 8/8
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-04-03*
-*Last updated: 2026-04-03 after initial v2.0 definition*
+*Last updated: 2026-04-03 after v2.0 roadmap creation*

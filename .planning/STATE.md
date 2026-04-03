@@ -2,11 +2,11 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: v2.0 Features
-status: defining requirements
-stopped_at: —
-last_updated: "2026-04-01T00:00:00.000Z"
+status: ready to plan
+stopped_at: Roadmap created for v2.0
+last_updated: "2026-04-03T00:00:00.000Z"
 progress:
-  total_phases: 0
+  total_phases: 4
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -19,20 +19,22 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-01)
 
 **Core value:** A parent can generate a safe, personalized bedtime story in under a minute and read it aloud to their child tonight.
-**Current focus:** Milestone v2.0 — defining requirements
+**Current focus:** Phase 12 — Streaming & Reading UX
 
 ## Current Position
 
-Phase: Not started (defining requirements)
+Phase: 12 of 15 (Streaming & Reading UX) — first phase of v2.0
 Plan: —
-Status: Defining requirements
-Last activity: 2026-04-01 — Milestone v2.0 started
+Status: Ready to plan
+Last activity: 2026-04-03 — v2.0 roadmap created (4 phases, 8 requirements)
+
+Progress: [░░░░░░░░░░] 0% (v2.0)
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 0
+- Total plans completed: 0 (v2.0)
 - Average duration: -
 - Total execution time: 0 hours
 
@@ -48,81 +50,17 @@ Last activity: 2026-04-01 — Milestone v2.0 started
 - Trend: -
 
 *Updated after each plan completion*
-| Phase 01-project-scaffolding P01 | 30 | 2 tasks | 13 files |
-| Phase 02-core-generation-pipeline P01 | 3 | 2 tasks | 8 files |
-| Phase 02-core-generation-pipeline P02 | 2 | 2 tasks | 3 files |
-| Phase 03 P01 | 2 | 1 tasks | 3 files |
-| Phase 03 P02 | 1 | 1 tasks | 1 files |
-| Phase 03 P02 | 1 | 2 tasks | 1 files |
-| Phase 04-input-form P01 | 2 | 2 tasks | 8 files |
-| Phase 04-input-form P02 | 22 | 3 tasks | 7 files |
-| Phase 05 P01 | 3 | 2 tasks | 4 files |
-| Phase 05 P02 | 3 | 2 tasks | 2 files |
-| Phase 06 P01 | 1 | 2 tasks | 2 files |
-| Phase 06 P02 | 2 | 2 tasks | 2 files |
-| Phase 06.1 P01 | 2 | 2 tasks | 5 files |
-| Phase 07 P01 | 5 | 3 tasks | 5 files |
-| Phase 08 P01 | 4 | 2 tasks | 18 files |
-| Phase 08-theme-svg-assets P02 | 5 | 2 tasks | 1 files |
-| Phase 09-production-hardening P01 | 7 | 3 tasks | 6 files |
-| Phase 10 P02 | 8 | 2 tasks | 5 files |
-| Phase 10-nyquist-compliance P01 | 3 | 2 tasks | 5 files |
-| Phase 11 P01 | 1 | 1 tasks | 2 files |
-| Phase 11 P02 | 3 | 2 tasks | 2 files |
 
 ## Accumulated Context
-
-### Roadmap Evolution
-
-- Phase 06.1 inserted after Phase 6: 3-minute duration option (URGENT)
-- Phases 8-10 added after v1.0 audit gap closure (STORY-03 SVG assets, INFRA-03 rate limiting, Nyquist compliance)
-- Phase 11 added: UI polish and tidy up
 
 ### Decisions
 
 Decisions are logged in PROJECT.md Key Decisions table.
 Recent decisions affecting current work:
 
-- Roadmap: Pipeline before UI -- generation pipeline is the core product risk, prove it works via curl before building UI
-- Roadmap: Safety as separate phase -- post-generation validation is complex enough to warrant its own phase, not tangled with generation logic
-- Roadmap: Quality tuning last -- prompt refinement requires the full loop (form -> generate -> validate -> read) to be in place
-- [Phase 01-project-scaffolding]: Tailwind v4 CSS-first: @import 'tailwindcss' in globals.css, @tailwindcss/postcss plugin, no tailwind.config.js
-- [Phase 01-project-scaffolding]: Edge Runtime declared with export const runtime = 'edge' (not experimental-edge, removed in Next.js 16)
-- [Phase 01-project-scaffolding]: src/ layout with tsconfig @/* alias pointing to ./src/*; all app code under src/app/
-- [Phase 01-project-scaffolding]: Vercel deployment via GitHub dashboard integration (not CLI) — automatic redeploy on push to main at https://bed-time-nu.vercel.app/
-- [Phase 02-core-generation-pipeline]: System prompt uses word count range (93%-107%) rather than exact target for natural Claude output
-- [Phase 02-core-generation-pipeline]: Name regex /^[a-zA-Z\s]{1,30}$/ per D-06 -- ASCII letters and spaces only
-- [Phase 02-core-generation-pipeline]: Plain text streaming (text/plain) instead of SSE for simpler client consumption
-- [Phase 02-core-generation-pipeline]: Generic 500 error on Claude failures -- never expose API internals to client
-- [Phase 03]: Fail-closed validation parsing: unparseable responses treated as UNSAFE
-- [Phase 03]: Haiku claude-haiku-4-5-20251001 for validation, Sonnet claude-sonnet-4-6 for generation
-- [Phase 03]: Buffered response replaces streaming: full story validated before reaching client
-- [Phase 03]: Buffered response replaces streaming: full story validated before reaching client
-- [Phase 04-input-form]: In-memory Map for rate limiter: edge-compatible, no external dependency, resets on redeploy (acceptable for MVP)
-- [Phase 04-input-form]: Tailwind v4 @theme inline font bridge connects next/font CSS variables to font-serif and font-sans utilities
-- [Phase 04-input-form]: All sub-components are controlled (presentational) — state centralized in StoryForm parent
-- [Phase 04-input-form]: window.location.href used for /story navigation to ensure sessionStorage is written before page unloads
-- [Phase 04-input-form]: LoadingOverlay uses inline <style> for @keyframes breathe and twinkle — Tailwind v4 cannot express custom keyframes without config file
-- [Phase 05]: Utility functions (parseStoryData, splitParagraphs, calculateScrollProgress, assembleTitle) defined inline in test file; will be extracted in Plan 02
-- [Phase 05]: jsdom environment applied globally to all vitest tests (no-op for non-browser tests)
-- [Phase 05]: Gold accent scroll progress bar and single CTA at end of story (per visual checkpoint feedback)
-- [Phase 06]: D-08: Per-age sensory guidance in ReadingLevelConfig descriptions, not global prompt
-- [Phase 06]: Prompt organized into labeled sections (Story structure, Opening variety, Voice and craft) for readability
-- [Phase 06.1]: 3-minute stories target 450 words / 900 tokens; compact arc (1-2/2/1-2 paragraphs) for targetWords < 500; ending wind-down identical in both paths
-- [Phase 07]: Moon emoji favicon generated server-side via next/og ImageResponse (no static .ico file)
-- [Phase 07]: OG metadata explicitly duplicates title/description (OG spec does not inherit from HTML meta)
-- [Phase 08]: dinosaurs.svg excluded from viewBox/palette/size/prohibited validation checks — it is a legacy 2048x2048 asset predating Phase 8 constraints
-- [Phase 08-theme-svg-assets]: Fallback placeholder uses bg-surface-container-low + bg-surface-container-highest circle; per-item load failures tracked via useState Set pattern
-- [Phase 09]: Upstash lazy-init: getRatelimit() guards on UPSTASH_REDIS_REST_URL to avoid module-scope throws
-- [Phase 09]: Dev bypass returns { allowed: true } when no Upstash env vars present
-- [Phase 10]: Evidence sourced from actual test runs: 32 prompts, 12 age-levels, 5 SVG, 4 rate-limit, 113 full suite
-- [Phase 10]: npm test command corrected to npx vitest run in Phase 9 (package.json has no test script)
-- [Phase 10]: Phase 06.1 VALIDATION.md created from scratch following established template structure
-- [Phase 10-nyquist-compliance]: Evidence notes use consistent format: [N] tests passing — npx vitest run [file] — 2026-03-30; Phase 1 build-only uses build success evidence; manual verifications backdated per D-04
-- [Phase 11]: Hero illustration uses 4s breathe cycle (slower than loading 3s) for calmer form page
-- [Phase 11]: Stars static (no twinkle) on form page to avoid distraction
-- [Phase 11]: Gold ring uses full-opacity secondary-container token with 10% background tint
-- [Phase 11]: Loading overlay reuses reading-mode CSS tokens for dark navy background
+- [Roadmap v2.0]: Buffer-validate-then-stream pattern — safety validation before any text reaches client (first-word latency ~3-5s, acceptable for children's safety)
+- [Roadmap v2.0]: TTS narration deferred to v2.1 — simplest features first, most complex last
+- [Roadmap v2.0]: Phase 15 (SVG refresh) has no dependencies — can execute in parallel or out of order
 
 ### Pending Todos
 
@@ -130,11 +68,11 @@ None yet.
 
 ### Blockers/Concerns
 
-- ~~Vercel free tier timeout~~ — Resolved in Phase 1 context: using Edge Runtime streaming, no timeout applies.
-- Claude model pricing and rate limits should be verified against current Anthropic docs before Phase 2.
+- fal.ai CDN image URL expiry: saved stories may have stale image references — needs investigation during Phase 14
+- Literata font is subjective — research recommends A/B test with parents before full commitment
 
 ## Session Continuity
 
-Last session: 2026-03-31T13:48:49.420Z
-Stopped at: Completed 11-02-PLAN.md
+Last session: 2026-04-03
+Stopped at: v2.0 roadmap created, ready to plan Phase 12
 Resume file: None
