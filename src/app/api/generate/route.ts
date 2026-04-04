@@ -1,4 +1,3 @@
-export const runtime = "edge"
 
 import Anthropic from "@anthropic-ai/sdk"
 import { validateInput, GenerateInput } from "@/lib/schemas"
