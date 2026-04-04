@@ -34,7 +34,6 @@ export function StoryForm() {
   const [duration, setDuration] = useState(10)
   const [theme, setTheme] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
 
   const canSubmit =
     name.trim().length > 0 &&
@@ -44,34 +43,15 @@ export function StoryForm() {
   async function handleSubmit() {
     if (isLoading || !canSubmit) return
     setIsLoading(true)
-    setError(null)
-    try {
-      const res = await fetch('/api/generate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: name.trim(), age, theme, duration }),
-      })
-      if (res.status === 429) {
-        setIsLoading(false)
-        setError("You've created a few stories recently. Try again in a bit.")
-        return
-      }
-      if (!res.ok) {
-        setIsLoading(false)
-        setError('Something went wrong creating the story. Please try again.')
-        return
-      }
-      const storyText = await res.text()
-      sessionStorage.setItem('nightlight-story', JSON.stringify({
-        story: storyText,
-        name: name.trim(),
-        theme: theme,
-      }))
-      window.location.href = '/story'
-    } catch {
-      setIsLoading(false)
-      setError('Something went wrong creating the story. Please try again.')
-    }
+
+    sessionStorage.setItem('nightlight-params', JSON.stringify({
+      name: name.trim(),
+      age,
+      theme,
+      duration,
+    }))
+
+    window.location.href = '/story'
   }
 
   if (isLoading) {
@@ -112,16 +92,6 @@ export function StoryForm() {
         >
           Generate Story
         </button>
-
-        {/* Error messages */}
-        {error && (
-          <p
-            role="alert"
-            className="mt-sm font-serif text-[1rem] leading-relaxed text-destructive"
-          >
-            {error}
-          </p>
-        )}
       </div>
     </main>
   )

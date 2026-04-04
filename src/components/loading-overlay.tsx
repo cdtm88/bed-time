@@ -51,7 +51,7 @@ export function LoadingOverlay({ name }: LoadingOverlayProps) {
         />
       </div>
 
-      <h2 className="font-serif text-[1.75rem] text-reading-on-surface">
+      <h2 className="font-serif text-[2rem] leading-[1.3] tracking-[-0.02em] text-reading-on-surface">
         Crafting {name}&apos;s story&hellip;
       </h2>
       <p className="font-serif text-[1rem] leading-relaxed text-reading-on-surface-muted mt-md">
