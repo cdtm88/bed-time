@@ -1,17 +1,9 @@
 ---
 phase: 12-streaming-reading-ux
 verified: 2026-04-04T15:45:00Z
-status: gaps_found
-score: 9/10 must-haves verified
-gaps:
-  - truth: "useWakeLock hook has full passing test coverage"
-    status: failed
-    reason: "@testing-library/react is declared in package.json devDependencies but not installed in node_modules — use-wake-lock.test.ts fails to resolve the import at test-collect time"
-    artifacts:
-      - path: "src/__tests__/use-wake-lock.test.ts"
-        issue: "Suite fails to load: 'Failed to resolve import \"@testing-library/react\"'"
-    missing:
-      - "Run npm install to install @testing-library/react (already declared, just not installed)"
+status: human_needed
+score: 10/10 must-haves verified
+gaps: []
 human_verification:
   - test: "Progressive paragraph reveal — end-to-end visual flow"
     expected: "Loading overlay shows during generation, then drops on first paragraph; subsequent paragraphs fade in one at a time with 300ms opacity+translateY animation; NEW STORY button appears at end"
