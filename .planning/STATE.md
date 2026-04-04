@@ -1,15 +1,17 @@
 ---
 gsd_state_version: 1.0
 milestone: v2.0
-milestone_name: v2.0 Features
-status: ready to plan
-stopped_at: Roadmap created for v2.0
-last_updated: "2026-04-03T00:00:00.000Z"
+milestone_name: Features
+status: planning
+stopped_at: Phase 12 context gathered
+last_updated: "2026-04-04T06:04:37.796Z"
+last_activity: 2026-04-03 — v2.0 roadmap created (4 phases, 8 requirements)
 progress:
   total_phases: 4
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
+  percent: 0
 ---
 
 # Project State
@@ -73,6 +75,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-03
-Stopped at: v2.0 roadmap created, ready to plan Phase 12
-Resume file: None
+Last session: 2026-04-04T06:04:37.793Z
+Stopped at: Phase 12 context gathered
+Resume file: .planning/phases/12-streaming-reading-ux/12-CONTEXT.md
