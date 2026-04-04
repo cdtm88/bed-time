@@ -31,7 +31,7 @@
 
 **Milestone Goal:** Enrich the reading experience with progressive streaming, visuals, and story persistence.
 
-- [ ] **Phase 12: Streaming & Reading UX** — Buffer-validate-then-stream pipeline, Wake Lock, Literata font
+- [x] **Phase 12: Streaming & Reading UX** — Per-paragraph streaming with inline validation, Wake Lock, progressive reading view
 - [ ] **Phase 13: Story Persistence** — Device-local story library, re-reading, shareable links
 - [ ] **Phase 14: AI Scene Illustrations** — fal.ai-generated scene images between story paragraphs
 - [ ] **Phase 15: Theme Tile Refresh** — 18 redesigned SVG theme illustrations with warmer nighttime aesthetic
@@ -49,8 +49,8 @@
   4. If Wake Lock is unavailable (unsupported browser), the reading experience still works normally without errors
 **Plans:** 2 plans
 Plans:
-- [ ] 12-01-PLAN.md — TDD stream utilities and Wake Lock hook
-- [ ] 12-02-PLAN.md — Wire streaming pipeline end-to-end (API route, form, reading view)
+- [x] 12-01-PLAN.md — TDD stream utilities and Wake Lock hook
+- [x] 12-02-PLAN.md — Wire streaming pipeline end-to-end (API route, form, reading view)
 
 ### Phase 13: Story Persistence
 **Goal**: Parents can save stories to their device, re-read them later, and share a story with anyone via a link
@@ -114,7 +114,7 @@ Phases execute in numeric order: 12 → 13 → 14 → 15 (Phase 15 has no depend
 | 9. Production Hardening | v1.0 | 2/2 | Complete | 2026-03-29 |
 | 10. Nyquist Compliance | v1.0 | 2/2 | Complete | 2026-03-30 |
 | 11. UI Polish and Tidy Up | v1.0 | 2/2 | Complete | 2026-03-31 |
-| 12. Streaming & Reading UX | v2.0 | 1/2 | In Progress | - |
+| 12. Streaming & Reading UX | v2.0 | 2/2 | Complete | 2026-04-04 |
 | 13. Story Persistence | v2.0 | 0/TBD | Not started | - |
 | 14. AI Scene Illustrations | v2.0 | 0/TBD | Not started | - |
 | 15. Theme Tile Refresh | v2.0 | 0/TBD | Not started | - |
