@@ -114,7 +114,7 @@ Phases execute in numeric order: 12 → 13 → 14 → 15 (Phase 15 has no depend
 | 9. Production Hardening | v1.0 | 2/2 | Complete | 2026-03-29 |
 | 10. Nyquist Compliance | v1.0 | 2/2 | Complete | 2026-03-30 |
 | 11. UI Polish and Tidy Up | v1.0 | 2/2 | Complete | 2026-03-31 |
-| 12. Streaming & Reading UX | v2.0 | 0/2 | Planning | - |
+| 12. Streaming & Reading UX | v2.0 | 1/2 | In Progress | - |
 | 13. Story Persistence | v2.0 | 0/TBD | Not started | - |
 | 14. AI Scene Illustrations | v2.0 | 0/TBD | Not started | - |
 | 15. Theme Tile Refresh | v2.0 | 0/TBD | Not started | - |
