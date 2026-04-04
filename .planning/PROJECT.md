@@ -24,13 +24,20 @@ A parent can generate a safe, personalized bedtime story in under a minute and r
 
 ## Current State
 
+**v2.0 in progress (Phase 12 complete 2026-04-04).** Phase 12 added:
+- Per-paragraph streaming with inline Haiku safety validation — first paragraph in ~5-8s
+- Screen Wake Lock keeps device awake during reading
+- Paragraph-by-paragraph fade-in animation in reading view
+- Child's name persisted to sessionStorage (pre-fills on return)
+- Node.js runtime on generate route (edge runtime removed — nested API calls require it)
+- 123 passing tests across 10 test files
+
 **v1.0 shipped 2026-04-01.** Fully functional MVP:
-- Next.js 16 + Tailwind CSS v4 + Edge Runtime on Vercel
-- Claude Sonnet (generation) + Claude Haiku (safety validation) with 3-attempt retry
+- Next.js 16 + Tailwind CSS v4 on Vercel
+- Claude Sonnet (generation) + Claude Haiku (safety validation)
 - Upstash Redis sliding-window rate limiting (10 req/hr/IP) in production
 - 18 theme SVG illustrations with onError fallback
 - Polished UI: hero illustration, gold theme selection, dark navy loading overlay
-- 113 passing tests across 8 test files
 
 ## Requirements
 
