@@ -1,11 +1,11 @@
 ---
 gsd_state_version: 1.0
 milestone: v2.0
-milestone_name: v2.0 Features
+milestone_name: Features
 status: executing
-stopped_at: Completed 12-02-PLAN.md
-last_updated: "2026-04-04T15:35:00Z"
-last_activity: 2026-04-04 — Plan 12-02 complete (streaming pipeline + form fixes)
+stopped_at: Completed 12-02-PLAN.md (streaming pipeline + form fixes)
+last_updated: "2026-04-04T08:44:05.144Z"
+last_activity: 2026-04-04
 progress:
   total_phases: 4
   completed_phases: 1
@@ -25,10 +25,10 @@ See: .planning/PROJECT.md (updated 2026-04-01)
 
 ## Current Position
 
-Phase: 12 of 15 (Streaming & Reading UX) — complete
-Plan: 2 of 2 complete
+Phase: 13 of 15 (story persistence)
+Plan: Not started
 Status: Executing
-Last activity: 2026-04-04 — Plan 12-02 complete (per-paragraph streaming + name persistence)
+Last activity: 2026-04-04
 
 Progress: [██░░░░░░░░] 25% (v2.0)
 
@@ -69,7 +69,7 @@ Recent decisions affecting current work:
 
 ### Pending Todos
 
-None yet.
+- [ ] **Streaming speed** — per-paragraph validation adds ~1-3s latency per paragraph (one Haiku call each). Investigate batching validation, removing inline validation in favor of prompt-based safety, or parallel validation. Target: first paragraph <3s, subsequent paragraphs <1s apart. Future phase.
 
 ### Blockers/Concerns
 

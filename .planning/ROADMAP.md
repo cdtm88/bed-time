@@ -47,7 +47,7 @@
   2. Device screen does not dim or lock while a story is being read aloud
   3. Story text renders in Literata font on the reading screen, visually distinct from the previous Noto Serif
   4. If Wake Lock is unavailable (unsupported browser), the reading experience still works normally without errors
-**Plans:** 2 plans
+**Plans:** 2/2 plans complete
 Plans:
 - [x] 12-01-PLAN.md — TDD stream utilities and Wake Lock hook
 - [x] 12-02-PLAN.md — Wire streaming pipeline end-to-end (API route, form, reading view)
@@ -114,7 +114,7 @@ Phases execute in numeric order: 12 → 13 → 14 → 15 (Phase 15 has no depend
 | 9. Production Hardening | v1.0 | 2/2 | Complete | 2026-03-29 |
 | 10. Nyquist Compliance | v1.0 | 2/2 | Complete | 2026-03-30 |
 | 11. UI Polish and Tidy Up | v1.0 | 2/2 | Complete | 2026-03-31 |
-| 12. Streaming & Reading UX | v2.0 | 2/2 | Complete | 2026-04-04 |
+| 12. Streaming & Reading UX | v2.0 | 2/2 | Complete    | 2026-04-04 |
 | 13. Story Persistence | v2.0 | 0/TBD | Not started | - |
 | 14. AI Scene Illustrations | v2.0 | 0/TBD | Not started | - |
 | 15. Theme Tile Refresh | v2.0 | 0/TBD | Not started | - |
