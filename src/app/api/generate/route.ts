@@ -5,11 +5,11 @@ import { validateInput, GenerateInput } from "@/lib/schemas"
 import { checkRateLimit } from "@/lib/rate-limit"
 import { getReadingLevel } from "@/lib/age-levels"
 import {
-  buildSystemPrompt,
   buildUserMessage,
   getWordCount,
   getMaxTokens,
 } from "@/lib/prompts"
+import { generateSafeStory } from "@/lib/safety"
 
 const client = new Anthropic()
 
@@ -46,41 +46,47 @@ export async function POST(request: Request) {
   const targetWords = getWordCount(duration)
   const userMessage = buildUserMessage(name, theme)
   const maxTokens = getMaxTokens(duration)
-  const systemPrompt = buildSystemPrompt(readingLevel, targetWords)
 
   try {
-    const stream = client.messages.stream({
-      model: "claude-sonnet-4-6",
-      max_tokens: maxTokens,
-      system: systemPrompt,
-      messages: [{ role: "user", content: userMessage }],
+    const result = await generateSafeStory(client, {
+      name,
+      age,
+      theme,
+      duration: duration as 3 | 5 | 10 | 15,
+      readingLevel,
+      targetWords,
+      maxTokens,
+      userMessage,
     })
 
+    if (!result.ok) {
+      return new Response(
+        JSON.stringify({ error: "We weren't able to create a story right now. Please try again." }),
+        { status: 500, headers: { 'Content-Type': 'application/json' } }
+      )
+    }
+
     const encoder = new TextEncoder()
+    const story = result.story
+    const paragraphs = story.split('\n\n')
 
     const readable = new ReadableStream({
       async start(controller) {
-        try {
-          for await (const event of stream) {
-            if (
-              event.type === "content_block_delta" &&
-              event.delta.type === "text_delta"
-            ) {
-              controller.enqueue(encoder.encode(event.delta.text))
-            }
+        for (let i = 0; i < paragraphs.length; i++) {
+          const chunk = i > 0 ? '\n\n' + paragraphs[i] : paragraphs[i]
+          controller.enqueue(encoder.encode(chunk))
+          if (i < paragraphs.length - 1) {
+            await new Promise(r => setTimeout(r, 80))
           }
-          controller.close()
-        } catch {
-          controller.close()
         }
+        controller.close()
       },
     })
 
     return new Response(readable, {
-      headers: { "Content-Type": "text/plain; charset=utf-8" },
+      headers: { 'Content-Type': 'text/plain; charset=utf-8' },
     })
   } catch {
-    // Per D-07/D-08: warm, non-technical error message
     return new Response(
       JSON.stringify({
         error: "We weren't able to create a story right now. Please try again.",
