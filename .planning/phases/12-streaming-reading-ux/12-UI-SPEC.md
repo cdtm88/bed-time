@@ -47,17 +47,16 @@ Exceptions: 3px for scroll progress bar height (existing pattern, not a spacing 
 
 ## Typography
 
-All values match existing `reading-view.tsx` styles. No changes introduced by this phase.
+All values match existing `reading-view.tsx` styles. The loading overlay heading ("Crafting {name}'s story...") uses the same Heading size (32px) as the story title, consolidating the previous 28px loading title into the standard heading tier.
 
 | Role | Size | Weight | Line Height | Font | Usage |
 |------|------|--------|-------------|------|-------|
 | Body | 20px (1.25rem) | 400 (normal) | 1.8 | Noto Serif | Story paragraph text |
 | Label | 12px (0.75rem) | 600 (semibold) | default | Plus Jakarta Sans | Button text (uppercase, tracking 0.04em) |
-| Heading | 32px (2rem) | 400 (normal) | 1.3 | Noto Serif | Story title, empty/error state headings |
+| Heading | 32px (2rem) | 400 (normal) | 1.3 | Noto Serif | Story title, loading overlay heading, empty/error state headings |
 | Secondary | 16px (1rem) | 400 (normal) | 1.6 | Noto Serif | Loading overlay subtext, empty/error state body |
-| Loading title | 28px (1.75rem) | 400 (normal) | default | Noto Serif | "Crafting {name}'s story..." overlay heading |
 
-Source: Existing `reading-view.tsx` and `loading-overlay.tsx` inline classes.
+Source: Existing `reading-view.tsx` and `loading-overlay.tsx` inline classes. Loading overlay heading consolidated from 28px to 32px Heading tier.
 
 ---
 
@@ -157,14 +156,14 @@ No visual indicator for Wake Lock status. Silent feature.
 | Empty state heading | No story yet |
 | Empty state body | Head back to create a bedtime story. |
 | Empty state CTA | CREATE A STORY |
-| Error state heading | Something went wrong |
-| Error state body (load failure) | Something went wrong loading the story. Please try generating a new one. |
+| Error state heading | Couldn't create your story |
+| Error state body (load failure) | The story failed to generate. Please try again. |
 | Error state CTA (load failure) | TRY AGAIN |
 | Mid-stream error body | The story couldn't be completed. Tap to try again. |
 | Mid-stream error CTA | TRY AGAIN |
 | Destructive confirmation | None (no destructive actions in this phase) |
 
-Source: Existing `reading-view.tsx` copy preserved. Mid-stream error copy from RESEARCH.md Open Question 3.
+Source: Existing `reading-view.tsx` copy preserved. Error heading updated to domain-specific copy. Mid-stream error copy from RESEARCH.md Open Question 3.
 
 ---
 
@@ -175,7 +174,7 @@ Components modified or created in this phase:
 | Component | Status | Changes |
 |-----------|--------|---------|
 | `reading-view.tsx` | Modified | Add streaming fetch, paragraph accumulation state, `paragraphFadeIn` animation, Wake Lock hook, loading/streaming/complete/error states |
-| `loading-overlay.tsx` | Unchanged | Reused within reading view during validation window |
+| `loading-overlay.tsx` | Modified | Update heading size from 28px to 32px to match consolidated Heading tier |
 | `story-form.tsx` | Modified | Remove `fetch` + `await res.text()`. Store params in sessionStorage, navigate to `/story` |
 | `stream-utils.ts` | New | `readParagraphs()` async generator for paragraph buffering |
 | `use-wake-lock.ts` | New | Custom hook: acquire on mount, release on unmount, silent fail |
