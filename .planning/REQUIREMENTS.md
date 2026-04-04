@@ -9,9 +9,9 @@ Requirements for the v2.0 milestone. Each maps to roadmap phases.
 
 ### Streaming & Core UX
 
-- [ ] **STREAM-01**: Story text streams progressively to the reading view (buffer-validate-then-stream: full story generated and validated server-side, then streamed to client)
-- [ ] **STREAM-02**: Device screen stays awake throughout the reading session (Screen Wake Lock API)
-- [ ] **STREAM-03**: Reading view uses Literata font, optimized for dim-room mobile reading
+- [x] **STREAM-01**: Story text streams progressively to the reading view (buffer-validate-then-stream: full story generated and validated server-side, then streamed to client)
+- [x] **STREAM-02**: Device screen stays awake throughout the reading session (Screen Wake Lock API)
+- [x] **STREAM-03**: Reading view uses Literata font, optimized for dim-room mobile reading
 
 ### Visuals
 
@@ -52,9 +52,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| STREAM-01 | Phase 12 | Pending |
-| STREAM-02 | Phase 12 | Pending |
-| STREAM-03 | Phase 12 | Pending |
+| STREAM-01 | Phase 12 | Complete |
+| STREAM-02 | Phase 12 | Complete |
+| STREAM-03 | Phase 12 | Complete |
 | VISUAL-01 | Phase 15 | Pending |
 | VISUAL-02 | Phase 14 | Pending |
 | PERSIST-01 | Phase 13 | Pending |
