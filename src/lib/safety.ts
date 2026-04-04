@@ -50,6 +50,25 @@ export async function validateStory(
   return parseValidationResponse(text).safe
 }
 
+export async function validateParagraph(
+  client: Anthropic,
+  paragraph: string
+): Promise<boolean> {
+  const message = await client.messages.create({
+    model: "claude-haiku-4-5-20251001",
+    max_tokens: 100,
+    system: buildValidationPrompt(),
+    messages: [{ role: "user", content: paragraph }],
+  })
+
+  const text = message.content
+    .filter((block): block is Anthropic.TextBlock => block.type === "text")
+    .map((block) => block.text)
+    .join("")
+
+  return parseValidationResponse(text).safe
+}
+
 const MAX_ATTEMPTS = 3
 
 export async function generateSafeStory(

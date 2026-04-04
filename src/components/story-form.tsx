@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { NameInput } from './name-input'
 import { AgeStepper } from './age-stepper'
 import { DurationToggle } from './duration-toggle'
@@ -10,6 +10,26 @@ import { HeroIllustration } from './hero-illustration'
 
 export function StoryForm() {
   const [name, setName] = useState('')
+
+  // Restore remembered name from sessionStorage on mount
+  useEffect(() => {
+    try {
+      const saved = sessionStorage.getItem('nightlight-name')
+      if (saved) setName(saved)
+    } catch {
+      // sessionStorage unavailable (SSR, privacy mode)
+    }
+  }, [])
+
+  // Persist name to sessionStorage on change
+  const handleNameChange = useCallback((value: string) => {
+    setName(value)
+    try {
+      sessionStorage.setItem('nightlight-name', value)
+    } catch {
+      // sessionStorage unavailable
+    }
+  }, [])
   const [age, setAge] = useState(5)
   const [duration, setDuration] = useState(10)
   const [theme, setTheme] = useState<string | null>(null)
@@ -72,7 +92,7 @@ export function StoryForm() {
 
         {/* Form fields */}
         <div className="mt-2xl flex flex-col gap-md">
-          <NameInput value={name} onChange={setName} />
+          <NameInput value={name} onChange={handleNameChange} />
           <AgeStepper value={age} onChange={setAge} />
           <DurationToggle value={duration} onChange={setDuration} />
         </div>

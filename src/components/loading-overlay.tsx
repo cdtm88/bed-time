@@ -55,7 +55,7 @@ export function LoadingOverlay({ name }: LoadingOverlayProps) {
         Crafting {name}&apos;s story&hellip;
       </h2>
       <p className="font-serif text-[1rem] leading-relaxed text-reading-on-surface-muted mt-md">
-        This takes about 30 seconds.
+        Just a moment&hellip;
       </p>
     </div>
   )
