@@ -62,7 +62,11 @@ Plans:
   3. User can copy a shareable link for any story; opening that link in another browser displays the story
   4. Shared links stop working after their TTL expires
   5. Library works offline for previously saved stories (no network needed to re-read)
-**Plans**: TBD
+**Plans:** 3 plans
+Plans:
+- [ ] 13-01-PLAN.md — Data layer: idb-keyval story store, shared Redis client, share API route, tests
+- [ ] 13-02-PLAN.md — Library UI: /library page, story cards, swipe-to-delete, MY LIBRARY button
+- [ ] 13-03-PLAN.md — Wiring: auto-save in ReadingView, shared story route, expired page, back-to-library
 **UI hint**: yes
 
 ### Phase 14: AI Scene Illustrations
@@ -115,6 +119,6 @@ Phases execute in numeric order: 12 → 13 → 14 → 15 (Phase 15 has no depend
 | 10. Nyquist Compliance | v1.0 | 2/2 | Complete | 2026-03-30 |
 | 11. UI Polish and Tidy Up | v1.0 | 2/2 | Complete | 2026-03-31 |
 | 12. Streaming & Reading UX | v2.0 | 2/2 | Complete    | 2026-04-04 |
-| 13. Story Persistence | v2.0 | 0/TBD | Not started | - |
+| 13. Story Persistence | v2.0 | 0/3 | Planned | - |
 | 14. AI Scene Illustrations | v2.0 | 0/TBD | Not started | - |
 | 15. Theme Tile Refresh | v2.0 | 0/TBD | Not started | - |
